@@ -45,7 +45,8 @@ _DEPS = doomNukem.h
 DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
 
 SOURCES =   main.c \
-			sdl_handle.c
+			sdl_handle.c \
+			playerMovement.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

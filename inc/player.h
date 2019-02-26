@@ -19,8 +19,17 @@
 #define CrouchingHeight 2.5
 #define HeadMargin      1    // How much room there is above camera before the head hits the ceiling
 #define KneeHeight      2    // How tall obstacles the player can simply walk over without jumping
-// #define hfov            (0.73f * W)  
-// #define vfov            (.2f * H)    
+#define hfov            (0.73f * W)  
+#define vfov            (.2f * H)    
+
+typedef enum MovementDirection
+{
+    Nothing = 0,
+    Forward,
+    Backward,
+    Right,
+    Left,
+} e_direction;
 
 typedef struct		s_player
 {
@@ -31,6 +40,14 @@ typedef struct		s_player
     float           anglesin;
     float           anglecos;
     size_t          sectorNumber;
+
+    short           isMoving;
+    short           isCrouching;
+    short           isFalling;
+    short           isStanding;
+
+    e_direction     dir;
 }                   t_player;
+
 
 #endif

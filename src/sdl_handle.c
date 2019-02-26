@@ -12,45 +12,60 @@
 
 #include "doomNukem.h"
 
-// static void			key_down(int key, t_main *m)
-// {
-// 	if (key == SDLK_ESCAPE)
-// 		m->sdl.running = 0;
-// 	else if (key == SDLK_w || key == SDLK_s || key == SDLK_a || key == SDLK_d
-// 				|| key == SDLK_q || key == SDLK_e || key == SDLK_SPACE)
-// 	{
-// 		m->sdl.changes = 1;
-// 	}
-// 	else if (key == SDLK_i || key == SDLK_k || key == SDLK_j || key == SDLK_l
-// 				|| key == SDLK_u || key == SDLK_o)
-// 	{
-// 		m->sdl.changes = 1;
-// 	}
-// 	else if (key == SDLK_z)
-// 	{
-// 	}
-// }
+void				sdl_hook(t_main *m)
+{
+	while (SDL_PollEvent(&m->sdl.e))
+	{
+		if (m->sdl.e.type == SDL_QUIT)
+			m->sdl.running = 0;
+		else if (m->sdl.e.type == SDL_WINDOWEVENT)
+		{
+			if (m->sdl.e.window.event == SDL_WINDOWEVENT_RESIZED)
+				;
+		}
+		else if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_KEYUP)
+        {
+            int key = m->sdl.e.key.keysym.sym;
 
-// void				sdl_hook(t_main *m)
-// {
-// 	while (SDL_PollEvent(&m->sdl.e) != 0)
-// 	{
-// 		if (m->sdl.e.type == SDL_QUIT)
-// 			m->sdl.running = 0;
-// 		else if (m->sdl.e.type == SDL_WINDOWEVENT)
-// 		{
-// 			if (m->sdl.e.window.event == SDL_WINDOWEVENT_RESIZED)
-// 				;
-// 		}
-// 		else if (m->sdl.e.type == SDL_KEYDOWN)
-// 			key_down(m->sdl.e.key.keysym.sym, m);
-// 		else if (m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
-// 			;
-// 		else if (m->sdl.e.type == SDL_MOUSEBUTTONUP)
-// 			;
-// 		else if (m->sdl.e.type == SDL_MOUSEMOTION)
-// 			;
-// 		else if (m->sdl.e.type == SDL_MOUSEWHEEL)
-// 			;
-// 	}
-// }
+            if (key == SDLK_ESCAPE || key == SDLK_q)
+                m->sdl.running = 0;
+            else if (key == SDLK_w)
+            {
+                m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Forward : Nothing;
+            }
+            else if (key == SDLK_s)
+            {
+                m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Backward : Nothing;
+            }
+            else if (key == SDLK_a)
+            {
+                m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Left : Nothing;
+            }
+            else if (key == SDLK_d)
+            {
+                m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Right : Nothing;
+            }
+            else if (key == ' ')
+            {
+                if(m->map.player.isStanding)
+                {
+                    m->map.player.velocity[2] += 0.5;
+                    m->map.player.isFalling = 1;
+                }
+            }
+            else if ( key == SDLK_LCTRL || key == SDLK_RCTRL)
+            {
+                m->map.player.isCrouching = m->sdl.e.type == SDL_KEYDOWN;
+                m->map.player.isFalling = 1;
+            } 
+        }
+		else if (m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
+			;
+		else if (m->sdl.e.type == SDL_MOUSEBUTTONUP)
+			;
+		else if (m->sdl.e.type == SDL_MOUSEMOTION)
+			;
+		else if (m->sdl.e.type == SDL_MOUSEWHEEL)
+			;
+	}
+}

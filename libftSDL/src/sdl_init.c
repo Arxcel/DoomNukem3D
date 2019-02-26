@@ -29,6 +29,7 @@ void				sdl_init(t_sdl *sdl)
 								SDL_TEXTUREACCESS_STATIC,
 								sdl->win_w, sdl->win_h)))
 		MSG(SDL_GetError());
+	SDL_ShowCursor(SDL_DISABLE);
 	SDL_SetRenderDrawColor(sdl->ren, 255, 255, 255, 255);
 	SDL_RenderClear(sdl->ren);
 	SDL_RenderPresent(sdl->ren);

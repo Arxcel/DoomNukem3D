@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <math.h>
 
-// # include "ft_sdl.h"
+# include "ft_sdl.h"
 # include "ft_map.h"
 # include "ft_libftu.h"
 
@@ -38,17 +38,20 @@
 // PointSide: Determine which side of a line the point is on. Return value: <0, =0 or >0.
 #define PointSide(px,py, x0,y0, x1,y1) vxs((x1)-(x0), (y1)-(y0), (px)-(x0), (py)-(y0))
 // Intersect: Calculate the point of intersection between two lines.
-#define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((struct xy) { \
+#define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((t_vertex) { \
     vxs(vxs(x1,y1, x2,y2), (x1)-(x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
     vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
 
 typedef struct		s_main
 {
-	// t_sdl	sdl;
+	t_sdl	sdl;
 	t_map	map;
 }					t_main;
 
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);
+
+
+void                movePlayer(t_main *m);
 
 #endif
