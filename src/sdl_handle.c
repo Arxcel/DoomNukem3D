@@ -49,7 +49,7 @@ void				sdl_hook(t_main *m)
             {
                 if(m->map.player.isStanding)
                 {
-                    m->map.player.velocity[2] += 0.5;
+                    m->map.player.velocity.z += 0.5;
                     m->map.player.isFalling = 1;
                 }
             }

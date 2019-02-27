@@ -13,8 +13,6 @@
 #ifndef FT_PLAYER_H
 # define FT_PLAYER_H
 
-# include <ft_vector.h>
-
 #define StandHeight     6
 #define CrouchingHeight 2.5
 #define HeadMargin      1    // How much room there is above camera before the head hits the ceiling
@@ -30,6 +28,13 @@ typedef enum MovementDirection
     Right,
     Left,
 } e_direction;
+
+typedef struct		s_vector
+{
+    float           x;
+    float           y;
+    float           z;
+}					t_vector;
 
 typedef struct		s_player
 {

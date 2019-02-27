@@ -31,17 +31,6 @@ typedef struct		s_sector
     size_t          numberSectorVertices;
 }                   t_sector;
 
-typedef struct		s_enemy
-{
-    t_vector        position;
-    t_vector        velocity;
-    float           angle;
-    float           yaw;
-    float           anglesin;
-    float           anglecos;
-    size_t          sectorNumber;
-}                   t_enemy;
-
 typedef struct		s_sprite
 {
     t_vector        position;
@@ -56,7 +45,6 @@ typedef struct		s_map
 {
 	t_vertex        *vertices;
     t_sector        *sectors;
-    t_enemy         *enemies;
     t_sprite        *sprites;
     t_player        player;
     size_t          numberVertices;
@@ -64,5 +52,12 @@ typedef struct		s_map
     size_t          numberEnemies;
     size_t          numberSptites;
 }					t_map;
+
+typedef struct		s_renderItem
+{
+    int sectorno;
+    int sx1;
+    int sx2;
+}                   t_renderItem;
 
 #endif
