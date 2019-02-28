@@ -1,19 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   doomNukem.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/02/23 13:57:54 by vkozlov          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#ifndef STRUCTURE_H
+# define STRUCTURE_H
+# include "enum.h"
 
-#ifndef FT_MAP_H
-# define FT_MAP_H
-
-# include <player.h>
+typedef struct		s_vector
+{
+    float           x;
+    float           y;
+    float           z;
+}					t_vector;
 
 typedef struct		s_vertex
 {
@@ -40,6 +34,24 @@ typedef struct		s_sprite
     float           anglecos;
     size_t          sectorNumber;
 }                   t_sprite;
+
+typedef struct		s_player
+{
+    t_vector        position;
+    t_vector        velocity;
+    float           angle;
+    float           yaw;
+    float           anglesin;
+    float           anglecos;
+    size_t          sectorNumber;
+
+    short           isMoving;
+    short           isCrouching;
+    short           isFalling;
+    short           isStanding;
+
+    MoveDir         dir;
+}                   t_player;
 
 typedef struct		s_map
 {

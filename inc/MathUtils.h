@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doomNukem.h                                        :+:      :+:    :+:   */
+/*   MathUtils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,17 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PLAYER_H
-# define FT_PLAYER_H
+#ifndef MathUtils_h
+# define MathUtils_h
 #include "structure.h"
 
-#define StandHeight     6
-#define CrouchingHeight 2.5
-#define HeadMargin      1    // How much room there is above camera before the head hits the ceiling
-#define KneeHeight      2    // How tall obstacles the player can simply walk over without jumping
-#define hfov            (0.73f * W)  
-#define vfov            (.2f * H)    
-
-
+float minf(float a, float b);
+float maxf(float a, float b);
+float clampf(float a, float min, float max);
+float crossf(float x0, float y0, float x1, float y1);
+int overlapf(float begin0, float end0, float begin1, float end1);
+int intersectBox(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4);
+t_vertex intersectLine(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4);
+float pointSide(t_vertex p, t_vertex v1, t_vertex v2);
+float calcYaw(float y, float z, float currentYaw);
 
 #endif
