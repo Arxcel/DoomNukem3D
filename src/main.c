@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "doomNukem.h"
-#include "MathUtils.h"
+#include "mathUtils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -92,10 +92,10 @@ static void UnloadData(t_map *m)
     m->sectors  = NULL;
 }
 
-static void vline(t_img *img, int x, int y1,int y2, int top,int middle,int bottom)
+static void vline(t_img *img, int x, int y1, int y2, int top, int middle, int bottom)
 {
-    y1 = clamp(y1, 0, H - 1);
-    y2 = clamp(y2, 0, H - 1);
+    y1 = clampf(y1, 0, H - 1);
+    y2 = clampf(y2, 0, H - 1);
     if(y2 == y1)
 		sdl_pixel_put(img, x, y1, middle);
     else if(y2 > y1)
@@ -140,11 +140,12 @@ static void DrawScreen(t_main *m)
         /* Pick a sector & slice from the queue to draw */
         const t_renderItem now = *tail;
         ++tail;
-        if(tail == queue+MaxQueue)
+        if(tail == queue + MaxQueue)
             tail = queue;
 
         if (renderedsectors[now.sectorno] & 0x21)
             continue; // Odd = still rendering, 0x20 = give up
+
         ++renderedsectors[now.sectorno];
         t_sector const* sect = &m->map.sectors[now.sectorno];
 
@@ -174,7 +175,7 @@ static void DrawScreen(t_main *m)
             /* If it's partially behind the player, clip it against player's view frustrum */
             if (tz1 <= 0 || tz2 <= 0)
             {
-                float nearz = 1e-4f
+                float nearz = 1e-4f;
                 float farz = 5;
                 float nearside = 1e-5f;
                 float farside = 20.f;
@@ -183,7 +184,7 @@ static void DrawScreen(t_main *m)
                 t_vertex intersectionPoint2 = intersectLine((t_vertex){tx1, tz1}, (t_vertex){tx2, tz2}, (t_vertex){nearside, nearz},  (t_vertex){farside, farz});
                 if (tz1 < nearz)
                 {
-                    if(i1.y > 0)
+                    if(intersectionPoint1.y > 0)
                     {
                         tx1 = intersectionPoint1.x;
                         tz1 = intersectionPoint1.y;
@@ -234,12 +235,17 @@ static void DrawScreen(t_main *m)
                 nyfloor = m->map.sectors[neighbor].floorHeight - m->map.player.position.z;
             }
             /* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-            float cYaw = m->map.player.yaw;
-            int y1a  = H / 2 - (int)(calcYaw(yceil, tz1, cYaw) * yscale1),  y1b = H / 2 - (int)(calcYaw(yfloor, tz1, cYaw) * yscale1);
-            int y2a  = H / 2 - (int)(calcYaw(yceil, tz2, cYaw) * yscale2),  y2b = H / 2 - (int)(calcYaw(yfloor, tz2) * yscale2);
+            float const cYaw = m->map.player.yaw;
+            printf("%f\n", cYaw);
+            int y1a = H / 2 - (int)(calcYaw(yceil, tz1, cYaw) * yscale1);
+            int y1b = H / 2 - (int)(calcYaw(yfloor, tz1, cYaw) * yscale1);
+            int y2a = H / 2 - (int)(calcYaw(yceil, tz2, cYaw) * yscale2);
+            int y2b = H / 2 - (int)(calcYaw(yfloor, tz2, cYaw) * yscale2);
             /* The same for the neighboring sector */
-            int ny1a = H / 2 - (int)(calcYaw(nyceil, tz1, cYaw) * yscale1), ny1b = H / 2 - (int)(calcYaw(nyfloor, tz1, cYaw) * yscale1);
-            int ny2a = H / 2 - (int)(calcYaw(nyceil, tz2, cYaw) * yscale2), ny2b = H / 2 - (int)(calcYaw(nyfloor, tz2, cYaw) * yscale2);
+            int ny1a = H / 2 - (int)(calcYaw(nyceil, tz1, cYaw) * yscale1);
+            int ny1b = H / 2 - (int)(calcYaw(nyfloor, tz1, cYaw) * yscale1);
+            int ny2a = H / 2 - (int)(calcYaw(nyceil, tz2, cYaw) * yscale2);
+            int ny2b = H / 2 - (int)(calcYaw(nyfloor, tz2, cYaw) * yscale2);
 
             /* Render the wall. */
             int beginx = maxf(x1, now.sx1);
@@ -250,8 +256,10 @@ static void DrawScreen(t_main *m)
                 /* Calculate the Z coordinate for this point. (Only used for lighting.) */
                 int z = ((x - x1) * (tz2 - tz1) / (x2 - x1) + tz1) * 8;
                 /* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-                int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a, cya = clampf(ya, ytop[x], ybottom[x]); // top
-                int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b, cyb = clampf(yb, ytop[x], ybottom[x]); // bottom
+                int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a;
+                int cya = clampf(ya, ytop[x], ybottom[x]); // top
+                int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b;
+                int cyb = clampf(yb, ytop[x], ybottom[x]); // bottom
 
                 /* Render ceiling: everything above this sector's ceiling height. */
                 vline(&m->sdl.img, x, ytop[x], cya - 1, 0x111111 ,0x222222,0x111111);
@@ -262,11 +270,13 @@ static void DrawScreen(t_main *m)
                 if (neighbor >= 0)
                 {
                     /* Same for _their_ floor and ceiling */
-                    int nya = (x - x1) * (ny2a - ny1a) / (x2-x1) + ny1a, cnya = clampf(nya, ytop[x],ybottom[x]);
-                    int nyb = (x - x1) * (ny2b - ny1b) / (x2-x1) + ny1b, cnyb = clampf(nyb, ytop[x],ybottom[x]);
+                    int nya = (x - x1) * (ny2a - ny1a) / (x2-x1) + ny1a;
+                    int cnya = clampf(nya, ytop[x],ybottom[x]);
+                    int nyb = (x - x1) * (ny2b - ny1b) / (x2-x1) + ny1b;
+                    int cnyb = clampf(nyb, ytop[x],ybottom[x]);
                     /* If our ceiling is higher than their ceiling, render upper wall */
-                    unsigned r1 = 0x010101 * (255-z);
-                    unsigned r2 = 0x040007 * (31-z/8);
+                    unsigned r1 = 0x010101 * (255 - z);
+                    unsigned r2 = 0x040007 * (31 - z/8);
                     vline(&m->sdl.img, x, cya, cnya - 1, 0, x == x1 || x == x2 ? 0 : r1, 0); // Between our and their ceiling
                     ytop[x] = clampf(maxf(cya, cnya), ytop[x], H-1);   // Shrink the remaining window below these ceilings
                     /* If our floor is lower than their floor, render bottom wall */
@@ -276,12 +286,10 @@ static void DrawScreen(t_main *m)
                 else
                 {
                     /* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
-                    unsigned r = 0x010101 * (255-z);
-                    vline(&m->sdl.img, x, cya, cyb, 0, x==x1||x==x2 ? 0 : r, 0);
+                    unsigned r = 0x010101 * clampf(255 - z / 2, 0, 255);
+                    vline(&m->sdl.img, x, cya, cyb, 0, x==x1 || x==x2 ? 0 : r, 0);
                 }
             }
-
-
             /* Schedule the neighboring sector for rendering within the window formed by this wall. */
             if (neighbor >= 0 && endx >= beginx && (head + MaxQueue + 1 - tail) % MaxQueue)
             {

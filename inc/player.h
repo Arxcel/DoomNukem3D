@@ -12,7 +12,6 @@
 
 #ifndef FT_PLAYER_H
 # define FT_PLAYER_H
-#include "structure.h"
 
 #define StandHeight     6
 #define CrouchingHeight 2.5

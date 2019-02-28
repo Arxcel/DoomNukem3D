@@ -7,8 +7,8 @@ static void transformPlayer(t_map *map, float dx, float dy)
 
     t_sector const* sect = &map->sectors[map->player.sectorNumber];
     t_vertex const* vert = sect->vertices;
-    int i = -1;
-    while (++i < sect->numberSectorVertices)
+    int s = -1;
+    while (++s < sect->numberSectorVertices)
         if(sect->neighbors[s] >= 0
         && intersectBox((t_vertex){px, py}, (t_vertex){px + dx, py + dy}, (t_vertex){vert[s + 0].x, vert[s + 0].y}, (t_vertex){vert[s + 1].x, vert[s + 1].y})
         && pointSide((t_vertex){px + dx, py + dy}, (t_vertex){vert[s + 0].x, vert[s + 0].y}, (t_vertex){vert[s + 1].x, vert[s + 1].y}) < 0)
@@ -32,10 +32,10 @@ static void playerVerticalMovement(t_main *m)
     nextz = m->map.player.position.z + m->map.player.velocity.z;
     if (m->map.player.velocity.z < 0 && nextz  < m->map.sectors[m->map.player.sectorNumber].floorHeight + eyeheight)
     {
-        m->map.player.position.z    = m->map.sectors[m->map.player.sectorNumber].floorHeight + eyeheight;
+        m->map.player.position.z = m->map.sectors[m->map.player.sectorNumber].floorHeight + eyeheight;
         m->map.player.velocity.z = 0;
-        m->map.player.isFalling = 0;
-        m->map.player.isStanding  = 1;
+        m->map.player.isFalling  = 0;
+        m->map.player.isStanding = 1;
     }
     else if (m->map.player.velocity.z > 0 && nextz > m->map.sectors[m->map.player.sectorNumber].ceilHeight)
     {
@@ -66,8 +66,8 @@ static void playerHorizontalMovement(t_main *m)
         && pointSide((t_vertex){px + dx, py + dy}, (t_vertex){vert[s + 0].x, vert[s + 0].y}, (t_vertex){vert[s + 1].x, vert[s + 1].y}) < 0)
         {
             /* Check where the hole is. */
-            float hole_low  = sect->neighbors[s] < 0 ? -1 : max(sect->floorHeight, m->map.sectors[sect->neighbors[s]].floorHeight);
-            float hole_high = sect->neighbors[s] < 0 ? -1 : min(sect->ceilHeight,  m->map.sectors[sect->neighbors[s]].ceilHeight );
+            float hole_low  = sect->neighbors[s] < 0 ? -1 : maxf(sect->floorHeight, m->map.sectors[sect->neighbors[s]].floorHeight);
+            float hole_high = sect->neighbors[s] < 0 ? -1 : minf(sect->ceilHeight,  m->map.sectors[sect->neighbors[s]].ceilHeight );
             /* Check whether we're bumping into a wall. */
             if(hole_high < m->map.player.position.z + HeadMargin
             || hole_low  > m->map.player.position.z - eyeheight + KneeHeight)
@@ -93,7 +93,7 @@ static t_vertex getPlayerDirection(t_main *m)
     SDL_GetRelativeMouseState(&x, &y);
     m->map.player.angle += x * 0.03f;
     yaw = clampf(yaw + y * 0.05f, -5, 5);
-    m->map.player.yaw = yaw - m->map.player.velocity.z * 0.5f;
+    m->map.player.yaw += yaw - m->map.player.velocity.z * 0.1f;
     transformPlayer(&m->map, 0, 0);
     if(m->map.player.dir == Forward)
     {

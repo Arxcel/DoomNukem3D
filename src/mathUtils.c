@@ -1,5 +1,6 @@
 
-#include "MathUtils.h"
+#include "mathUtils.h"
+
 float minf(float a, float b)
 {
     if (a < b)
@@ -36,17 +37,21 @@ int intersectBox(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4)
                                 && overlapf(v1.y, v2.y, v3.y, v4.y));
 }
 
+#define Intersect(x1, y1, x2, y2, x3, y3, x4, y4) ((t_vertex) { \
+    vxs(vxs(x1, y1, x2, y2), (x1)-(x2), vxs(x3, y3, x4, y4), (x3) - (x4)) / vxs((x1) - (x2), (y1) - (y2), (x3) - (x4), (y3) - (y4)), \
+    vxs(vxs(x1, y1, x2, y2), (y1)-(y2), vxs(x3, y3, x4, y4), (y3) - (y4)) / vxs((x1) - (x2), (y1) - (y2), (x3) - (x4), (y3) - (y4)) })
+
 t_vertex intersectLine(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4)
 {
     t_vertex result;
 
     result.x = crossf(crossf(v1.x, v1.y, v2.x, v2.y),
                     v1.x-v2.x, crossf(v3.x, v3.y, v4.x, v4.y),v3.x- v4.x) /
-                    crossf(v1.x - v2.x, v1.y - v2.x, v3.x - v4.x, v3.y - v4.y);
+                    crossf(v1.x - v2.x, v1.y - v2.y, v3.x - v4.x, v3.y - v4.y);
     result.y = crossf(crossf(v1.x, v1.y, v2.x, v2.y), v1.y-v2.y,
                     crossf(v3.x, v3.y, v4.x, v4.y), v3.y- v4.y) /
-                    crossf(v1.x - v2.x, v1.y - v2.x, v3.x - v4.x, v3.y - v4.y);
-    return (result);
+                    crossf(v1.x - v2.x, v1.y - v2.y, v3.x - v4.x, v3.y - v4.y);
+    return result;
 }
 
 float pointSide(t_vertex p, t_vertex v1, t_vertex v2)

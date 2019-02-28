@@ -37,13 +37,18 @@ DIR_O = obj
 
 HEADER = inc
 
-_DEPS = doomNukem.h
+_DEPS = doomNukem.h \
+		enum.h \
+		structure.h \
+		mathUtils.h \
+		player.h
 
 DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
 
 SOURCES =   main.c \
-			sdl_handle.c \
-			playerMovement.c
+			sdlHandle.c \
+			playerMovement.c \
+			mathUtils.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

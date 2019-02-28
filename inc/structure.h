@@ -1,7 +1,7 @@
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
 # include "enum.h"
-
+# include <ctype.h>
 typedef struct		s_vector
 {
     float           x;
