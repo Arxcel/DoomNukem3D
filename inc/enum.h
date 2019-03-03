@@ -12,7 +12,7 @@ typedef enum    e_MovementDirection
 
 enum
 {
-    MaxQueue = 32
+    MaxQueue = 66
 };  // maximum number of pending portal renders
 
 

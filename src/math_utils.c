@@ -37,10 +37,6 @@ int intersectBox(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4)
                                 && overlapf(v1.y, v2.y, v3.y, v4.y));
 }
 
-#define Intersect(x1, y1, x2, y2, x3, y3, x4, y4) ((t_vertex) { \
-    vxs(vxs(x1, y1, x2, y2), (x1)-(x2), vxs(x3, y3, x4, y4), (x3) - (x4)) / vxs((x1) - (x2), (y1) - (y2), (x3) - (x4), (y3) - (y4)), \
-    vxs(vxs(x1, y1, x2, y2), (y1)-(y2), vxs(x3, y3, x4, y4), (y3) - (y4)) / vxs((x1) - (x2), (y1) - (y2), (x3) - (x4), (y3) - (y4)) })
-
 t_vertex intersectLine(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4)
 {
     t_vertex result;
@@ -59,7 +55,7 @@ float pointSide(t_vertex p, t_vertex v1, t_vertex v2)
     return crossf(v2.x - v1.x, v2.y - v1.y, p.x - v1.x, p.y - v1.y);
 }
 
-float calcYaw(float y, float z, float currentYaw)
+float calcPitch(float y, float z, float currentYaw)
 {
     return (y + z * currentYaw);
 }

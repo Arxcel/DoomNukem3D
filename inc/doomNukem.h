@@ -38,4 +38,6 @@ void				sdl_loop(t_main *m);
 
 void                movePlayer(t_main *m);
 
+
+void				drawScreen(t_img *img, t_map *map);
 #endif

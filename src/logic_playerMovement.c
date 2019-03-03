@@ -85,15 +85,15 @@ static t_vertex getPlayerDirection(t_main *m)
 {
     int x;
     int y;
-    float yaw;
+    float pitch;
     t_vertex moveDir;
 
-    yaw = 0;
+    pitch = 0;
     ft_bzero(&moveDir, sizeof(t_vertex));
     SDL_GetRelativeMouseState(&x, &y);
     m->map.player.angle += x * 0.03f;
-    yaw = clampf(yaw + y * 0.05f, -5, 5);
-    m->map.player.yaw += yaw - m->map.player.velocity.z * 0.1f;
+    pitch = clampf(pitch + y * 0.05f, -5, 5);
+    m->map.player.pitch += pitch- m->map.player.velocity.z * 0.1f;
     transformPlayer(&m->map, 0, 0);
     if(m->map.player.dir == Forward)
     {

@@ -20,7 +20,6 @@ typedef struct		s_sector
     float           floorHeight;
     float           ceilHeight;
     short           *neighbors;
-    size_t          numberNeighbors;
     t_vertex        *vertices;
     size_t          numberSectorVertices;
 }                   t_sector;
@@ -40,7 +39,7 @@ typedef struct		s_player
     t_vector        position;
     t_vector        velocity;
     float           angle;
-    float           yaw;
+    float           pitch;
     float           anglesin;
     float           anglecos;
     size_t          sectorNumber;
@@ -71,5 +70,13 @@ typedef struct		s_renderItem
     int sx1;
     int sx2;
 }                   t_renderItem;
+
+typedef struct		s_slice
+{
+    int yTop;
+    int yBottom;
+}                   t_slice;
+
+
 
 #endif
