@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doomNukem.h"
+#include "doom_nukem.h"
 
 void				sdl_hook(t_main *m)
 {

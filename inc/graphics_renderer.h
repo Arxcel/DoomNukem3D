@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doomNukem.h                                        :+:      :+:    :+:   */
+/*   graphics_renderer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,34 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_DOOM_NUKEM_H
-# define FT_DOOM_NUKEM_H
+#ifndef graphics_renderer_H
+# define graphics_renderer_H
+# include "structure.h" 
 
-# define W 800
-# define H 600
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <math.h>
-
-# include "ft_sdl.h"
-# include "ft_libftu.h"
-# include "structure.h"
-# include "player.h"
-# include "mathUtils.h"
-
-typedef struct		s_main
+typedef struct  s_renderer
 {
-	t_sdl	sdl;
-	t_map	map;
-}					t_main;
+    t_renderItem    queue[MaxQueue];
+    t_renderItem    *head;
+    t_renderItem    *tail;
+    int             *renderedSectors;
+    int             *topLimit;
+    int             *bottomLimit;
 
-void				sdl_hook(t_main *m);
-void				sdl_loop(t_main *m);
-
-
-void                movePlayer(t_main *m);
-
-
-void				drawScreen(t_img *img, t_map *map);
+}               t_renderer;
+    
+typedef struct  s_line
+{
+    int x;
+    int yTop;
+    int yBottom;
+    int colorTop;
+    int colorMain;
+    int colorBottom;
+}               t_line;
 #endif

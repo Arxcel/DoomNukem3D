@@ -1,6 +1,6 @@
 CC = clang
 
-NAME = doomNukem
+NAME = doom_nukem
 
 KEYS = #-Wall -Wextra -Werror
 
@@ -10,7 +10,12 @@ IDIR = ./inc
 
 EXTENSIONS = $(addprefix $(IDIR)/,$(EXT))
 
-EXT =	doomNukem.h
+EXT =	doom_nukem.h \
+		enum.h \
+		structure.h \
+		math_utils.h \
+		player.h \
+		graphics_renderer.h
 
 CFLAGS = -I$(IDIR) \
 		-I./libft/inc \
@@ -37,11 +42,12 @@ DIR_O = obj
 
 HEADER = inc
 
-_DEPS = doomNukem.h \
+_DEPS = doom_nukem.h \
 		enum.h \
 		structure.h \
-		mathUtils.h \
-		player.h
+		math_utils.h \
+		player.h \
+		graphics_renderer.h
 
 DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
 

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doomNukem.h"
-#include "mathUtils.h"
+#include "doom_nukem.h"
+#include "math_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -106,6 +106,7 @@ void				sdl_loop(t_main *m)
 
 int					main(int ac, char **av)
 {
+    	    printf("start");
 	t_main			m;
 	(void)av;
 	ft_bzero(&m, sizeof(t_main));
@@ -113,7 +114,7 @@ int					main(int ac, char **av)
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	
+
 	sdl_loop(&m);
 
 	UnloadData(&m.map);

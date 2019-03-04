@@ -1,4 +1,4 @@
-#include "doomNukem.h"
+#include "doom_nukem.h"
 
 static void transformPlayer(t_map *map, float dx, float dy)
 {
