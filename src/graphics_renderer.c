@@ -3,30 +3,21 @@
 #include "graphics_renderer.h"
 #include <stdlib.h>
 
-#define FLOOR_COLOR 0x005599
-#define CEILING_COLOR 0x222222
-
-static void drawSector()
+static void drawLine(t_img *img, t_vline *vline)//int x, int y1, int y2, int colorTop, int colorMiddle, int colorBottom)
 {
-}
+    int y;
 
-static void drawWall()
-{
-}
-
-static void drawLine(t_img *img, int x, int y1, int y2, int colorTop, int colorMiddle, int colorBottom)
-{
-    y1 = clampf(y1, 0, H - 1);
-    y2 = clampf(y2, 0, H - 1);
-    if (y2 == y1)
-        sdl_pixel_put(img, x, y1, colorMiddle);
-    else if (y2 > y1)
+    vline->yTop = clampf(vline->yTop, 0, img->h - 1);
+    vline->yBottom = clampf(vline->yBottom, 0, img->h - 1);
+    if (vline->yBottom == vline->yTop)
+        sdl_pixel_put(img, vline->x, vline->yTop, vline->colorMain);
+    else if (vline->yBottom > vline->yTop)
     {
-        sdl_pixel_put(img, x, y1, colorTop);
-        int y = y1;
-        while (++y < y2)
-            sdl_pixel_put(img, x, y, colorMiddle);
-        sdl_pixel_put(img, x, y2, colorBottom);
+        sdl_pixel_put(img, vline->x, vline->yTop, vline->colorTop);
+        y = vline->yTop;
+        while (++y < vline->yBottom)
+            sdl_pixel_put(img, vline->x, y, vline->colorMain);
+        sdl_pixel_put(img, vline->x, vline->yBottom, vline->colorBottom);
     }
 }
 
@@ -49,187 +40,202 @@ static void initRenderer(t_renderer *renderer, t_img *imgToRender, int numberSec
 
 static void freeRenderer(t_renderer *renderer)
 {
-
     free(renderer->renderedSectors);
     free(renderer->topLimit);
     free(renderer->bottomLimit);
 }
 
+
+static void renderWall(t_img *img, t_renderer *renderer, t_renderItem const *currentSector, t_wall *wall)
+{
+    int     beginx;
+    int     endx;
+    int     x;
+    t_vline vline;
+
+    beginx = maxf(wall->x1, currentSector->limitXLeft);
+    endx = minf(wall->x2, currentSector->limitXRight);
+    x = beginx - 1;
+    while (++x <= endx)
+    {
+        /* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
+        int ya = (x - wall->x1) * (wall->y2[0] - wall->y1[0]) / (wall->x2 - wall->x1) + wall->y1[0];
+        int cya = clampf(ya, renderer->topLimit[x], renderer->bottomLimit[x]); // top
+        int yb = (x - wall->x1) * (wall->y2[1] - wall->y1[1]) / (wall->x2 - wall->x1) + wall->y1[1];
+        int cyb = clampf(yb, renderer->topLimit[x], renderer->bottomLimit[x]); // bottom
+
+        /* Render ceiling: everything above this sector's ceiling height. */
+        vline = (t_vline){ x, renderer->topLimit[x], cya , 0x000000, 0x003399, 0x000000 };
+        drawLine(img, &vline);
+        /* Render floor: everything below this sector's floor height. */
+        vline =(t_vline){ x, cyb, renderer->bottomLimit[x], 0x000000, 0x009933, 0x000000 };
+        drawLine(img, &vline);
+
+        /* Is there another sector behind this edge? */
+        if (wall->neighbor >= 0)
+        {
+            /* Same for _their_ floor and ceiling */
+            int nya = (x - wall->x1) * (wall->neighbor_y2[0] - wall->neighbor_y1[0]) / (wall->x2 - wall->x1) + wall->neighbor_y1[0];
+            int cnya = clampf(nya, renderer->topLimit[x], renderer->bottomLimit[x]);
+            int nyb = (x - wall->x1) * (wall->neighbor_y2[1] - wall->neighbor_y1[1]) / (wall->x2 - wall->x1) + wall->neighbor_y1[1];
+            int cnyb = clampf(nyb, renderer->topLimit[x], renderer->bottomLimit[x]);
+
+            vline = (t_vline){ x, cya, cnya - 1, 0, 0x440077, 0 };
+            drawLine(img, &vline); // Between our and their ceiling
+            renderer->topLimit[x] = clampf(maxf(cya, cnya), renderer->topLimit[x], img->h - 1);
+
+            vline = (t_vline){ x, cnyb + 1, cyb, 0, x == wall->x1 || x == wall->x2 ? 0 : 0x770044, 0 };
+            drawLine(img, &vline); // Between their and our floor
+            renderer->bottomLimit[x] = clampf(minf(cyb, cnyb), 0, renderer->bottomLimit[x]);
+        }
+        else
+        {
+            /* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
+            vline = (t_vline){ x, cya, cyb, 0, x == wall->x1 || x == wall->x2 ? 0 : 0x444444, 0 };
+            drawLine(img, &vline);
+        }
+    }
+    /* Schedule the neighboring sector for rendering within the window formed by this wall. */
+    if (wall->neighbor >= 0 && endx >= beginx)
+    {
+        *renderer->head = (t_renderItem){ wall->neighbor, beginx, endx };
+        if (++renderer->head == renderer->queue + MaxQueue)
+            renderer->head = renderer->queue;
+    }
+}
+
+/* Acquire the x,y coordinates of the two endpoints (vertices) of this edge of the sector */
+/* and rotate them around the player's view */
+static t_vector calculateEdges(t_player *aPlayer, t_vertex *vertex)
+{
+    t_vector res;
+
+    res.x = (vertex->x - aPlayer->position.x) * aPlayer->anglesin - (vertex->y - aPlayer->position.y) * aPlayer->anglecos;
+    res.z = (vertex->x - aPlayer->position.x) * aPlayer->anglecos + (vertex->y - aPlayer->position.y) * aPlayer->anglesin;
+
+    return res;
+}
+
+static void clampPoint(t_vector *point, t_vertex *i1, t_vertex *i2)
+{
+        if (i1->y > 0)
+        {
+            point->x = i1->x;
+            point->z = i1->y;
+        }
+        else
+        {
+            point->x = i2->x;
+            point->z = i2->y;
+        }
+}
+
+// /* If it's partially behind the player, clip it against player's view frustrum */
+// Find an intersection between the wall and the approximate edges of player's view
+static void clampEdgesWithPlayerView(t_renderer *renderer)
+{
+    t_vertex intersectionPoint1;
+    t_vertex intersectionPoint2;
+
+    intersectionPoint1 = intersectLine((t_vertex){renderer->t1.x, renderer->t1.z},
+                                        (t_vertex){renderer->t2.x, renderer->t2.z},
+                                        (t_vertex){-NEAR_SIDE, NEAR_Z},
+                                        (t_vertex){-FAR_SIDE, FAR_Z});
+    intersectionPoint2 = intersectLine((t_vertex){renderer->t1.x, renderer->t1.z},
+                                        (t_vertex){renderer->t2.x, renderer->t2.z},
+                                        (t_vertex){NEAR_SIDE, NEAR_Z}, 
+                                        (t_vertex){FAR_SIDE, FAR_Z});
+    if (renderer->t1.z < NEAR_Z)
+        clampPoint(&renderer->t1, &intersectionPoint1, &intersectionPoint2);
+    
+    if (renderer->t2.z < NEAR_Z)
+        clampPoint(&renderer->t2, &intersectionPoint1, &intersectionPoint2);
+
+}
+
+/* Do perspective transformation */
+static t_wall doPerspective(t_renderer *renderer, int width)
+{
+    t_wall ret;
+
+    ret.scale1.x = hfov / renderer->t1.z;
+    ret.scale1.y = vfov / renderer->t1.z;
+    ret.x1 = width / 2 - (int)(renderer->t1.x * ret.scale1.x);
+    ret.scale2.x = hfov / renderer->t2.z;
+    ret.scale2.y = vfov / renderer->t2.z;
+    ret.x2 = width / 2 - (int)(renderer->t2.x * ret.scale2.x);
+    return ret;
+}
+
+static float calcPitch(float y, float z, float currentYaw)
+{
+    return (y + z * currentYaw);
+}
+
+/* Render each wall of this sector that is facing towards player. */
+static void renderSector(t_img *img, t_map *map, t_renderer *renderer, t_renderItem const *currentSector)
+{
+    int       s;
+    t_sector *sect;
+    t_wall     wall;
+
+    s = -1;
+    sect = &map->sectors[currentSector->sectorno];
+    while (++s < sect->numberSectorVertices)
+    {
+        renderer->t1 = calculateEdges(&map->player, &sect->vertices[s]);
+        renderer->t2 = calculateEdges(&map->player, &sect->vertices[s + 1]);
+        if (renderer->t1.z <= 0 && renderer->t2.z <= 0)
+            continue;
+        if (renderer->t1.z <= 0 || renderer->t2.z <= 0)
+            clampEdgesWithPlayerView(renderer);
+        wall = doPerspective(renderer, img->w);
+        if (wall.x1 >= wall.x2 || wall.x2 < currentSector->limitXLeft || wall.x1 > currentSector->limitXRight)
+            continue;
+        wall.ceil = sect->ceilHeight - map->player.position.z;
+        wall.floor = sect->floorHeight - map->player.position.z;
+        wall.neighbor = sect->neighbors[s];
+        if (wall.neighbor >= 0) // Is another sector showing through this portal?
+        {
+            wall.neighbor_ceil = map->sectors[wall.neighbor].ceilHeight - map->player.position.z;
+             wall.neighbor_floor = map->sectors[wall.neighbor].floorHeight - map->player.position.z;
+        }
+
+        // /* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
+        wall.y1[0] = img->h / 2 - (int)(calcPitch(wall.ceil, renderer->t1.z, map->player.pitch) * wall.scale1.y);
+        wall.y1[1] = img->h / 2 - (int)(calcPitch(wall.floor, renderer->t1.z, map->player.pitch) * wall.scale1.y);
+        wall.y2[0] = img->h / 2 - (int)(calcPitch(wall.ceil, renderer->t2.z, map->player.pitch) * wall.scale2.y);
+        wall.y2[1] = img->h / 2 - (int)(calcPitch(wall.floor, renderer->t2.z, map->player.pitch) * wall.scale2.y);
+        // /* The same for the neighboring sector */
+        wall.neighbor_y1[0] = img->h / 2 - (int)(calcPitch(wall.neighbor_ceil, renderer->t1.z, map->player.pitch) * wall.scale1.y);
+        wall.neighbor_y1[1]= img->h / 2 - (int)(calcPitch(wall.neighbor_floor, renderer->t1.z, map->player.pitch) * wall.scale1.y);
+        wall.neighbor_y2[0] = img->h / 2 - (int)(calcPitch(wall.neighbor_ceil, renderer->t2.z, map->player.pitch) * wall.scale2.y);
+        wall.neighbor_y2[1] = img->h / 2 - (int)(calcPitch(wall.neighbor_floor, renderer->t2.z, map->player.pitch) * wall.scale2.y);
+
+        renderWall(img, renderer, currentSector, &wall);
+    }
+}
+
 void drawScreen(t_img *img, t_map *map)
 {
     t_renderer renderer;
-    // t_renderItem queue[MaxQueue];
-    // t_renderItem *head;
-    // t_renderItem *tail;
-
-
+    t_renderItem currentSector;
+    
     initRenderer(&renderer, img, map->numberSectors);
-    // head = queue;
-    // tail = queue;
     (*renderer.head) = (t_renderItem){map->player.sectorNumber, 0, img->w - 1};
     ++renderer.head;
     if (renderer.head == renderer.queue + MaxQueue)
         renderer.head = renderer.queue;
-
-    while (renderer.head != renderer.tail) // render any other queued sectors
+    while (renderer.head != renderer.tail)
     {
-        /* Pick a sector & slice from the queue to draw */
-        t_renderItem const currentSector = *renderer.tail;
+        currentSector = *renderer.tail;
         ++renderer.tail;
         if (renderer.tail == renderer.queue + MaxQueue)
             renderer.tail = renderer.queue;
-
         if (renderer.renderedSectors[currentSector.sectorno] == MaxQueue)
             continue;
-        ++renderer.renderedSectors[currentSector.sectorno];
-        t_sector const *sect = &map->sectors[currentSector.sectorno];
-
-        /* Render each wall of this sector that is facing towards player. */
-        int s = -1;
-        while (++s < sect->numberSectorVertices)
-        {
-            // {
-            /* Acquire the x,y coordinates of the two endpoints (vertices) of this edge of the sector */
-            float vx1 = sect->vertices[s].x - map->player.position.x;
-            float vy1 = sect->vertices[s].y - map->player.position.y;
-            float vx2 = sect->vertices[s + 1].x - map->player.position.x;
-            float vy2 = sect->vertices[s + 1].y - map->player.position.y;
-
-            /* Rotate them around the player's view */
-            float tx1 = vx1 * map->player.anglesin - vy1 * map->player.anglecos;
-            float tz1 = vx1 * map->player.anglecos + vy1 * map->player.anglesin;
-            float tx2 = vx2 * map->player.anglesin - vy2 * map->player.anglecos;
-            float tz2 = vx2 * map->player.anglecos + vy2 * map->player.anglesin;
-            // }
-
-            /* Is the wall at least partially in front of the player? */
-            if (tz1 <= 0 && tz2 <= 0)
-                continue;
-
-            // /* If it's partially behind the player, clip it against player's view frustrum */
-            if (tz1 <= 0 || tz2 <= 0)
-            {
-                float nearz = 1e-4f;
-                float farz = 5;
-                float nearside = 1e-5f;
-                float farside = 20.f;
-                // Find an intersection between the wall and the approximate edges of player's view
-                t_vertex intersectionPoint1 = intersectLine((t_vertex){tx1, tz1}, (t_vertex){tx2, tz2}, (t_vertex){-nearside, nearz}, (t_vertex){-farside, farz});
-                t_vertex intersectionPoint2 = intersectLine((t_vertex){tx1, tz1}, (t_vertex){tx2, tz2}, (t_vertex){nearside, nearz}, (t_vertex){farside, farz});
-                if (tz1 < nearz)
-                {
-                    if (intersectionPoint1.y > 0)
-                    {
-                        tx1 = intersectionPoint1.x;
-                        tz1 = intersectionPoint1.y;
-                    }
-                    else
-                    {
-                        tx1 = intersectionPoint2.x;
-                        tz1 = intersectionPoint2.y;
-                    }
-                }
-                if (tz2 < nearz)
-                {
-                    if (intersectionPoint1.y > 0)
-                    {
-                        tx2 = intersectionPoint1.x;
-                        tz2 = intersectionPoint1.y;
-                    }
-                    else
-                    {
-                        tx2 = intersectionPoint2.x;
-                        tz2 = intersectionPoint2.y;
-                    }
-                }
-            }
-            /* Do perspective transformation */
-            float xscale1 = hfov / tz1;
-            float yscale1 = vfov / tz1;
-
-            int x1 = W / 2 - (int)(tx1 * xscale1);
-
-            float xscale2 = hfov / tz2;
-            float yscale2 = vfov / tz2;
-
-            int x2 = W / 2 - (int)(tx2 * xscale2);
-
-            if (x1 >= x2 || x2 < currentSector.sx1 || x1 > currentSector.sx2)
-                continue; // Only render if it's visible
-            /* Acquire the floor and ceiling heights, relative to where the player's view is */
-            float yceil = sect->ceilHeight - map->player.position.z;
-            float yfloor = sect->floorHeight - map->player.position.z;
-            /* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
-            int neighbor = sect->neighbors[s];
-            float nyceil = 0;
-            float nyfloor = 0;
-            if (neighbor >= 0) // Is another sector showing through this portal?
-            {
-                nyceil = map->sectors[neighbor].ceilHeight - map->player.position.z;
-                nyfloor = map->sectors[neighbor].floorHeight - map->player.position.z;
-            }
-            // /* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-            float const cPitch = map->player.pitch;
-            int y1a = H / 2 - (int)(calcPitch(yceil, tz1, cPitch) * yscale1);
-            int y1b = H / 2 - (int)(calcPitch(yfloor, tz1, cPitch) * yscale1);
-            int y2a = H / 2 - (int)(calcPitch(yceil, tz2, cPitch) * yscale2);
-            int y2b = H / 2 - (int)(calcPitch(yfloor, tz2, cPitch) * yscale2);
-            // /* The same for the neighboring sector */
-            int ny1a = H / 2 - (int)(calcPitch(nyceil, tz1, cPitch) * yscale1);
-            int ny1b = H / 2 - (int)(calcPitch(nyfloor, tz1, cPitch) * yscale1);
-            int ny2a = H / 2 - (int)(calcPitch(nyceil, tz2, cPitch) * yscale2);
-            int ny2b = H / 2 - (int)(calcPitch(nyfloor, tz2, cPitch) * yscale2);
-
-            // /* Render the wall. */
-            int beginx = maxf(x1, currentSector.sx1);
-            int endx = minf(x2, currentSector.sx2);
-            int x = beginx - 1;
-            while (++x <= endx)
-            {
-                /* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-                int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a;
-                int cya = clampf(ya, renderer.topLimit[x], renderer.bottomLimit[x]); // top
-                int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b;
-                int cyb = clampf(yb, renderer.topLimit[x], renderer.bottomLimit[x]); // bottom
-
-                /* Render ceiling: everything above this sector's ceiling height. */
-                drawLine(img, x, renderer.topLimit[x], cya - 1, 0x000000, CEILING_COLOR, 0x000000);
-                /* Render floor: everything below this sector's floor height. */
-                drawLine(img, x, cyb + 1, renderer.bottomLimit[x], 0x000000, FLOOR_COLOR, 0x000000);
-
-                /* Is there another sector behind this edge? */
-                if (neighbor >= 0)
-                {
-                    //     /* Same for _their_ floor and ceiling */
-                    int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a;
-                    int cnya = clampf(nya, renderer.topLimit[x], renderer.bottomLimit[x]);
-                    int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b;
-                    int cnyb = clampf(nyb, renderer.topLimit[x], renderer.bottomLimit[x]);
-                    /* If our ceiling is higher than their ceiling, render upper wall */
-                    unsigned r1 = 0x040007;
-                    unsigned r2 = 0x040007;
-                    drawLine(img, x, cya, cnya - 1, 0, x == x1 || x == x2 ? 0 : r1, 0); // Between our and their ceiling
-                    renderer.topLimit[x] = clampf(maxf(cya, cnya), renderer.topLimit[x], H - 1);                  // Shrink the remaining window below these ceilings
-                    /* If our floor is lower than their floor, render bottom wall */
-                    drawLine(img, x, cnyb + 1, cyb, 0, x == x1 || x == x2 ? 0 : r2, 0); // Between their and our floor
-                    renderer.bottomLimit[x] = clampf(minf(cyb, cnyb), 0, renderer.bottomLimit[x]);                // Shrink the remaining window above these floors
-                }
-                else
-                {
-                    /* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
-                    unsigned r = x == x1 || x == x2 ? 0 : 0x444444;
-                    drawLine(img, x, cya, cyb, 0x000000, r, 0x000000);
-                }
-            }
-
-            /* Schedule the neighboring sector for rendering within the window formed by this wall. */
-            if (neighbor >= 0 && endx >= beginx)
-            {
-                *renderer.head = (t_renderItem){neighbor, beginx, endx};
-                if (++renderer.head == renderer.queue + MaxQueue)
-                    renderer.head = renderer.queue;
-            }
-        } // for s in sector's edges
+        renderer.renderedSectors[currentSector.sectorno]++;
+        renderSector(img, map, &renderer, &currentSector);
         renderer.renderedSectors[currentSector.sectorno]++;
     }
     freeRenderer(&renderer);

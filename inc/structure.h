@@ -64,19 +64,4 @@ typedef struct		s_map
     size_t          numberSptites;
 }					t_map;
 
-typedef struct		s_renderItem
-{
-    int sectorno;
-    int sx1;
-    int sx2;
-}                   t_renderItem;
-
-typedef struct		s_slice
-{
-    int yTop;
-    int yBottom;
-}                   t_slice;
-
-
-
 #endif

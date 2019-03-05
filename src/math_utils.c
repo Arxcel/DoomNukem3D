@@ -54,8 +54,3 @@ float pointSide(t_vertex p, t_vertex v1, t_vertex v2)
 {
     return crossf(v2.x - v1.x, v2.y - v1.y, p.x - v1.x, p.y - v1.y);
 }
-
-float calcPitch(float y, float z, float currentYaw)
-{
-    return (y + z * currentYaw);
-}

@@ -22,6 +22,5 @@ int overlapf(float begin0, float end0, float begin1, float end1);
 int intersectBox(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4);
 t_vertex intersectLine(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4);
 float pointSide(t_vertex p, t_vertex v1, t_vertex v2);
-float calcPitch(float y, float z, float currentYaw);
 
 #endif

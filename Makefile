@@ -67,8 +67,6 @@ $(NAME): $(OBJS) $(EXTENSIONS)
 		make libs
 		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) -L $(LIBFT) -lft -L $(LIBJSON) -lJSON $(SDL2_P) $(SDL2_F) -L $(LIBFTSDL) -lftsdl
 
-		
-
 libs: 
 	make -C $(LIBFT)
 	make -C $(LIBJSON)
