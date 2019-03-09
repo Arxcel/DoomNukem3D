@@ -54,6 +54,7 @@ DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
 SOURCES =   main.c \
 			sdl_handle.c \
 			player_movement.c \
+			player_direction.c \
 			math_utils.c \
 			render_utils.c \
 			render_sector.c \
