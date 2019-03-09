@@ -30,6 +30,7 @@ void				sdl_init(t_sdl *sdl)
 								sdl->win_w, sdl->win_h)))
 		MSG(SDL_GetError());
 	SDL_ShowCursor(SDL_DISABLE);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_SetRenderDrawColor(sdl->ren, 255, 255, 255, 255);
 	SDL_RenderClear(sdl->ren);
 	SDL_RenderPresent(sdl->ren);
