@@ -4,7 +4,7 @@ NAME = doom_nukem
 
 KEYS = #-Wall -Wextra -Werror
 
-FLAGS = -flto -O3 $(KEYS)
+FLAGS = -g
 
 IDIR = ./inc
 

@@ -35,7 +35,7 @@ typedef struct		s_main
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);
 
-t_vertex			get_player_direction(t_main *m);
+void				get_player_direction(t_main *m);
 void				move_player(t_main *m);
 void				transform_player(t_map *map);
 

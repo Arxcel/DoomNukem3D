@@ -59,8 +59,8 @@ typedef struct		s_player
 
 	short			is_moving;
 	short			is_crouching;
-	short			is_falling;
-	short			is_standing;
+	short			is_grounded;
+	short			is_rotating;
 
 	short			dir;
 }					t_player;

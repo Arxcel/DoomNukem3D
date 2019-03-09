@@ -12,44 +12,19 @@
 
 #include "doom_nukem.h"
 
-static void	get_direction(t_player *p, t_vertex *dir)
-{
-	if (p->dir == Forward)
-	{
-		dir->x += p->anglecos * 0.1f;
-		dir->y += p->anglesin * 0.1f;
-	}
-	if (p->dir == Backward)
-	{
-		dir->x -= p->anglecos * 0.1f;
-		dir->y -= p->anglesin * 0.1f;
-	}
-	if (p->dir == Left)
-	{
-		dir->x += p->anglesin * 0.1f;
-		dir->y -= p->anglecos * 0.1f;
-	}
-	if (p->dir == Right)
-	{
-		dir->x -= p->anglesin * 0.1f;
-		dir->y += p->anglecos * 0.1f;
-	}
-}
 
-t_vertex	get_player_direction(t_main *m)
+void	get_player_direction(t_main *m)
 {
 	int			x;
 	int			y;
 	float		pitch;
-	t_vertex	move_dir;
 
 	pitch = 0;
-	ft_bzero(&move_dir, sizeof(t_vertex));
 	SDL_GetRelativeMouseState(&x, &y);
 	m->map.player.angle += x * 0.03f;
+	m->map.player.anglesin = sinf(m->map.player.angle);
+	m->map.player.anglecos = cosf(m->map.player.angle);
 	pitch = clampf(pitch + y * 0.05f, -5, 5);
-	m->map.player.pitch += pitch - m->map.player.velocity.z * 0.1f;
-	get_direction(&m->map.player, &move_dir);
-	transform_player(&m->map);
-	return (move_dir);
+	m->map.player.pitch = clampf(m->map.player.pitch, -5, 5);
+	printf("%f\n", m->map.player.pitch);
 }

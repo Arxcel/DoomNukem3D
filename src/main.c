@@ -98,7 +98,6 @@ static void UnloadData(t_map *m)
 
 void				sdl_loop(t_main *m)
 {
-	m->map.player.is_falling = 1;
 	while (m->sdl.running)
 	{
 		sdl_hook(m);

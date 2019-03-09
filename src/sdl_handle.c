@@ -26,16 +26,15 @@ static void			handle_key(t_main *m, int key)
 		m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Right : Nothing;
 	else if (key == ' ')
 	{
-		if (m->map.player.is_standing)
+		if (m->map.player.is_grounded)
 		{
-			m->map.player.velocity.z += 0.5;
-			m->map.player.is_falling = 1;
+			m->map.player.velocity.z += 0.5f;
+			m->map.player.is_grounded = 0;
 		}
 	}
 	else if (key == SDLK_LCTRL || key == SDLK_RCTRL)
 	{
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
-		m->map.player.is_falling = 1;
 	}
 }
 
@@ -57,7 +56,7 @@ void				sdl_hook(t_main *m)
 		else if (m->sdl.e.type == SDL_MOUSEBUTTONUP)
 			;
 		else if (m->sdl.e.type == SDL_MOUSEMOTION)
-			;
+			m->map.player.is_rotating = 1;
 		else if (m->sdl.e.type == SDL_MOUSEWHEEL)
 			;
 	}
