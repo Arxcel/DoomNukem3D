@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_nukem.h                                        :+:      :+:    :+:   */
+/*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/02/23 13:57:54 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/09 10:49:48 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ typedef struct		s_main
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);
 
+void				move_player(t_main *m);
 
-void                movePlayer(t_main *m);
-
-
-void				drawScreen(t_img *img, t_map *map);
+void				draw_screen(t_img *img, t_map *map);
 #endif

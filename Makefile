@@ -53,9 +53,12 @@ DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
 
 SOURCES =   main.c \
 			sdl_handle.c \
-			logic_playerMovement.c \
+			player_movement.c \
 			math_utils.c \
-			graphics_renderer.c
+			render_utils.c \
+			render_sector.c \
+			render_main.c \
+			geom_utils.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
