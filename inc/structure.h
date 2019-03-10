@@ -28,6 +28,14 @@ typedef struct		s_vertex
 	float			y;
 }					t_vertex;
 
+typedef struct	s_dir
+{
+	short	forward;
+	short	backward;
+	short	right;
+	short	left;
+}				t_dir;
+
 typedef struct		s_sector
 {
 	float			floor_height;
@@ -63,7 +71,7 @@ typedef struct		s_player
 	short			is_crouching;
 	short			is_grounded;
 
-	short			dir;
+	t_dir			dir;
 }					t_player;
 
 typedef struct		s_map
@@ -77,5 +85,8 @@ typedef struct		s_map
 	size_t			number_enemies;
 	size_t			number_sptites;
 }					t_map;
+
+
+
 
 #endif

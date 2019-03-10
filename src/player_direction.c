@@ -29,23 +29,24 @@ void			get_player_direction(t_main *m)
 
 void			get_player_velocity(t_player *p)
 {
-	p->is_moving = p->dir;
-	if (p->dir == Forward)
+	p->is_moving = p->dir.forward || p->dir.backward ||
+			p->dir.left || p->dir.right;
+	if (p->dir.forward)
 	{
 		p->velocity.x += p->anglecos;
 		p->velocity.y += p->anglesin;
 	}
-	if (p->dir == Backward)
+	if (p->dir.backward)
 	{
 		p->velocity.x -= p->anglecos;
 		p->velocity.y -= p->anglesin;
 	}
-	if (p->dir == Left)
+	if (p->dir.left)
 	{
 		p->velocity.x += p->anglesin;
 		p->velocity.y -= p->anglecos;
 	}
-	if (p->dir == Right)
+	if (p->dir.right)
 	{
 		p->velocity.x -= p->anglesin;
 		p->velocity.y += p->anglecos;
