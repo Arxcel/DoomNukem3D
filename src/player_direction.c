@@ -12,8 +12,7 @@
 
 #include "doom_nukem.h"
 
-
-void	get_player_direction(t_main *m)
+void			get_player_direction(t_main *m)
 {
 	int			x;
 	int			y;
@@ -21,10 +20,34 @@ void	get_player_direction(t_main *m)
 
 	pitch = 0;
 	SDL_GetRelativeMouseState(&x, &y);
-	m->map.player.angle += x * 0.03f;
+	m->map.player.angle += x * MOUSE_SENSIVITY_X / 100.f;
 	m->map.player.anglesin = sinf(m->map.player.angle);
 	m->map.player.anglecos = cosf(m->map.player.angle);
-	pitch = clampf(pitch + y * 0.05f, -5, 5);
-	m->map.player.pitch = clampf(m->map.player.pitch, -5, 5);
-	printf("%f\n", m->map.player.pitch);
+	m->map.player.pitch = clampf(m->map.player.pitch + pitch +
+									y * MOUSE_SENSIVITY_Y / 100.f, -5, 5);
+}
+
+void			get_player_velocity(t_player *p)
+{
+	p->is_moving = p->dir;
+	if (p->dir == Forward)
+	{
+		p->velocity.x += p->anglecos;
+		p->velocity.y += p->anglesin;
+	}
+	if (p->dir == Backward)
+	{
+		p->velocity.x -= p->anglecos;
+		p->velocity.y -= p->anglesin;
+	}
+	if (p->dir == Left)
+	{
+		p->velocity.x += p->anglesin;
+		p->velocity.y -= p->anglecos;
+	}
+	if (p->dir == Right)
+	{
+		p->velocity.x -= p->anglesin;
+		p->velocity.y += p->anglecos;
+	}
 }

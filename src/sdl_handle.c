@@ -14,7 +14,7 @@
 
 static void			handle_key(t_main *m, int key)
 {
-	if (key == SDLK_ESCAPE || key == SDLK_q)
+	if (key == SDLK_q)
 		m->sdl.running = 0;
 	else if (key == SDLK_w)
 		m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Forward : Nothing;
@@ -56,7 +56,7 @@ void				sdl_hook(t_main *m)
 		else if (m->sdl.e.type == SDL_MOUSEBUTTONUP)
 			;
 		else if (m->sdl.e.type == SDL_MOUSEMOTION)
-			m->map.player.is_rotating = 1;
+			;
 		else if (m->sdl.e.type == SDL_MOUSEWHEEL)
 			;
 	}

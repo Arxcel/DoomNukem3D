@@ -20,11 +20,16 @@
 # include <stdlib.h>
 # include <math.h>
 
+# define GRAVITY	9.87f
+# define SPEED		10
+# define MOUSE_SENSIVITY_X 3
+# define MOUSE_SENSIVITY_Y 5
+
 # include "ft_sdl.h"
 # include "ft_libftu.h"
 # include "structure.h"
 # include "player.h"
-# include "math_utils.h"
+# include "utils.h"
 
 typedef struct		s_main
 {
@@ -37,7 +42,7 @@ void				sdl_loop(t_main *m);
 
 void				get_player_direction(t_main *m);
 void				move_player(t_main *m);
-void				transform_player(t_map *map);
+void				get_player_velocity(t_player *p);
 
 void				draw_screen(t_img *img, t_map *map);
 #endif

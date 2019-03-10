@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math_utils.h"
+#include "utils.h"
 
 float		crossf(float x0, float y0, float x1, float y1)
 {
@@ -19,8 +19,8 @@ float		crossf(float x0, float y0, float x1, float y1)
 
 int			overlapf(float begin0, float end0, float begin1, float end1)
 {
-	return (minf(begin0, end0) <= maxf(begin1, end1)
-				&& minf(begin1, end1) <= maxf(begin0, end0));
+	return (minf(begin0, end0) < maxf(begin1, end1)
+				&& minf(begin1, end1) < maxf(begin0, end0));
 }
 
 int			intersect_box(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4)

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-#include "math_utils.h"
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -32,7 +32,7 @@ static void LoadData(t_map *map)
     int n, m, NumVertices = 0;
     vert = malloc(1);
     map->sectors = malloc(1);
-    
+    ft_bzero(&v, sizeof(t_vertex));
     while(fgets(Buf, sizeof Buf, fp))
     {
         switch(sscanf(ptr = Buf, "%32s%n", word, &n) == 1 ? word[0] : '\0')
@@ -55,11 +55,27 @@ static void LoadData(t_map *map)
                 }
                 sect->number_vertices   = m /= 2;
                 sect->neighbors = malloc( (m  ) * sizeof(*sect->neighbors) );
-                sect->vertices  = malloc( (m + 1) * sizeof(*sect->vertices)    );
+                sect->vertices  = malloc( (m + 1) * sizeof(*sect->vertices));
                 for(n = 0; n < m; ++n)
                     sect->neighbors[n] = num[m + n];
+				sect->min = vert[num[0]];
+				sect->max = vert[num[0]];
                 for(n=0; n<m; ++n)
-                    sect->vertices[n + 1]  = vert[num[n]]; // TODO: Range checking
+				{
+					t_vertex t = vert[num[n]];
+                    sect->vertices[n + 1]  = t; // TODO: Range checking
+					
+					if (vert[num[n]].x >= sect->max.x)
+						sect->max.x = vert[num[n]].x;
+					if (vert[num[n]].y >= sect->max.y)
+						sect->max.y = vert[num[n]].y;
+					if (vert[num[n]].x <= sect->min.x)
+						sect->min.x = vert[num[n]].x;
+					if (vert[num[n]].y <= sect->min.y)
+						sect->min.y = vert[num[n]].y;
+					t_vertex min = sect->min;
+					t_vertex max = sect->max;
+				}
                 sect->vertices[0] = sect->vertices[m]; // Ensure the vertexes form a loop
                 free(num);
                 break;
@@ -86,6 +102,7 @@ static void LoadData(t_map *map)
     fclose(fp);
     free(vert);
 }
+
 static void UnloadData(t_map *m)
 {
     for(size_t a = 0;  a < m->number_sectors; ++a)
@@ -104,6 +121,7 @@ void				sdl_loop(t_main *m)
 		draw_screen(&m->sdl.img, &m->map);
 		sdl_put_image(&m->sdl);
 		move_player(m);
+		SDL_Delay(10);
 	}
 }
 

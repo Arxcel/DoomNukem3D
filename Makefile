@@ -13,7 +13,7 @@ EXTENSIONS = $(addprefix $(IDIR)/,$(EXT))
 EXT =	doom_nukem.h \
 		enum.h \
 		structure.h \
-		math_utils.h \
+		utils.h \
 		player.h \
 		graphics_renderer.h
 
@@ -45,7 +45,7 @@ HEADER = inc
 _DEPS = doom_nukem.h \
 		enum.h \
 		structure.h \
-		math_utils.h \
+		utils.h \
 		player.h \
 		graphics_renderer.h
 
@@ -55,7 +55,7 @@ SOURCES =   main.c \
 			sdl_handle.c \
 			player_movement.c \
 			player_direction.c \
-			math_utils.c \
+			utils.c \
 			render_utils.c \
 			render_sector.c \
 			render_main.c \

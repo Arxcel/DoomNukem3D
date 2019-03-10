@@ -35,6 +35,8 @@ typedef struct		s_sector
 	short			*neighbors;
 	t_vertex		*vertices;
 	size_t			number_vertices;
+	t_vertex		min;
+	t_vertex		max;
 }					t_sector;
 
 typedef struct		s_sprite
@@ -60,7 +62,6 @@ typedef struct		s_player
 	short			is_moving;
 	short			is_crouching;
 	short			is_grounded;
-	short			is_rotating;
 
 	short			dir;
 }					t_player;
