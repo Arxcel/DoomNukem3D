@@ -13,19 +13,9 @@
 #ifndef ENUM_H
 # define ENUM_H
 
-enum	e_move_dir
-{
-	Nothing = 0,
-	Forward,
-	Backward,
-	Right,
-	Left,
-};
-
 enum
 {
 	MaxQueue = 32
 };
-
 
 #endif

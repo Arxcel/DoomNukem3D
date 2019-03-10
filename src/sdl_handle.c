@@ -17,13 +17,13 @@ static void			handle_key(t_main *m, int key)
 	if (key == SDLK_q)
 		m->sdl.running = 0;
 	else if (key == SDLK_w)
-		m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Forward : Nothing;
+		m->map.player.dir.forward = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == SDLK_s)
-		m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Backward : Nothing;
+		m->map.player.dir.backward = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == SDLK_a)
-		m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Left : Nothing;
+		m->map.player.dir.left = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == SDLK_d)
-		m->map.player.dir = m->sdl.e.type == SDL_KEYDOWN ? Right : Nothing;
+		m->map.player.dir.right = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == ' ')
 	{
 		if (m->map.player.is_grounded)
