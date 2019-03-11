@@ -1,13 +1,11 @@
 
 # Editors trash
-.vscode
 .vs/
 
 #idea
 *cmake-build*
 *.idea*
 
-.vscode/*
 .DS_Store
 
 **/*.a

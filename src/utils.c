@@ -31,8 +31,7 @@ float		clampf(float a, float min, float max)
 	return (minf(maxf(a, min), max));
 }
 
-int			intersects(t_player const *p, t_sector const *cur_s,
-							int v1, int v2)
+int			intersects(t_player const *p, t_vertex v1, t_vertex v2)
 {
 	t_vertex p_old_pos;
 	t_vertex p_new_pos;
@@ -40,7 +39,6 @@ int			intersects(t_player const *p, t_sector const *cur_s,
 	p_old_pos =  (t_vertex) { p->position.x, p->position.y };
 	p_new_pos = (t_vertex) { p->position.x + p->velocity.x,
 									p->position.y + p->velocity.y };
-	return (intersect_box(p_old_pos, p_new_pos, cur_s->vertices[v1],
-												cur_s->vertices[v2]) &&
-		point_side(p_new_pos, cur_s->vertices[v1], cur_s->vertices[v2]) < 0);
+	return (intersect_box(p_old_pos, p_new_pos, v1, v2) &&
+							point_side(p_new_pos, v1, v2) < 0);
 }
