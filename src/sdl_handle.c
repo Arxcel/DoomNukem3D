@@ -26,15 +26,16 @@ static void			handle_key(t_main *m, int key)
 		m->map.player.dir.right = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == ' ')
 	{
-		if (m->map.player.is_grounded)
+		if (m->map.player.is_standing)
 		{
 			m->map.player.velocity.z += 0.5f;
-			m->map.player.is_grounded = 0;
+			m->map.player.is_falling = 1;
 		}
 	}
 	else if (key == SDLK_LCTRL || key == SDLK_RCTRL)
 	{
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
+		m->map.player.is_falling = 1;
 	}
 }
 

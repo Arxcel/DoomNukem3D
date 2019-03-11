@@ -14,41 +14,44 @@
 
 void			get_player_direction(t_main *m)
 {
-	int			x;
-	int			y;
-	float		pitch;
+	int x;
+	int y;
+	float pitch;
 
 	pitch = 0;
 	SDL_GetRelativeMouseState(&x, &y);
 	m->map.player.angle += x * MOUSE_SENSIVITY_X / 100.f;
-	m->map.player.anglesin = sinf(m->map.player.angle);
-	m->map.player.anglecos = cosf(m->map.player.angle);
 	m->map.player.pitch = clampf(m->map.player.pitch + pitch +
 									y * MOUSE_SENSIVITY_Y / 100.f, -5, 5);
+	m->map.player.anglesin = sinf(m->map.player.angle);
+    m->map.player.anglecos = cosf(m->map.player.angle);
+	// transform_player(&m->map, 0, 0);
 }
 
-void			get_player_velocity(t_player *p)
+t_vertex		get_player_velocity(t_player *p)
 {
-	p->is_moving = p->dir.forward || p->dir.backward ||
-			p->dir.left || p->dir.right;
+	t_vertex res;
+
+	ft_bzero(&res, sizeof(res));
 	if (p->dir.forward)
 	{
-		p->velocity.x += p->anglecos;
-		p->velocity.y += p->anglesin;
+		res.x += p->anglecos * 0.1f;
+		res.y += p->anglesin * 0.1f;
 	}
 	if (p->dir.backward)
 	{
-		p->velocity.x -= p->anglecos;
-		p->velocity.y -= p->anglesin;
+		res.x -= p->anglecos * 0.1f;
+		res.y -= p->anglesin * 0.1f;
 	}
 	if (p->dir.left)
 	{
-		p->velocity.x += p->anglesin;
-		p->velocity.y -= p->anglecos;
+		res.x += p->anglesin * 0.1f;
+		res.y -= p->anglecos * 0.1f;
 	}
 	if (p->dir.right)
 	{
-		p->velocity.x -= p->anglesin;
-		p->velocity.y += p->anglecos;
+		res.x -= p->anglesin * 0.1f;
+		res.y += p->anglecos * 0.1f;
 	}
+	return (res);
 }
