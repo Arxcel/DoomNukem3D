@@ -17,7 +17,7 @@
 # define CROUCHINGHEIGHT 2.5
 # define HEADMARGIN      1
 # define KNEEHEIGHT      2
-# define HFOV            (0.73f * W)
-# define VFOV            (.2f * H)
+# define HFOV            (.75f)
+# define VFOV            (.2f)
 
 #endif

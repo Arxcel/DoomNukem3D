@@ -27,6 +27,7 @@ static void		transform_player(t_map *map)
 		intersects(&map->player, vert[s], vert[s + 1]))
 		{
 			map->player.sector_number = sect->neighbors[s];
+			printf("player in sector: %zu\n", map->player.sector_number);
 			break;
 		}
 	map->player.position.x += map->player.velocity.x;
@@ -59,6 +60,17 @@ static void player_vertical_movement(t_main *m)
     }
 }
 
+static void updateVelocity(t_player *p, t_vertex p1, t_vertex p2)
+{
+	float xd;
+	float yd; 
+
+	xd = p2.x - p1.x;
+	yd = p2.y - p1.y;
+	p->velocity.x = xd * (p->velocity.x * xd + p->velocity.y * yd) / (xd * xd + yd * yd);
+	p->velocity.y = yd * (p->velocity.x * xd + p->velocity.y * yd) / (xd * xd + yd * yd);
+}
+
 static void player_horizontal_movement(t_main *m)
 {
 	t_sector * sect;
@@ -71,7 +83,11 @@ static void player_horizontal_movement(t_main *m)
 	vert = sect->vertices;
 	s = -1;
 	while (++s < sect->number_vertices)
-		if(intersects(&m->map.player, vert[s], vert[s + 1]))
+	{
+		float d = line_to_point_distance(vert[s], vert[s + 1], (t_vertex){ m->map.player.position.x + m->map.player.velocity.x, m->map.player.position.y + m->map.player.velocity.x });
+		
+		// printf("distance to wall: %f\n", d);
+		if (intersects(&m->map.player, vert[s], vert[s + 1]))
 		{
 			hole_low  = sect->neighbors[s] < 0 ? -1 : maxf(sect->floor_height,
 							m->map.sectors[sect->neighbors[s]].floor_height);
@@ -82,11 +98,13 @@ static void player_horizontal_movement(t_main *m)
 			m->map.player.position.z - (m->map.player.is_crouching ?
 								CROUCHINGHEIGHT : STANDHEIGHT) + KNEEHEIGHT)
 			{
-				m->map.player.velocity.x = 0;
-				m->map.player.velocity.y = 0;
+				updateVelocity(&m->map.player, vert[s], vert[s + 1]);
+
 				m->map.player.is_moving = 0;
 			}
 		}
+	}
+
 	transform_player(&m->map);
 	m->map.player.is_falling = 1;
 }

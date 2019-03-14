@@ -21,6 +21,10 @@ static t_vector		calculate_edges(t_player *player, t_vertex *vertex)
 						(vertex->y - player->position.y) * player->anglecos;
 	res.z = (vertex->x - player->position.x) * player->anglecos +
 						(vertex->y - player->position.y) * player->anglesin;
+	// if (res.z < 1.f)
+	// 	res.z = -1;
+	// res.z = maxf(res.z, 1.f);
+	// printf("point (%f;%f)\n", res.x, res.z);
 	return (res);
 }
 
@@ -29,9 +33,12 @@ static void			clamp_edges_with_player_view(t_renderer *renderer)
 	t_vertex i1;
 	t_vertex i2;
 
+	// printf("before point1 (%f;%f)\n", renderer->t1.x, renderer->t1.z);
+	// printf("before point2 (%f;%f)\n", renderer->t2.x, renderer->t2.z);
+
 	i1 = intersect_line((t_vertex){renderer->t1.x, renderer->t1.z},
 						(t_vertex){renderer->t2.x, renderer->t2.z},
-						(t_vertex){-NEAR_SIDE, NEAR_Z},
+						(t_vertex){NEAR_SIDE, NEAR_Z},
 						(t_vertex){-FAR_SIDE, FAR_Z});
 	i2 = intersect_line((t_vertex){renderer->t1.x, renderer->t1.z},
 						(t_vertex){renderer->t2.x, renderer->t2.z},
@@ -41,18 +48,22 @@ static void			clamp_edges_with_player_view(t_renderer *renderer)
 		clamp_point(&renderer->t1, &i1, &i2);
 	if (renderer->t2.z < NEAR_Z)
 		clamp_point(&renderer->t2, &i1, &i2);
+
+	// printf("after point1 (%f;%f)\n", renderer->t1.x, renderer->t1.z);
+	// printf("after point2 (%f;%f)\n", renderer->t2.x, renderer->t2.z);
 }
 
-static t_wall		do_perspective(t_renderer *renderer, int width)
+static t_wall		do_perspective(t_renderer *renderer, int width, int height)
 {
 	t_wall	ret;
 
-	ret.scale1.x = HFOV / renderer->t1.z;
-	ret.scale1.y = VFOV / renderer->t1.z;
+	ret.scale1.x = HFOV / renderer->t1.z * width;
+	ret.scale1.y = VFOV / renderer->t1.z * height;
 	ret.x1 = width / 2 - (int)(renderer->t1.x * ret.scale1.x);
-	ret.scale2.x = HFOV / renderer->t2.z;
-	ret.scale2.y = VFOV / renderer->t2.z;
+	ret.scale2.x = HFOV / renderer->t2.z * width;
+	ret.scale2.y = VFOV / renderer->t2.z * height;
 	ret.x2 = width / 2 - (int)(renderer->t2.x * ret.scale2.x);
+		// printf("wall (%d;%d)\n", ret.x1, ret.x2);
 	return (ret);
 }
 
@@ -103,7 +114,7 @@ void				render_sector(t_img *img, t_map *map, t_renderer *r,
 			continue;
 		if (r->t1.z <= 0 || r->t2.z <= 0)
 			clamp_edges_with_player_view(r);
-		wall = do_perspective(r, img->w);
+		wall = do_perspective(r, img->w, img->h);
 		if (wall.x1 >= wall.x2 || wall.x2 < current_sector->limit_x_left ||
 										wall.x1 > current_sector->limit_x_right)
 			continue;
