@@ -50,7 +50,7 @@ _DEPS = doom_nukem.h \
 		graphics_renderer.h \
 		macroses.h
 
-DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
+DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))ß
 
 SOURCES =   main.c \
 			sdl_handle.c \
@@ -62,6 +62,8 @@ SOURCES =   main.c \
 			render_main.c \
 			geom_utils.c \
 			dn_init_textures_map.c
+			line.c \
+			minimap.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

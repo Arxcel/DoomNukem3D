@@ -51,6 +51,20 @@ typedef struct		s_vertex
 	float			y;
 }					t_vertex;
 
+typedef struct		s_line
+{
+	t_vertex		from;
+	t_vertex		to;
+	int				dx;
+	int				dy;
+	int				big_d;
+	int				xi;
+	int				yi;
+	int				color;
+	t_vertex		limit_min;
+	t_vertex		limit_max;
+}					t_line;
+
 typedef struct	s_dir
 {
 	short	forward;

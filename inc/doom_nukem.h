@@ -46,7 +46,8 @@ void				sdl_loop(t_main *m);
 void				get_player_direction(t_main *m);
 void				move_player(t_main *m);
 t_vertex			get_player_velocity(t_player *p);
-
+void				drawMinimap(t_img *img, t_map *map);
 void				draw_screen(t_img *img, t_map *map);
 
+void				plot_line(t_img *img, t_line *l);
 #endif
