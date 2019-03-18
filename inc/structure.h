@@ -13,6 +13,7 @@
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
 # include "enum.h"
+# include "ft_sdl.h"
 # include <ctype.h>
 
 typedef struct		s_vector
@@ -87,7 +88,18 @@ typedef struct		s_map
 	size_t			number_sptites;
 }					t_map;
 
+typedef struct	s_point
+{
+	int		x;
+	int		y;
+}				t_point;
 
 
+typedef struct		s_textures_map
+{
+	SDL_Surface	*surface;
+	int			*pixels;
+	t_point		walls_pos[8];
+}					t_tex_map;
 
 #endif
