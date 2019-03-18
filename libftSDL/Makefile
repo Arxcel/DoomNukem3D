@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+         #
+#    By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 18:38:09 by vkozlov           #+#    #+#              #
-#    Updated: 2019/02/23 14:08:01 by vkozlov          ###   ########.fr        #
+#    Updated: 2019/03/18 17:45:44 by tmaluh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ HEADERS = -I inc \
 		  -I../libSDL/SDL2.framework/Headers \
 		  -I../libSDL/SDL2_image.framework/Headers \
 		  -I../libSDL/SDL2_ttf.framework/Headers \
+		  -I../libft/inc/
 
 SOURCES = sdl_clear_image.c \
 			ft_killer.c \
@@ -33,6 +34,7 @@ SOURCES = sdl_clear_image.c \
 			sdl_init.c \
 			sdl_pixel_put.c \
 			sdl_put_image.c \
+			sdl_load_surface.c
 		  
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
