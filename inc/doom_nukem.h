@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 14:59:36 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/18 17:48:23 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,22 @@
 # define MOUSE_SENSIVITY_X 3
 # define MOUSE_SENSIVITY_Y 5
 
+# define WALLS_BLOCK_SIZE	64
+# define WALL_MAX_TEXTURES	8
+# define TEXUTRES_MAP		"resources/textures_map.bmp"
+
 # include "ft_sdl.h"
 # include "ft_libftu.h"
 # include "structure.h"
 # include "player.h"
 # include "utils.h"
+# include "macroses.h"
 
 typedef struct		s_main
 {
-	t_sdl	sdl;
-	t_map	map;
+	t_sdl		sdl;
+	t_map		map;
+	t_tex_map	tex_map;
 }					t_main;
 
 void				sdl_hook(t_main *m);
@@ -45,4 +51,6 @@ void				move_player(t_main *m);
 t_vertex			get_player_velocity(t_player *p);
 
 void				draw_screen(t_img *img, t_map *map);
+bool				dn_init_textures_map(t_tex_map *tmap);
+
 #endif

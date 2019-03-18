@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sdl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afarapon <afarapon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:38:51 by vkozlov           #+#    #+#             */
-/*   Updated: 2018/03/21 23:08:52 by anestor          ###   ########.fr       */
+/*   Updated: 2019/03/18 17:48:19 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,6 @@ void				ft_putendl_fd(char const *s, int fd);
 int					ft_killer(const char *reason);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memalloc(size_t size);
+SDL_Surface			*sdl_load_surface(const char *path);
+
 #endif

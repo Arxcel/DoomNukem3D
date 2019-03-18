@@ -18,4 +18,10 @@ enum
 	MaxQueue = 32
 };
 
+enum	e_bool {false, true} __attribute__((packed));
+
+# define _BOOL  typedef enum e_bool bool
+
+_BOOL;
+
 #endif
