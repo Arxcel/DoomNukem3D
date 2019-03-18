@@ -51,13 +51,13 @@ float line_to_point_distance(t_vertex start, t_vertex end, t_vertex point)
     return fabs(dist);
 } 
 
-int			overlapf(float begin0, float end0, float begin1, float end1)
+bool			overlapf(float begin0, float end0, float begin1, float end1)
 {
 	return (minf(begin0, end0) < maxf(begin1, end1)
 				&& minf(begin1, end1) < maxf(begin0, end0));
 }
 
-int			intersect_box(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4)
+bool			intersect_box(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4)
 {
 	return (overlapf(v1.x, v2.x, v3.x, v4.x)
 								&& overlapf(v1.y, v2.y, v3.y, v4.y));

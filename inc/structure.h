@@ -67,10 +67,10 @@ typedef struct		s_line
 
 typedef struct	s_dir
 {
-	short	forward;
-	short	backward;
-	short	right;
-	short	left;
+	bool	forward;
+	bool	backward;
+	bool	right;
+	bool	left;
 }				t_dir;
 
 typedef struct		s_sector
@@ -104,10 +104,10 @@ typedef struct		s_player
 	float			anglecos;
 	size_t			sector_number;
 
-	short			is_moving;
-	short			is_crouching;
-	short			is_standing;
-	short			is_falling;
+	bool			is_moving;
+	bool			is_crouching;
+	bool			is_standing;
+	bool			is_falling;
 
 	t_dir			dir;
 }					t_player;

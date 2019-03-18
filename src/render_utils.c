@@ -65,7 +65,7 @@ void		clamp_point(t_vector *point, t_vertex *i1, t_vertex *i2)
 		point->x = i1->x;
 		point->z = i1->y;
 	}
-	else
+	else if (i2->y > 0)
 	{
 		point->x = i2->x;
 		point->z = i2->y;

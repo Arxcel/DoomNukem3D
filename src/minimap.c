@@ -25,7 +25,7 @@ void		drawMinimap(t_img *img, t_map *map)
 		int x = -1;
 		while (++x < w)
 		{
-			sdl_pixel_put(img, x, y, 0);
+			sdl_pixel_append(img, x, y, 0x111111);
 		}
 	}
 	int s = -1;

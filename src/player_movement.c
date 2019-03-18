@@ -50,13 +50,13 @@ static void player_vertical_movement(t_main *m)
     {
         m->map.player.position.z = player_sector->floor_height + eyeheight;
         m->map.player.velocity.z = 0;
-        m->map.player.is_falling  = 0;
-        m->map.player.is_standing = 1;
+        m->map.player.is_falling  = false;
+        m->map.player.is_standing = true;
     }
     else if (m->map.player.velocity.z > 0 && nextz > player_sector->ceil_height)
     {
         m->map.player.velocity.z = 0;
-        m->map.player.is_falling = 1;
+        m->map.player.is_falling = true;
     }
 }
 
@@ -99,20 +99,19 @@ static void player_horizontal_movement(t_main *m)
 								CROUCHINGHEIGHT : STANDHEIGHT) + KNEEHEIGHT)
 			{
 				updateVelocity(&m->map.player, vert[s], vert[s + 1]);
-
-				m->map.player.is_moving = 0;
+				m->map.player.is_moving = false;
 			}
 		}
 	}
 
 	transform_player(&m->map);
-	m->map.player.is_falling = 1;
+	m->map.player.is_falling = true;
 }
 
 void move_player(t_main *m)
 {
 	t_vertex		moveDir;
-	int				pushing;
+	bool			pushing;
 	float			acceleration;
 
 	m->map.player.is_standing = !m->map.player.is_falling;
@@ -130,6 +129,6 @@ void move_player(t_main *m)
 	m->map.player.velocity.y = m->map.player.velocity.y *
 					(1 - acceleration) + moveDir.y * acceleration;
 	if(pushing)
-		m->map.player.is_moving = 1;
+		m->map.player.is_moving = true;
 }
 

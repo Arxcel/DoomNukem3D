@@ -24,8 +24,7 @@ void			get_player_direction(t_main *m)
 	m->map.player.pitch = clampf(m->map.player.pitch + pitch +
 									y * MOUSE_SENSIVITY_Y / 100.f, -5, 5);
 	m->map.player.anglesin = sinf(m->map.player.angle);
-    m->map.player.anglecos = cosf(m->map.player.angle);
-	// transform_player(&m->map, 0, 0);
+	m->map.player.anglecos = cosf(m->map.player.angle);
 }
 
 t_vertex		get_player_velocity(t_player *p)
