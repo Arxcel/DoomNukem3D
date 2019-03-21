@@ -88,18 +88,41 @@ typedef struct		s_map
 	size_t			number_sptites;
 }					t_map;
 
+/*
+**	All staff below used for textures(textures.h):
+*/
+
 typedef struct	s_point
 {
 	int		x;
 	int		y;
 }				t_point;
 
-
-typedef struct		s_textures_map
+/*
+**	spos - start positions of textures on texture map
+**	epos - end positions of textures on texture map
+**	w & h - is surf(pxls), but not of each texture on texture map
+*/
+typedef struct	s_textures_map
 {
-	SDL_Surface	*surface;
-	int			*pixels;
-	t_point		walls_pos[8];
-}					t_tex_map;
+	SDL_Surface	*surf;
+	int			*pxls;
+	int			w;
+	int			h;
+	t_point		*spos;
+	t_point		*epos;
+	int			tmax;
+}				t_tmap;
+
+
+typedef struct		s_textures
+{
+	t_tmap	walls;
+	t_tmap	wpns;
+}					t_textures;
+
+/*
+**	End of Staff for work with textures.
+*/
 
 #endif

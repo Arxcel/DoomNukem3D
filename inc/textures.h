@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macroses.h                                         :+:      :+:    :+:   */
+/*   textures.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/18 16:54:00 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/21 19:08:32 by tmaluh           ###   ########.fr       */
+/*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
+/*   Updated: 2019/03/21 19:31:44 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROSES_H
-# define MACROSES_H
+#ifndef TEXTURES_H
+# define TEXTURES_H
 
-# define _NOTIS_F(ex) if (!(ex)) return (false)
-# define _Z(type, dest, x) ft_bzero(dest, sizeof(type) * (x))
-# define _ISZ(t, d, x) _NOTIS_F(d = (t*)malloc(sizeof(t)*(x))); _Z(t, d, x)
+# include "enum.h"
+# include "structure.h"
+
+# define WALL_SIZE	64
+# define WALL_MAX_TEXTURES	8
+# define TEXUTRES_MAP "resources/textures_map.bmp"
+# define WEAPONS_MAP "assets/weapon/PC Computer - Doom Doom II - Weapons.png"
+# define WPNS_TEX_BG    0x00ffff
+# define WPNS_MAP_BG    0x95b1c8
+
+bool				dn_init_textures_map(t_textures *tmap);
 
 #endif
