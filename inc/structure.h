@@ -17,7 +17,7 @@
 # include <ctype.h>
 
 /*
-**	"Undefined Behaviour" is can happens in C if use union below.
+**	"Undefined Behaviour" is can happens in C if use this union below.
 **	But why not ? =)
 */
 typedef union
