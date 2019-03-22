@@ -132,6 +132,15 @@ typedef struct		s_textures
 	t_tmap	wpns;
 }					t_textures;
 
+typedef struct	s_init_helper
+{
+	t_tmap	*t;
+	char	*path;
+	Uint32	ck_color;
+	Uint32	bg_color;
+	int		max_textures;
+}				t_hinit;
+
 /*
 **	End of Staff for work with textures.
 */
