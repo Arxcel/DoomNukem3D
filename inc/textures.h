@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 16:59:58 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/22 17:12:30 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define CHAINSAW1		3
 # define CHAINSAW2		4
 # define CHAINSAW3		11
-# define CHAINSAW3		12
+# define CHAINSAW4		12
 
 # define HANDS_ATTACK2	9
 # define HANDS_ATTACK1	13
@@ -62,7 +62,7 @@
 # define SUPER_SHOTGUN_RELOAD5		25
 # define SUPER_SHOTGUN_RELOAD6		24
 # define SUPER_SHOTGUN_RELOAD7		22
-# define SHOTGUN					32
+# define SUPER_SHOTGUN				32
 
 # define CGUN_ICO		36
 # define CGUN_SHOT_EFF2	38
