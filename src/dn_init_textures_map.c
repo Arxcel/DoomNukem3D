@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 12:47:08 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/22 17:11:36 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool		dn_init_ck_map(t_hinit h)
 	p.y = -1;
 	h.t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(h.t->surf = sdl_load_surface(WPNS_MAP));
+	_NOTIS_F(h.t->surf = sdl_load_surface(h.path));
 	_NOTIS_F(h.t->pxls = h.t->surf->pixels);
 	h.t->s = (point) {h.t->surf->w, h.t->surf->h};
 	while(++(p.y) < h.t->s.h && (p.x = -1))
