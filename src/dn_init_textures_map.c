@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 11:34:28 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/22 12:27:45 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	add_show_saved_pos(int max, point *spos, point *epos)
 					epos[i].y, epos[i].x);
 }
 
-int		add_check_saved(point p,
+int			dn_check_saved_texture(point p,
 		int already_saved_textures, point *spos, point *epos)
 {
 	int	i;
@@ -35,7 +35,8 @@ int		add_check_saved(point p,
 	return (false);
 }
 
-static bool	add_weapons_map_init(t_textures *t)
+bool		dn_init_ck_map(t_tmap *t, char *path,
+							Uint32 ck_color, Uint32 bg_color)
 {
 	point	p;
 	point	spos[WPNS_MAX_TEXTURES];
@@ -43,40 +44,42 @@ static bool	add_weapons_map_init(t_textures *t)
 	int		which_texture_skip;
 
 	p.y = -1;
-	t->wpns.tmax = 0;
+	t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(t->wpns.surf = sdl_load_surface(WPNS_MAP));
-	_NOTIS_F(t->wpns.pxls = t->wpns.surf->pixels);
-	t->wpns.s = (point) {t->wpns.surf->w, t->wpns.surf->h};
-	while(++(p.y) < t->wpns.s.h && (p.x = -1))
-		while (++(p.x) < t->wpns.s.w)
-			if (t->wpns.pxls[p.y * t->wpns.s.w + p.x] == WPNS_TEX_BG)
+	_NOTIS_F(t->surf = sdl_load_surface(WPNS_MAP));
+	_NOTIS_F(t->pxls = t->surf->pixels);
+	t->s = (point) {t->surf->w, t->surf->h};
+	while(++(p.y) < t->s.h && (p.x = -1))
+		while (++(p.x) < t->s.w)
+			if (t->pxls[p.y * t->s.w + p.x] == WPNS_TEX_BG)
+			{
 				if ((which_texture_skip =
-					add_check_saved(p, t->wpns.tmax, spos, epos)))
+					dn_check_saved_texture(p, t->tmax, spos, epos)))
 					p.x = epos[which_texture_skip - 1].x;
 				else
 				{
-					spos[t->wpns.tmax] = (point){p.x, p.y};
-					epos[t->wpns.tmax] = (point){p.x, p.y};
-					while (epos[t->wpns.tmax].x < t->wpns.s.w
-						&& t->wpns.pxls[epos[t->wpns.tmax].y *
-							t->wpns.s.w + epos[t->wpns.tmax].x] != WPNS_MAP_BG)
-						++(epos[t->wpns.tmax].x);
-					p.x = epos[t->wpns.tmax].x;
-					while (epos[t->wpns.tmax].y < t->wpns.s.h
-						&& t->wpns.pxls[epos[t->wpns.tmax].y *
-							t->wpns.s.w + (p.x - 1)]
+					spos[t->tmax] = (point){p.x, p.y};
+					epos[t->tmax] = (point){p.x, p.y};
+					while (epos[t->tmax].x < t->s.w
+						&& t->pxls[epos[t->tmax].y *
+							t->s.w + epos[t->tmax].x] != WPNS_MAP_BG)
+						++(epos[t->tmax].x);
+					p.x = epos[t->tmax].x;
+					while (epos[t->tmax].y < t->s.h
+						&& t->pxls[epos[t->tmax].y *
+							t->s.w + (p.x - 1)]
 							!= WPNS_MAP_BG)
-						++(epos[t->wpns.tmax].y);
-					++(t->wpns.tmax);
+						++(epos[t->tmax].y);
+					++(t->tmax);
 				}
-	_ISZ(point, t->wpns.spos, t->wpns.tmax);
-	_ISZ(point, t->wpns.epos, t->wpns.tmax);
+			}
+	_ISZ(point, t->spos, t->tmax);
+	_ISZ(point, t->epos, t->tmax);
 	int	i = -1;
-	while (++i < t->wpns.tmax)
+	while (++i < t->tmax)
 	{
-		t->wpns.spos[i] = spos[i];
-		t->wpns.epos[i] = epos[i];
+		t->spos[i] = spos[i];
+		t->epos[i] = epos[i];
 	}
 	return (true);
 }
@@ -102,6 +105,6 @@ bool		dn_init_textures_map(t_textures *t)
 		if (i + 1 == t->walls.tmax / 2)
 			p = (point){0, p.y + WALL_SIZE};
 	}
-	_NOTIS_F(add_weapons_map_init(t));
+	_NOTIS_F(dn_init_ck_map(&t->wpns, WPNS_MAP, WPNS_TEX_BG, WPNS_MAP_BG));
 	return (true);
 }

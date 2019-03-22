@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 11:34:49 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/22 12:26:52 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define WPNS_MAP_BG	0xff95b1c8
 
 bool	dn_init_textures_map(t_textures *tmap);
-int		add_check_saved(point p,
-		int already_saved_textures, point *spos, point *epos);
+int		dn_check_saved_texture(point p, int already_saved_textures,
+								point *spos, point *epos);
+bool	dn_init_ck_map(t_tmap *t, char *path, Uint32 ck_color, Uint32 bg_color);
 
 #endif
