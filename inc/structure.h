@@ -16,6 +16,28 @@
 # include "ft_sdl.h"
 # include <ctype.h>
 
+/*
+**	"Undefined Behaviour" is can happens in C if use this union below.
+**	But why not ? =)
+*/
+typedef union
+{
+	struct
+	{
+		int	x;
+		int	y;
+	};
+	struct
+	{
+		int	w;
+		int	h;
+	};
+}					t_upoint;
+
+# define _POINT	typedef t_upoint	point
+
+_POINT;
+
 typedef struct		s_vector
 {
 	float			x;
@@ -88,18 +110,39 @@ typedef struct		s_map
 	size_t			number_sptites;
 }					t_map;
 
-typedef struct	s_point
+/*
+**	spos - start positions of textures on texture map
+**	epos - end positions of textures on texture map
+**	w & h - is surf(pxls), but not of each texture on texture map
+*/
+typedef struct	s_textures_map
 {
-	int		x;
-	int		y;
-}				t_point;
+	SDL_Surface	*surf;
+	int			*pxls;
+	point		s;
+	point		*spos;
+	point		*epos;
+	int			tmax;
+}				t_tmap;
 
 
-typedef struct		s_textures_map
+typedef struct		s_textures
 {
-	SDL_Surface	*surface;
-	int			*pixels;
-	t_point		walls_pos[8];
-}					t_tex_map;
+	t_tmap	walls;
+	t_tmap	wpns;
+}					t_textures;
+
+typedef struct	s_init_helper
+{
+	t_tmap	*t;
+	char	*path;
+	Uint32	ck_color;
+	Uint32	bg_color;
+	int		max_textures;
+}				t_hinit;
+
+/*
+**	End of Staff for work with textures.
+*/
 
 #endif

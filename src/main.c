@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/18 17:48:51 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/22 12:27:07 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,19 @@ void				sdl_loop(t_main *m)
 	{
 		sdl_hook(m);
 		draw_screen(&m->sdl.img, &m->map);
+		point p;
+
+		p.y = -1;
+		while (++p.y < m->tex.wpns.s.h && (p.x = -1))
+			while (++p.x < m->tex.wpns.s.w)
+			{
+				if (dn_check_saved_texture(p, m->tex.wpns.tmax,
+					m->tex.wpns.spos, m->tex.wpns.epos))
+					sdl_pixel_put(&m->sdl.img, p.x, p.y, 0xffffff);
+				else
+					sdl_pixel_put(&m->sdl.img, p.x, p.y,
+						m->tex.wpns.pxls[p.y * m->tex.wpns.s.w + p.x]);
+			}
 		sdl_put_image(&m->sdl);
 		move_player(m);
 		SDL_Delay(10);
@@ -135,7 +148,7 @@ int					main(int ac, char **av)
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	_NOTIS_F(dn_init_textures_map(&m.tex_map));
+	_NOTIS_F(dn_init_textures_map(&m.tex));
 	sdl_loop(&m);
 	UnloadData(&m.map);
 	SDL_Quit();

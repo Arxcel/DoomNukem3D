@@ -20,7 +20,7 @@ enum
 
 enum	e_bool {false, true} __attribute__((packed));
 
-# define _BOOL  typedef enum e_bool bool
+# define _BOOL  typedef enum e_bool	bool
 
 _BOOL;
 
