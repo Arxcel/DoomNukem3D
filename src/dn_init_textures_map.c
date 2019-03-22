@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 12:40:06 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/22 12:47:08 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	add_save_current_texture_pos(point p, point *spos,
 	++(h->t->tmax);
 }
 
-static bool	add_copy_texutres_pos_to_map(t_hinit *h, point *spos, point *epos)
+static bool	add_copy_textures_pos_to_map(t_hinit *h, point *spos, point *epos)
 {
 	int	i;
 
@@ -80,7 +80,7 @@ bool		dn_init_ck_map(t_hinit h)
 				else
 					add_save_current_texture_pos(p, spos, epos, &h);
 			}
-	return (add_copy_texutres_pos_to_map(&h, spos, epos));
+	return (add_copy_textures_pos_to_map(&h, spos, epos));
 }
 
 bool		dn_init_textures_map(t_textures *t)
