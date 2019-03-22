@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 16:57:51 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/22 16:59:58 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define PISTOL_AFTER_SHOT3	8
 # define PISTOL_AFTER_SHOT2	7
 # define PISTOL_AFTER_SHOT1	6
-# define PISTOL 			10
+# define PISTOL				10
 
 # define CHAINSAW_ICO	5
 # define CHAINSAW1		3
@@ -67,8 +67,8 @@
 # define CGUN_ICO		36
 # define CGUN_SHOT_EFF2	38
 # define CGUN_SHOT_EFF1	40
-# define CGUN_SHOT2 	49
-# define CGUN_SHOT1 	47
+# define CGUN_SHOT2		49
+# define CGUN_SHOT1		47
 
 # define ROCKETL_ICO		53
 # define ROCKETL_SHOT_EFF4	34
@@ -81,9 +81,9 @@
 # define BFG_ICO		42
 # define BFG_SHOT_EFF2	35
 # define BFG_SHOT_EFF1	41
-# define BFG_SHOT2 		46
-# define BFG_SHOT1 		48
-# define BFG 			45
+# define BFG_SHOT2		46
+# define BFG_SHOT1		48
+# define BFG			45
 
 # define PLASMAG_ICO	50
 # define PLASMAG_RELOAD	44
