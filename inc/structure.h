@@ -132,7 +132,7 @@ typedef struct		s_map
 typedef struct	s_textures_map
 {
 	SDL_Surface	*surf;
-	int			*pxls;
+	Uint32		*pxls;
 	point		s;
 	point		*spos;
 	point		*epos;

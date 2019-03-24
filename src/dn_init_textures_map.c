@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/24 23:04:50 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 00:21:21 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	add_copy_textures_pos_to_map(t_hinit *h, point *spos, point *epos)
 	return (true);
 }
 
-bool		dn_init_ck_map(t_hinit h, t_sdl *sdl)
+bool		dn_init_ck_map(t_hinit h)
 {
 	point	p;
 	point	spos[h.max_textures];
@@ -67,18 +67,9 @@ bool		dn_init_ck_map(t_hinit h, t_sdl *sdl)
 	p.y = -1;
 	h.t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(h.t->surf = sdl_load_surface(h.path));
+	_NOTIS_F(h.t->surf = sdl_load_surface(h.path, 1));
 	_NOTIS_F(h.t->pxls = h.t->surf->pixels);
 	h.t->s = (point) {h.t->surf->w, h.t->surf->h};
-	point x;
-
-	x.y = -1;
-	while (++(x.y) < h.t->s.h && (x.x = -1))
-		while (++(x.x) < h.t->s.w)
-			sdl_pixel_put(&sdl->img, x.x, x.y, h.t->pxls[x.y * h.t->s.w + x.x]);
-	sdl_put_image(sdl);
-	SDL_Delay(10000);
-	return true;
 	while(++(p.y) < h.t->s.h && (p.x = -1))
 		while (++(p.x) < h.t->s.w)
 			if (h.t->pxls[p.y * h.t->s.w + p.x] == h.ck_color)
@@ -92,14 +83,14 @@ bool		dn_init_ck_map(t_hinit h, t_sdl *sdl)
 	return (add_copy_textures_pos_to_map(&h, spos, epos));
 }
 
-bool		dn_init_textures_map(t_textures *t, t_sdl *sdl)
+bool		dn_init_textures_map(t_textures *t)
 {
 	point	p;
 	int		i;
 
 	i = -1;
 	p = (point){0, 0};
-	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP));
+	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP, 1));
 	_NOTIS_F(t->walls.pxls = t->walls.surf->pixels);
 	t->walls.s = (point){t->walls.surf->w, t->walls.surf->h};
 	t->walls.tmax = WALL_MAX_TEXTURES;
@@ -113,7 +104,7 @@ bool		dn_init_textures_map(t_textures *t, t_sdl *sdl)
 		if (i + 1 == t->walls.tmax / 2)
 			p = (point){0, p.y + WALL_SIZE};
 	}
-	_NOTIS_F(dn_init_ck_map((t_hinit){
-		&t->wpns, WPNS_MAP, WPNS_TEX_BG, WPNS_MAP_BG, WPNS_MAX_TEXTURES}, sdl));
+	_NOTIS_F(dn_init_ck_map((t_hinit){&t->wpns, WPNS_MAP, WPNS_TEX_BG,
+									WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
 	return (true);
 }
