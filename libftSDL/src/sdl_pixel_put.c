@@ -18,3 +18,10 @@ void				sdl_pixel_put(t_img *img, int x, int y, int color)
 		return ;
 	img->pixels[x + y * img->w] = color;
 }
+
+void				sdl_pixel_append(t_img *img, int x, int y, int color)
+{
+	if (x < 0 || (size_t)x > img->w || y < 0 || (size_t)y > img->h)
+		return ;
+	img->pixels[x + y * img->w] += color;
+}

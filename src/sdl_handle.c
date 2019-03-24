@@ -29,13 +29,13 @@ static void			handle_key(t_main *m, int key)
 		if (m->map.player.is_standing)
 		{
 			m->map.player.velocity.z += 0.5f;
-			m->map.player.is_falling = 1;
+			m->map.player.is_falling = true;
 		}
 	}
 	else if (key == SDLK_LCTRL || key == SDLK_RCTRL)
 	{
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
-		m->map.player.is_falling = 1;
+		m->map.player.is_falling = true;
 	}
 }
 

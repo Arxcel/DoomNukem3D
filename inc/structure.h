@@ -51,12 +51,26 @@ typedef struct		s_vertex
 	float			y;
 }					t_vertex;
 
+typedef struct		s_line
+{
+	t_vertex		from;
+	t_vertex		to;
+	int				dx;
+	int				dy;
+	int				big_d;
+	int				xi;
+	int				yi;
+	int				color;
+	t_vertex		limit_min;
+	t_vertex		limit_max;
+}					t_line;
+
 typedef struct	s_dir
 {
-	short	forward;
-	short	backward;
-	short	right;
-	short	left;
+	bool	forward;
+	bool	backward;
+	bool	right;
+	bool	left;
 }				t_dir;
 
 typedef struct		s_sector
@@ -90,10 +104,10 @@ typedef struct		s_player
 	float			anglecos;
 	size_t			sector_number;
 
-	short			is_moving;
-	short			is_crouching;
-	short			is_standing;
-	short			is_falling;
+	bool			is_moving;
+	bool			is_crouching;
+	bool			is_standing;
+	bool			is_falling;
 
 	t_dir			dir;
 }					t_player;

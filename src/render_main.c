@@ -96,7 +96,6 @@ void			draw_screen(t_img *img, t_map *map)
 			r.tail = r.queue;
 		if (r.rendered_sectors[current_sector.sectorno] == MaxQueue)
 			continue;
-		r.rendered_sectors[current_sector.sectorno]++;
 		render_sector(img, map, &r, &current_sector);
 		r.rendered_sectors[current_sector.sectorno]++;
 	}

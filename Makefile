@@ -61,7 +61,9 @@ SOURCES =   main.c \
 			render_sector.c \
 			render_main.c \
 			geom_utils.c \
-			dn_init_textures_map.c
+			dn_init_textures_map.c \
+			line.c \
+			minimap.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

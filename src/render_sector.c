@@ -13,32 +13,56 @@
 #include "doom_nukem.h"
 #include "graphics_renderer.h"
 
+static double ray_segment_intersaction(t_vertex v1, t_vertex v2, t_vertex v3)
+{
+	double dot;
+	double t1;
+	double t2;
+
+	dot = v_dot(v2, v3);
+	if (fabs(dot) < 0.000001)
+		return (-1.0);
+	t1 = crossf(v2.x, v2.y, v1.x, v1.y) / dot;
+	t2 = v_dot(v1, v3) / dot;
+	if (t1 >= 0.0 && (t2 >= 0.0 && t2 <= 1.0))
+		return (t1);
+	return (-1.0);
+}
+
+static double cast_ray_2line(t_vertex ray_origin, t_vertex ray_direction, t_vertex point1, t_vertex point2)
+{
+	t_vertex v1;
+	t_vertex v2;
+	t_vertex v3;
+
+	v1.x = ray_origin.x - point1.x;
+	v1.y = ray_origin.y - point1.y;
+	v2.x = point2.x - point1.x;
+	v2.y = point2.y - point1.y;
+	v3 = (t_vertex){-ray_direction.y, ray_direction.x};
+	return (ray_segment_intersaction(v1, v2, v3));
+}
+
 static t_vector		calculate_edges(t_player *player, t_vertex *vertex)
 {
-	t_vector res;
+	t_vector	res;
 
 	res.x = (vertex->x - player->position.x) * player->anglesin -
 						(vertex->y - player->position.y) * player->anglecos;
 	res.z = (vertex->x - player->position.x) * player->anglecos +
 						(vertex->y - player->position.y) * player->anglesin;
-	// if (res.z < 1.f)
-	// 	res.z = -1;
-	// res.z = maxf(res.z, 1.f);
-	// printf("point (%f;%f)\n", res.x, res.z);
+
 	return (res);
 }
 
 static void			clamp_edges_with_player_view(t_renderer *renderer)
 {
-	t_vertex i1;
-	t_vertex i2;
-
-	// printf("before point1 (%f;%f)\n", renderer->t1.x, renderer->t1.z);
-	// printf("before point2 (%f;%f)\n", renderer->t2.x, renderer->t2.z);
+	t_vertex	i1;
+	t_vertex	i2;
 
 	i1 = intersect_line((t_vertex){renderer->t1.x, renderer->t1.z},
 						(t_vertex){renderer->t2.x, renderer->t2.z},
-						(t_vertex){NEAR_SIDE, NEAR_Z},
+						(t_vertex){-NEAR_SIDE, NEAR_Z},
 						(t_vertex){-FAR_SIDE, FAR_Z});
 	i2 = intersect_line((t_vertex){renderer->t1.x, renderer->t1.z},
 						(t_vertex){renderer->t2.x, renderer->t2.z},
@@ -48,9 +72,6 @@ static void			clamp_edges_with_player_view(t_renderer *renderer)
 		clamp_point(&renderer->t1, &i1, &i2);
 	if (renderer->t2.z < NEAR_Z)
 		clamp_point(&renderer->t2, &i1, &i2);
-
-	// printf("after point1 (%f;%f)\n", renderer->t1.x, renderer->t1.z);
-	// printf("after point2 (%f;%f)\n", renderer->t2.x, renderer->t2.z);
 }
 
 static t_wall		do_perspective(t_renderer *renderer, int width, int height)
@@ -63,7 +84,6 @@ static t_wall		do_perspective(t_renderer *renderer, int width, int height)
 	ret.scale2.x = HFOV / renderer->t2.z * width;
 	ret.scale2.y = VFOV / renderer->t2.z * height;
 	ret.x2 = width / 2 - (int)(renderer->t2.x * ret.scale2.x);
-		// printf("wall (%d;%d)\n", ret.x1, ret.x2);
 	return (ret);
 }
 
@@ -97,6 +117,35 @@ static void			get_wall_height(t_map *map, t_wall *wall,
 							r->t2.z * map->player.pitch) * wall->scale2.y);
 }
 
+
+static void clamp_values(t_renderer *r)
+{
+	int		sign;
+
+	sign = r->t1.z < 0 ? -1 : 1;
+	r->t1.z  = sign * maxf(fabs(r->t1.z ), 0.1f);
+	sign = r->t1.x < 0 ? -1 : 1;
+	r->t1.x  = sign * maxf(fabs(r->t1.x), 0.1f);
+	sign = r->t2.z < 0 ? -1 : 1;
+	r->t2.z  = sign * maxf(fabs(r->t2.z ), 0.1f);
+	sign = r->t2.x < 0 ? -1 : 1;
+	r->t2.x  = sign * maxf(fabs(r->t2.x), 0.1f);
+}
+
+static void check_wall(t_renderer *r, t_map *map, int s, t_render_item const *current_sector)
+{
+	double d;
+	t_sector	*sect;
+
+	sect = &map->sectors[current_sector->sectorno];
+	d = cast_ray_2line(
+		(t_vertex){map->player.position.x, map->player.position.y},
+		(t_vertex){map->player.anglecos, map->player.anglesin},
+		sect->vertices[s], sect->vertices[s+1]);
+	if (d > 0 && d < 3)
+		r->t1.x  = maxf(fabs(r->t1.x), 0.1f);
+}
+
 void				render_sector(t_img *img, t_map *map, t_renderer *r,
 										t_render_item const *current_sector)
 {
@@ -110,10 +159,12 @@ void				render_sector(t_img *img, t_map *map, t_renderer *r,
 	{
 		r->t1 = calculate_edges(&map->player, &sect->vertices[s]);
 		r->t2 = calculate_edges(&map->player, &sect->vertices[s + 1]);
-		if (r->t1.z <= 0 && r->t2.z <= 0)
+		if (r->t1.z < 0 && r->t2.z < 0)
 			continue;
 		if (r->t1.z <= 0 || r->t2.z <= 0)
 			clamp_edges_with_player_view(r);
+		clamp_values(r);
+		check_wall(r, map, s, current_sector);
 		wall = do_perspective(r, img->w, img->h);
 		if (wall.x1 >= wall.x2 || wall.x2 < current_sector->limit_x_left ||
 										wall.x1 > current_sector->limit_x_right)
@@ -123,3 +174,4 @@ void				render_sector(t_img *img, t_map *map, t_renderer *r,
 		render_wall(img, r, &wall, current_sector);
 	}
 }
+

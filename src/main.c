@@ -119,6 +119,7 @@ void				sdl_loop(t_main *m)
 	{
 		sdl_hook(m);
 		draw_screen(&m->sdl.img, &m->map);
+		drawMinimap(&m->sdl.img, &m->map);
 		sdl_put_image(&m->sdl);
 		move_player(m);
 		SDL_Delay(10);
