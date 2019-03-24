@@ -1,70 +1,59 @@
-CC = clang
+NAME := doom_nukem
 
-NAME = doom_nukem
+CC := clang
+KEYS := #-Wall -Wextra -Werror
+FLAGS := -g
 
-KEYS = #-Wall -Wextra -Werror
-
-FLAGS = -g
-
-IDIR = ./inc
-
-EXTENSIONS = $(addprefix $(IDIR)/,$(EXT))
-
-UNAME := $(shell uname)
-
-EXT =	doom_nukem.h \
+EXT := doom_nukem.h \
 		enum.h \
 		structure.h \
 		utils.h \
 		player.h \
 		graphics_renderer.h
+IDIR := $(CURDIR)/inc
+EXTENSIONS := $(addprefix $(IDIR)/,$(EXT))
 
+UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
-CFLAGS = -I$(IDIR) \
-		-I./libft/inc \
-		-I./libftSDL/inc \
-		-I./libJson/inc \
-		-I /usr/local/include/SDL2
+CFLAGS := -I$(IDIR) \
+		-I./libft/inc/ \
+		-I./libftSDL/inc/ \
+		-I./libJson/inc/ \
+		-I /usr/local/include/SDL2/ \
+		-I /usr/include/SDL2/ \
 else
-CFLAGS = -I$(IDIR) \
-		-I./libft/inc \
-		-I./libCL/inc \
+CFLAGS := -I$(IDIR) \
+		-I./libft/inc/ \
 		-I./libSDL/SDL2.framework/Headers/ \
 		-I./libSDL/SDL2_image.framework/Headers/ \
 		-I./libSDL/SDL2_ttf.framework/Headers/ \
-		-I./libftSDL/inc \
-		-I./libJson/inc
+		-I./libftSDL/inc/ \
+		-I./libJson/inc/
 endif
 
 LIBFT = libft
-
 LIBJSON = libJson
-
 LIBFTSDL = libftSDL
 
 ifeq ($(UNAME), Linux)
-SDL2_F =  -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lm
+SDL2_F := -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lm
 else
-SDL2_F		= -framework SDL2 -framework SDL2_image -framework SDL2_ttf -F ./libSDL/
+SDL2_F := -framework SDL2 -framework SDL2_image -framework SDL2_ttf -F ./libSDL/
 endif
-SDL2_P		= -rpath @loader_path/libSDL/
+SDL2_P := -rpath @loader_path/libSDL/
 
-DIR_S = src
-
-DIR_O = obj
-
-HEADER = inc
-
-_DEPS = doom_nukem.h \
+HEADER := inc
+_DEPS := doom_nukem.h \
 		enum.h \
 		structure.h \
 		utils.h \
 		player.h \
 		graphics_renderer.h \
 		macroses.h
+DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 
-DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
-
+DIR_S := src
+DIR_O := obj
 SOURCES =   main.c \
 			sdl_handle.c \
 			player_movement.c \
@@ -77,16 +66,16 @@ SOURCES =   main.c \
 			dn_init_textures_map.c \
 			line.c \
 			minimap.c
-
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
-
 OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
 all: obj $(NAME)
 
 $(NAME): $(OBJS) $(EXTENSIONS)
 		make libs
-		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS)  -L $(LIBFTSDL) -lftSDL -L $(LIBJSON) -lJSON  $(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft
+		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) \
+		-L $(LIBFTSDL) -lftSDL -L $(LIBJSON) -lJSON \
+		$(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft
 
 
 libs: 

@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/22 17:13:02 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/24 23:01:35 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int					main(int ac, char **av)
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	_NOTIS_F(dn_init_textures_map(&m.tex));
+	_NOTIS_F(dn_init_textures_map(&m.tex, &m.sdl));
 	sdl_loop(&m);
 	UnloadData(&m.map);
 	SDL_Quit();

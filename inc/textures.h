@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 17:12:30 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/24 23:01:28 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,15 @@
 
 # define WPNS_MAX_TEXTURES	57
 # define WPNS_MAP		"assets/weapon/PC Computer - Doom Doom II - Weapons.png"
+
 # define WPNS_TEX_BG	0xff00ffff
-# define WPNS_MAP_BG	0xff95b1c8
+# ifdef __APPLE__
+#  define WPNS_MAP_BG	0xb195c8b1
+# endif
+
+# ifdef __linux__
+#  define WPNS_MAP_BG	0x95c8b195
+# endif
 
 # define PISTOL_ICO			2
 # define PISTOL_SHOT_EFF	0
@@ -53,7 +60,7 @@
 # define SHOTGUN			31
 
 # define SUPER_SHOTGUN_ICO			29
-# define SUPER_SHOTGUN_SHOT_EFF2	18
+# define SUPER_SHOTGUN_SHOT_EFF1	18
 # define SUPER_SHOTGUN_SHOT_EFF2	20
 # define SUPER_SHOTGUN_RELOAD1		30
 # define SUPER_SHOTGUN_RELOAD2		33
@@ -91,9 +98,9 @@
 # define PLASMAG_SHOT2	55
 # define PLASMAG		56
 
-bool	dn_init_textures_map(t_textures *tmap);
+bool	dn_init_textures_map(t_textures *tmap, t_sdl *sdl);
 int		dn_check_saved_texture(point p, int already_saved_textures,
 								point *spos, point *epos);
-bool	dn_init_ck_map(t_hinit h);
+bool	dn_init_ck_map(t_hinit h, t_sdl *sdl);
 
 #endif

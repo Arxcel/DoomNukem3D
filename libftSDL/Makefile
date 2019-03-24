@@ -6,44 +6,39 @@
 #    By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 18:38:09 by vkozlov           #+#    #+#              #
-#    Updated: 2019/03/18 17:45:44 by tmaluh           ###   ########.fr        #
+#    Updated: 2019/03/24 21:45:43 by tmaluh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+NAME := libftSDL.a
 
-NAME = libftSDL.a
-
-FLAGS = -Wall -Wextra -Werror
-
-DIR_S = src
-
-DIR_O = obj
-
-HEADER = inc
+CC := gcc
+FLAGS := -Wall -Wextra -Werror
 
 UNAME := $(shell uname)
-
 ifeq ($(UNAME), Linux)
-HEADERS = -I inc -I ../libft/inc -I /usr/local/include/SDL2  -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
+HEADERS := -I inc/ -I ../libft/inc/ \
+		-I /usr/local/include/SDL2/ \
+		-I /usr/include/SDL2/ \
+		-lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
 else
-HEADERS = -I inc \
-		  -I../libSDL/SDL2.framework/Headers \
-		  -I../libSDL/SDL2_image.framework/Headers \
-		  -I../libSDL/SDL2_ttf.framework/Headers \
-		  -I../libft/inc/
+HEADERS := -I inc/ \
+		-I../libSDL/SDL2.framework/Headers/ \
+		-I../libSDL/SDL2_image.framework/Headers/ \
+		-I../libSDL/SDL2_ttf.framework/Headers/ \
+		-I../libft/inc/
 endif
 
-SOURCES = sdl_clear_image.c \
+DIR_S := src
+DIR_O := obj
+SOURCES := sdl_clear_image.c \
 			ft_killer.c \
 			sdl_create_image.c \
 			sdl_init.c \
 			sdl_pixel_put.c \
 			sdl_put_image.c \
-			sdl_load_surface.c
-		  
+			sdl_load_surface.c 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
-
 OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
 all: obj $(NAME)

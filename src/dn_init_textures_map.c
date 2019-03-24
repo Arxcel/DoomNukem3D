@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 17:11:36 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/24 23:04:50 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	add_copy_textures_pos_to_map(t_hinit *h, point *spos, point *epos)
 	return (true);
 }
 
-bool		dn_init_ck_map(t_hinit h)
+bool		dn_init_ck_map(t_hinit h, t_sdl *sdl)
 {
 	point	p;
 	point	spos[h.max_textures];
@@ -70,12 +70,21 @@ bool		dn_init_ck_map(t_hinit h)
 	_NOTIS_F(h.t->surf = sdl_load_surface(h.path));
 	_NOTIS_F(h.t->pxls = h.t->surf->pixels);
 	h.t->s = (point) {h.t->surf->w, h.t->surf->h};
+	point x;
+
+	x.y = -1;
+	while (++(x.y) < h.t->s.h && (x.x = -1))
+		while (++(x.x) < h.t->s.w)
+			sdl_pixel_put(&sdl->img, x.x, x.y, h.t->pxls[x.y * h.t->s.w + x.x]);
+	sdl_put_image(sdl);
+	SDL_Delay(10000);
+	return true;
 	while(++(p.y) < h.t->s.h && (p.x = -1))
 		while (++(p.x) < h.t->s.w)
 			if (h.t->pxls[p.y * h.t->s.w + p.x] == h.ck_color)
 			{
-				if ((which_texture_skip =
-					dn_check_saved_texture(p, h.t->tmax, spos, epos)))
+				if ((which_texture_skip
+					= dn_check_saved_texture(p, h.t->tmax, spos, epos)))
 					p.x = epos[which_texture_skip - 1].x;
 				else
 					add_save_current_texture_pos(p, spos, epos, &h);
@@ -83,7 +92,7 @@ bool		dn_init_ck_map(t_hinit h)
 	return (add_copy_textures_pos_to_map(&h, spos, epos));
 }
 
-bool		dn_init_textures_map(t_textures *t)
+bool		dn_init_textures_map(t_textures *t, t_sdl *sdl)
 {
 	point	p;
 	int		i;
@@ -105,6 +114,6 @@ bool		dn_init_textures_map(t_textures *t)
 			p = (point){0, p.y + WALL_SIZE};
 	}
 	_NOTIS_F(dn_init_ck_map((t_hinit){
-		&t->wpns, WPNS_MAP, WPNS_TEX_BG, WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
+		&t->wpns, WPNS_MAP, WPNS_TEX_BG, WPNS_MAP_BG, WPNS_MAX_TEXTURES}, sdl));
 	return (true);
 }
