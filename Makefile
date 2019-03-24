@@ -10,6 +10,8 @@ IDIR = ./inc
 
 EXTENSIONS = $(addprefix $(IDIR)/,$(EXT))
 
+UNAME := $(shell uname)
+
 EXT =	doom_nukem.h \
 		enum.h \
 		structure.h \
@@ -17,6 +19,13 @@ EXT =	doom_nukem.h \
 		player.h \
 		graphics_renderer.h
 
+ifeq ($(UNAME), Linux)
+CFLAGS = -I$(IDIR) \
+		-I./libft/inc \
+		-I./libftSDL/inc \
+		-I./libJson/inc \
+		-I /usr/local/include/SDL2
+else
 CFLAGS = -I$(IDIR) \
 		-I./libft/inc \
 		-I./libCL/inc \
@@ -24,7 +33,8 @@ CFLAGS = -I$(IDIR) \
 		-I./libSDL/SDL2_image.framework/Headers/ \
 		-I./libSDL/SDL2_ttf.framework/Headers/ \
 		-I./libftSDL/inc \
-		-I./libJson/inc 
+		-I./libJson/inc
+endif
 
 LIBFT = libft
 
@@ -32,8 +42,11 @@ LIBJSON = libJson
 
 LIBFTSDL = libftSDL
 
+ifeq ($(UNAME), Linux)
+SDL2_F =  -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lm
+else
 SDL2_F		= -framework SDL2 -framework SDL2_image -framework SDL2_ttf -F ./libSDL/
-
+endif
 SDL2_P		= -rpath @loader_path/libSDL/
 
 DIR_S = src
@@ -73,7 +86,8 @@ all: obj $(NAME)
 
 $(NAME): $(OBJS) $(EXTENSIONS)
 		make libs
-		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) -L $(LIBFT) -lft -L $(LIBJSON) -lJSON $(SDL2_P) $(SDL2_F) -L $(LIBFTSDL) -lftsdl
+		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS)  -L $(LIBFTSDL) -lftSDL -L $(LIBJSON) -lJSON  $(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft
+
 
 libs: 
 	make -C $(LIBFT)

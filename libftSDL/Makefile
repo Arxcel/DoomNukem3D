@@ -22,11 +22,17 @@ DIR_O = obj
 
 HEADER = inc
 
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+HEADERS = -I inc -I ../libft/inc -I /usr/local/include/SDL2  -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
+else
 HEADERS = -I inc \
 		  -I../libSDL/SDL2.framework/Headers \
 		  -I../libSDL/SDL2_image.framework/Headers \
 		  -I../libSDL/SDL2_ttf.framework/Headers \
 		  -I../libft/inc/
+endif
 
 SOURCES = sdl_clear_image.c \
 			ft_killer.c \
