@@ -21,6 +21,10 @@ void			get_player_direction(t_main *m)
 	pitch = 0;
 	SDL_GetRelativeMouseState(&x, &y);
 	m->map.player.angle += x * MOUSE_SENSIVITY_X / 100.f;
+	if (m->map.player.angle >= 2 * M_PI)
+		m->map.player.angle = 0;
+	else if (m->map.player.angle < 0)
+		m->map.player.angle = 2 * M_PI;
 	m->map.player.pitch = clampf(m->map.player.pitch + pitch +
 									y * MOUSE_SENSIVITY_Y / 100.f, -5, 5);
 	m->map.player.anglesin = sinf(m->map.player.angle);

@@ -18,38 +18,13 @@ float		crossf(float x0, float y0, float x1, float y1)
 	return (x0 * y1 - x1 * y0);
 }
 
-float cross_product(t_vertex point_a, t_vertex point_b, t_vertex point_c, t_vertex point_d)
+double			v_dot(t_vertex v1, t_vertex v2)
 {
-    t_vertex ab;
-    t_vertex cd;
-    float cross;
+	double	res;
 
-	ab.x = point_b.x - point_a.x;
-    ab.y = point_b.y - point_a.y;
-    cd.x = point_d.x - point_c.x;
-    cd.y = point_d.y - point_c.y;
-    cross = ab.x * cd.y - ab.y * cd.x;
-    return cross;
+	res = v1.x * v2.x + v1.y * v2.y;
+	return (res);
 }
-
-float distance(t_vertex point_a, t_vertex point_b)
-{
-    float d1;
-    float d2;
-
-	d1 = point_a.x = point_b.x;
-	d2 = point_a.y = point_b.y;
-
-    return (sqrtf(d1 * d1 + d2 * d2));
-}
-
-float line_to_point_distance(t_vertex start, t_vertex end, t_vertex point)
-{
-    float dist;
-
-	dist = cross_product(start, end, start, point) / distance(start, end);
-    return fabs(dist);
-} 
 
 bool			overlapf(float begin0, float end0, float begin1, float end1)
 {
@@ -80,3 +55,4 @@ float		point_side(t_vertex p, t_vertex v1, t_vertex v2)
 {
 	return (crossf(v2.x - v1.x, v2.y - v1.y, p.x - v1.x, p.y - v1.y));
 }
+

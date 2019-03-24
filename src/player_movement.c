@@ -83,10 +83,7 @@ static void player_horizontal_movement(t_main *m)
 	vert = sect->vertices;
 	s = -1;
 	while (++s < sect->number_vertices)
-	{
-		float d = line_to_point_distance(vert[s], vert[s + 1], (t_vertex){ m->map.player.position.x + m->map.player.velocity.x, m->map.player.position.y + m->map.player.velocity.x });
-		
-		// printf("distance to wall: %f\n", d);
+	{		
 		if (intersects(&m->map.player, vert[s], vert[s + 1]))
 		{
 			hole_low  = sect->neighbors[s] < 0 ? -1 : maxf(sect->floor_height,
