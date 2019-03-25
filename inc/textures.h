@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 17:12:30 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 14:40:01 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,18 @@
 
 # define WPNS_MAX_TEXTURES	57
 # define WPNS_MAP		"assets/weapon/PC Computer - Doom Doom II - Weapons.png"
-# define WPNS_TEX_BG	0xff00ffff
-# define WPNS_MAP_BG	0xff95b1c8
+
+# ifdef __APPLE__
+#  define WPNS_TEX_BG	0xff00ffff
+#  define WPNS_MAP_BG	0xff95b1c8
+#  define IS_FORMAT_SURF	0
+# endif
+
+# ifdef __linux__
+#  define WPNS_TEX_BG	0xffff
+#  define WPNS_MAP_BG	0x95b1c8
+#  define IS_FORMAT_SURF	1
+# endif
 
 # define PISTOL_ICO			2
 # define PISTOL_SHOT_EFF	0
@@ -53,7 +63,7 @@
 # define SHOTGUN			31
 
 # define SUPER_SHOTGUN_ICO			29
-# define SUPER_SHOTGUN_SHOT_EFF2	18
+# define SUPER_SHOTGUN_SHOT_EFF1	18
 # define SUPER_SHOTGUN_SHOT_EFF2	20
 # define SUPER_SHOTGUN_RELOAD1		30
 # define SUPER_SHOTGUN_RELOAD2		33

@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/22 17:11:36 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 14:40:49 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ bool		dn_init_ck_map(t_hinit h)
 	p.y = -1;
 	h.t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(h.t->surf = sdl_load_surface(h.path));
+	_NOTIS_F(h.t->surf = sdl_load_surface(h.path, IS_FORMAT_SURF));
 	_NOTIS_F(h.t->pxls = h.t->surf->pixels);
 	h.t->s = (point) {h.t->surf->w, h.t->surf->h};
 	while(++(p.y) < h.t->s.h && (p.x = -1))
 		while (++(p.x) < h.t->s.w)
 			if (h.t->pxls[p.y * h.t->s.w + p.x] == h.ck_color)
 			{
-				if ((which_texture_skip =
-					dn_check_saved_texture(p, h.t->tmax, spos, epos)))
+				if ((which_texture_skip
+					= dn_check_saved_texture(p, h.t->tmax, spos, epos)))
 					p.x = epos[which_texture_skip - 1].x;
 				else
 					add_save_current_texture_pos(p, spos, epos, &h);
@@ -90,7 +90,7 @@ bool		dn_init_textures_map(t_textures *t)
 
 	i = -1;
 	p = (point){0, 0};
-	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP));
+	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP, IS_FORMAT_SURF));
 	_NOTIS_F(t->walls.pxls = t->walls.surf->pixels);
 	t->walls.s = (point){t->walls.surf->w, t->walls.surf->h};
 	t->walls.tmax = WALL_MAX_TEXTURES;
@@ -104,7 +104,7 @@ bool		dn_init_textures_map(t_textures *t)
 		if (i + 1 == t->walls.tmax / 2)
 			p = (point){0, p.y + WALL_SIZE};
 	}
-	_NOTIS_F(dn_init_ck_map((t_hinit){
-		&t->wpns, WPNS_MAP, WPNS_TEX_BG, WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
+	_NOTIS_F(dn_init_ck_map((t_hinit){&t->wpns, WPNS_MAP, WPNS_TEX_BG,
+									WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
 	return (true);
 }
