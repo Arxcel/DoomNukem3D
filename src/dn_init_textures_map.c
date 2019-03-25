@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/25 00:21:21 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 14:40:49 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool		dn_init_ck_map(t_hinit h)
 	p.y = -1;
 	h.t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(h.t->surf = sdl_load_surface(h.path, 1));
+	_NOTIS_F(h.t->surf = sdl_load_surface(h.path, IS_FORMAT_SURF));
 	_NOTIS_F(h.t->pxls = h.t->surf->pixels);
 	h.t->s = (point) {h.t->surf->w, h.t->surf->h};
 	while(++(p.y) < h.t->s.h && (p.x = -1))
@@ -90,7 +90,7 @@ bool		dn_init_textures_map(t_textures *t)
 
 	i = -1;
 	p = (point){0, 0};
-	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP, 1));
+	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP, IS_FORMAT_SURF));
 	_NOTIS_F(t->walls.pxls = t->walls.surf->pixels);
 	t->walls.s = (point){t->walls.surf->w, t->walls.surf->h};
 	t->walls.tmax = WALL_MAX_TEXTURES;

@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/25 00:20:28 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 14:40:01 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@
 
 # ifdef __APPLE__
 #  define WPNS_TEX_BG	0xff00ffff
-#  define WPNS_MAP_BG	0xb195c8b1
+#  define WPNS_MAP_BG	0xff95b1c8
+#  define IS_FORMAT_SURF	0
 # endif
 
 # ifdef __linux__
 #  define WPNS_TEX_BG	0xffff
 #  define WPNS_MAP_BG	0x95b1c8
+#  define IS_FORMAT_SURF	1
 # endif
 
 # define PISTOL_ICO			2
