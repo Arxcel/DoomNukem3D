@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/25 00:23:44 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 23:48:08 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void LoadData(t_map *map)
 				{
 					t_vertex t = vert[num[n]];
 					sect->vertices[n + 1]  = t; // TODO: Range checking
-					
+
 					if (vert[num[n]].x >= sect->max.x)
 						sect->max.x = vert[num[n]].x;
 					if (vert[num[n]].y >= sect->max.y)
@@ -143,11 +143,13 @@ int					main(int ac, char **av)
 
 	(void)av;
 	ft_bzero(&m, sizeof(t_main));
+	_ISZ(t_wsys, m.wsys, 1);
 	LoadData(&m.map);
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
 	_NOTIS_F(dn_init_textures_map(&m.tex));
+	_NOTIS_F(dn_init_weapons(m.wsys, &m.tex.wpns));
 	sdl_loop(&m);
 	UnloadData(&m.map);
 	SDL_Quit();

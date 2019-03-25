@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/24 22:54:53 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 17:20:06 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "utils.h"
 # include "macroses.h"
 # include "textures.h"
+# include "weapons.h"
 
 # define W 800
 # define H 600
@@ -36,6 +37,13 @@
 # define FAR_Z		5
 # define NEAR_SIDE	1e-5f
 # define FAR_SIDE	20.f
+typedef struct		s_main
+{
+	t_sdl		sdl;
+	t_map		map;
+	t_textures	tex;
+	t_wsys		*wsys;
+}					t_main;
 
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);

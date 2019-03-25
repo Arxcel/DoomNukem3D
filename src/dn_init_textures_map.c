@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/25 14:40:49 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 23:56:08 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			dn_check_saved_texture(point p, int already_saved_textures,
 									point *spos, point *epos)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < already_saved_textures)
 		if ((p.y >= spos[i].y && p.y < epos[i].y)
@@ -24,6 +24,22 @@ int			dn_check_saved_texture(point p, int already_saved_textures,
 			return (i + 1);
 	return (false);
 }
+
+static bool	add_copy_pos(t_hinit *h, point *spos, point *epos)
+{
+	int	i;
+
+	i = -1;
+	_ISZ(point, h->t->spos, h->t->tmax);
+	_ISZ(point, h->t->epos, h->t->tmax);
+	while (++i < h->t->tmax)
+	{
+		h->t->spos[i] = spos[i];
+		h->t->epos[i] = epos[i];
+	}
+	return (true);
+}
+
 
 static void	add_save_current_texture_pos(point p, point *spos,
 										point *epos, t_hinit *h)
@@ -40,21 +56,6 @@ static void	add_save_current_texture_pos(point p, point *spos,
 			!= h->bg_color)
 		++(epos[h->t->tmax].y);
 	++(h->t->tmax);
-}
-
-static bool	add_copy_textures_pos_to_map(t_hinit *h, point *spos, point *epos)
-{
-	int	i;
-
-	i = -1;
-	_ISZ(point, h->t->spos, h->t->tmax);
-	_ISZ(point, h->t->epos, h->t->tmax);
-	while (++i < h->t->tmax)
-	{
-		h->t->spos[i] = spos[i];
-		h->t->epos[i] = epos[i];
-	}
-	return (true);
 }
 
 bool		dn_init_ck_map(t_hinit h)
@@ -80,7 +81,7 @@ bool		dn_init_ck_map(t_hinit h)
 				else
 					add_save_current_texture_pos(p, spos, epos, &h);
 			}
-	return (add_copy_textures_pos_to_map(&h, spos, epos));
+	return (add_copy_pos(&h, spos, epos));
 }
 
 bool		dn_init_textures_map(t_textures *t)
