@@ -54,6 +54,7 @@ DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 
 DIR_S := src
 DIR_O := obj
+DIR_OW := weapons
 SOURCES =   main.c \
 			sdl_handle.c \
 			player_movement.c \
@@ -65,7 +66,8 @@ SOURCES =   main.c \
 			geom_utils.c \
 			dn_init_textures_map.c \
 			line.c \
-			minimap.c
+			minimap.c \
+			weapons/dn_init_weapons.c
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
@@ -84,7 +86,8 @@ libs:
 	make -C $(LIBFTSDL)
 
 obj:
-	mkdir -p obj
+	mkdir -p $(DIR_O)
+	mkdir -p $(DIR_O)/$(DIR_OW)
 
 $(DIR_O)/%.o: $(DIR_S)/%.c $(DEPS) $(EXTENSIONS)
 		$(CC) -c -o $@ $< $(FLAGS) $(CFLAGS)
@@ -103,6 +106,7 @@ clean:
 		make clean -C $(LIBFTSDL)
 		make clean -C $(LIBJSON)
 		rm -rf $(DIR_O)
+		rm -rf $(DIR_O)/$(DIR_OW)
 
 fclean: clean
 		rm -f $(NAME)

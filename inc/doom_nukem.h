@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/24 22:54:53 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/25 22:46:13 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@
 # include "utils.h"
 # include "macroses.h"
 # include "textures.h"
+# include "weapons.h"
 
 typedef struct		s_main
 {
 	t_sdl		sdl;
 	t_map		map;
 	t_textures	tex;
+	t_wsys		*wsys;
 }					t_main;
 
 void				sdl_hook(t_main *m);
