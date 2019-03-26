@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:27:26 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 20:23:17 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 22:31:26 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	pidle(t_weapon *w, t_tmap *t, t_img *i)
 {
-	Uint32	curr_pxl;
 	point	p;
+	Uint32	curr_pxl;
 
 	p.y = w->spos[0].y - 1;
 	while (++(p.y) < w->epos[0].y && (p.x = w->spos[0].x - 1))

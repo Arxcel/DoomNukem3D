@@ -118,12 +118,13 @@ fclean: clean
 		make fclean -C $(LIBJSON)
 
 pre_clean:
-		rm -rf $(DIR_O)/$(DIR_OW)
-		rm -rf $(DIR_O)
+		rm -f $(DIR_O)/$(DIR_OW)/*.o
+		rm -f $(DIR_O)/*.o
+		rm -f $(NAME)
 pre: pre_clean all
 
 re: fclean all
 
 .PHONY: all, obj, norme, clean, fclean, re, pre
 .NOTPARALLEL:  all, obj, norme, clean, fclean, re, pre
-.SILENT:
+# .SILENT:

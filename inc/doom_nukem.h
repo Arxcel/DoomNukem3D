@@ -13,8 +13,8 @@
 #ifndef FT_DOOM_NUKEM_H
 # define FT_DOOM_NUKEM_H
 
-# define W 1280
-# define H 720
+# define W 720
+# define H 480
 
 # include <stdio.h>
 # include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 18:37:15 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 22:31:57 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@
 #  define WPNS_TEX_BG	0xff00ffff
 #  define WPNS_MAP_BG	0xff95b1c8
 #  define IS_FORMAT_SURF	0
+#  define PIXEL_FORMAT	SDL_PIXELFORMAT_ARGB8888
 # endif
 
 # ifdef __linux__
 #  define WPNS_TEX_BG	0xffff
 #  define WPNS_MAP_BG	0x95b1c8
 #  define IS_FORMAT_SURF	1
+#  define PIXEL_FORMAT	SDL_PIXELFORMAT_RGB888
 # endif
 
 /*
@@ -175,6 +177,6 @@ typedef struct	s_copy_helper
 bool			dn_init_textures_map(t_textures *tmap);
 int				dn_check_saved_texture(point p, int already_saved_textures,
 										point *spos, point *epos);
-bool			dn_init_ck_map(t_hinit h, point scale);
+bool			dn_init_ck_map(t_hinit h, float scale);
 
 #endif
