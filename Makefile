@@ -105,8 +105,8 @@ clean:
 		make clean -C $(LIBFT)
 		make clean -C $(LIBFTSDL)
 		make clean -C $(LIBJSON)
-		rm -rf $(DIR_O)
 		rm -rf $(DIR_O)/$(DIR_OW)
+		rm -rf $(DIR_O)
 
 fclean: clean
 		rm -f $(NAME)
