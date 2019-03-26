@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/25 23:56:08 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 12:07:04 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,25 +86,6 @@ bool		dn_init_ck_map(t_hinit h)
 
 bool		dn_init_textures_map(t_textures *t)
 {
-	point	p;
-	int		i;
-
-	i = -1;
-	p = (point){0, 0};
-	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP, IS_FORMAT_SURF));
-	_NOTIS_F(t->walls.pxls = t->walls.surf->pixels);
-	t->walls.s = (point){t->walls.surf->w, t->walls.surf->h};
-	t->walls.tmax = WALL_MAX_TEXTURES;
-	_ISZ(point, t->walls.spos, t->walls.tmax);
-	_ISZ(point, t->walls.epos, t->walls.tmax);
-	while (++i < t->walls.tmax)
-	{
-		t->walls.spos[i] = (point){p.x, p.y};
-		t->walls.epos[i] = (point){p.x + WALL_SIZE, p.y + WALL_SIZE};
-		p.x += WALL_SIZE;
-		if (i + 1 == t->walls.tmax / 2)
-			p = (point){0, p.y + WALL_SIZE};
-	}
 	_NOTIS_F(dn_init_ck_map((t_hinit){&t->wpns, WPNS_MAP, WPNS_TEX_BG,
 									WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
 	return (true);

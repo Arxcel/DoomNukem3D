@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/27 17:20:06 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 17:22:12 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define FAR_Z		5
 # define NEAR_SIDE	1e-5f
 # define FAR_SIDE	20.f
+
 typedef struct		s_main
 {
 	t_sdl		sdl;

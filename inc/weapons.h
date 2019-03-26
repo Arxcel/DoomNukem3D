@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:51:08 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/25 23:48:15 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 12:55:31 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,60 @@ typedef enum	e_state
 	shot,
 	reload,
 	draw,
-	hide
+	hide,
+	max_anim_states
 } __attribute__((packed))				t_state;
+
+typedef enum	e_current_weapon
+{
+	hands,
+	pistol,
+	sgun,
+	ssgun,
+	plasg,
+	chsaw,
+	rockl,
+	cgun,
+	bfg,
+	max_weapons
+} __attribute__((packed))				t_curr_w;
 
 typedef struct	s_weapon
 {
-	t_state	state;
 	int		fcount;
 	point	*spos;
 	point	*epos;
 }				t_weapon;
 
-
 typedef struct	s_weapons_system
 {
-	t_weapon	*pistol;
 	t_weapon	*hands;
+	t_weapon	*pistol;
+	t_weapon	*sgun;
+	t_weapon	*ssgun;
 	t_weapon	*plasg;
 	t_weapon	*chsaw;
 	t_weapon	*rockl;
-	t_weapon	*ssgun;
-	t_weapon	*sgun;
 	t_weapon	*cgun;
 	t_weapon	*bfg;
+	t_curr_w	wcurr;
+	t_state		state;
+	bool		no_action;
 }				t_wsys;
 
 bool			dn_init_weapons(t_wsys *wsys, t_tmap *t);
+
+void			dn_handle_wchange_wstate(t_wsys *wsys, int key);
+
+void			dn_choose_current_weapon_render(t_wsys *wsys, t_tmap *t);
+
+void			dn_render_pistol(t_weapon *w, t_tmap *tmap, t_state state);
+void			pidle(t_weapon *w, t_tmap *tmap);
+void			pshot(t_weapon *w, t_tmap *tmap);
+void			preload(t_weapon *w, t_tmap *tmap);
+void			pdraw(t_weapon *w, t_tmap *tmap);
+void			phide(t_weapon *w, t_tmap *tmap);
+
+typedef void (*fn_ptr)(t_weapon*, t_tmap*);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/25 23:56:16 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 12:38:19 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ typedef struct	s_textures_map
 
 typedef struct		s_textures
 {
-	t_tmap	walls;
 	t_tmap	wpns;
 }					t_textures;
 

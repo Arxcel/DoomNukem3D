@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/25 23:48:08 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 17:21:48 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void				sdl_loop(t_main *m)
 		if (m->delta_time > 0.016f)
 		{
 			draw_screen(m);
+			dn_choose_current_weapon_render(m->wsys, &m->tex.wpns);
 			drawMinimap(&m->sdl.img, &m->map);
 			sdl_put_image(&m->sdl);
 			move_player(m);
