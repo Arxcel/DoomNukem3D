@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/26 12:43:42 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 16:54:36 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void				sdl_loop(t_main *m)
 	{
 		sdl_hook(m);
 		draw_screen(&m->sdl.img, &m->map);
-		dn_choose_current_weapon_render(m->wsys, &m->tex.wpns);
+		dn_choose_weapon_render(m->wsys, &m->tex.wpns, &m->sdl.img);
 		drawMinimap(&m->sdl.img, &m->map);
 		sdl_put_image(&m->sdl);
 		move_player(m);
@@ -138,7 +138,8 @@ int					main(int ac, char **av)
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	_NOTIS_F(dn_init_textures_map(&m.tex));
+	_NOTIS_F(dn_init_ck_map((t_hinit){&m.tex.wpns, WPNS_MAP, WPNS_TEX_BG,
+									WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
 	_NOTIS_F(dn_init_weapons(m.wsys, &m.tex.wpns));
 	sdl_loop(&m);
 	UnloadData(&m.map);

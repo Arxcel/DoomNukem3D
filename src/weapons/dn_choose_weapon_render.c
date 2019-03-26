@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dn_choose_current_weapon_render.c                  :+:      :+:    :+:   */
+/*   dn_choose_weapon_render.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:36:26 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 13:01:53 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 13:52:26 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	dn_choose_current_weapon_render(t_wsys *wsys, t_tmap *t)
+void	dn_choose_weapon_render(t_wsys *wsys, t_tmap *t, t_img *i)
 {
 	if (wsys->wcurr == hands)
 		printf("hands\n");
 	else if (wsys->wcurr == pistol)
-		dn_render_pistol(wsys->pistol, t, wsys->state);
+		dn_render_pistol(wsys->pistol, t, wsys->state, i);
 	else if (wsys->wcurr == sgun)
 		printf("shotgun\n");
 	else if (wsys->wcurr == ssgun)
