@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:30:30 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 12:50:45 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 18:30:19 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static bool	acp_frames(t_weapon **w, t_tmap *t, int frames[], int fcount)
 {
-	int	i = -1;
+	int	i;
 
+	i = -1;
 	_ISZ(t_weapon, *w, 1);
 	(*w)->fcount = fcount;
 	_ISZ(point, (*w)->spos, (*w)->fcount);
@@ -25,10 +26,10 @@ static bool	acp_frames(t_weapon **w, t_tmap *t, int frames[], int fcount)
 		(*w)->spos[i] = t->spos[frames[i]];
 		(*w)->epos[i] = t->epos[frames[i]];
 	}
-	return true;
+	return (true);
 }
 
-bool	dn_init_weapons(t_wsys *wsys, t_tmap *t)
+bool		dn_init_weapons(t_wsys *wsys, t_tmap *t)
 {
 	_NOTIS_F(acp_frames(&wsys->pistol, t,
 		(int[]){PISTOL, PSHE, PAS1, PAS2, PAS3, PAS4}, PFRMS));

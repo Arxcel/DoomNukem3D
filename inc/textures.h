@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 17:36:21 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 18:29:22 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # endif
 
 /*
-**	All smal named defines used only for above fucking norme.
+**	All short named defines used only for above fucking norme.
 **
 **	- Someting about this defines:
 **		H	- Hands
