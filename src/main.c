@@ -7,10 +7,14 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2019/03/27 17:21:48 by tmaluh           ###   ########.fr       */
 =======
 /*   Updated: 2019/03/26 16:54:36 by tmaluh           ###   ########.fr       */
 >>>>>>> added scaling Surface for normal weapons size
+=======
+/*   Updated: 2019/03/26 18:49:21 by tmaluh           ###   ########.fr       */
+>>>>>>> minor fixes & shift dont work
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +158,8 @@ int					main(int ac, char **av)
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
 	_NOTIS_F(dn_init_ck_map((t_hinit){&m.tex.wpns, WPNS_MAP, WPNS_TEX_BG,
-									WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
+									WPNS_MAP_BG, WPNS_MAX_TEXTURES},
+							(point){WEAPON_SCALE_W, WEAPON_SCALE_H}));
 	_NOTIS_F(dn_init_weapons(m.wsys, &m.tex.wpns));
 	sdl_loop(&m);
 	UnloadData(&m.map);

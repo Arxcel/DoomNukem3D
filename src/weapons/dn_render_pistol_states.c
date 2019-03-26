@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:27:26 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 18:30:35 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 20:23:17 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	pidle(t_weapon *w, t_tmap *t, t_img *i)
 		{
 			curr_pxl = t->pxls[p.y * t->s.w + p.x];
 			if (curr_pxl != WPNS_TEX_BG)
-				sdl_pixel_put(i, PSHIFT_X, PSHIFT_Y, curr_pxl);
+				sdl_pixel_put(i, PSHIFT_X(0), PSHIFT_Y(0), curr_pxl);
 		}
 }
 
