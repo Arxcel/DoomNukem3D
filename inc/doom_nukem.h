@@ -6,15 +6,15 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/25 22:46:13 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 12:07:49 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DOOM_NUKEM_H
 # define FT_DOOM_NUKEM_H
 
-# define W 800
-# define H 600
+# define W 1280
+# define H 720
 
 # include <stdio.h>
 # include <stdlib.h>

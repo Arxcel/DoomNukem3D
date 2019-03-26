@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 11:52:46 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/26 12:48:38 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void			handle_key(t_main *m, int key)
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
 		m->map.player.is_falling = true;
 	}
+	dn_handle_wchange_wstate(m->wsys, key);
 }
 
 void				sdl_hook(t_main *m)

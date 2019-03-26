@@ -67,7 +67,11 @@ SOURCES =   main.c \
 			dn_init_textures_map.c \
 			line.c \
 			minimap.c \
-			weapons/dn_init_weapons.c
+			weapons/dn_init_weapons.c \
+			weapons/dn_choose_current_weapon_render.c \
+			weapons/dn_render_pistol.c \
+			weapons/dn_render_pistol_states.c \
+			weapons/dn_sdl_handle_key_wchoose_wstate.c
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
