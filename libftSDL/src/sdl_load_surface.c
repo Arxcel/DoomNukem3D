@@ -6,14 +6,14 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 17:01:44 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 17:35:01 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 22:02:31 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_sdl.h"
 #include "ft_libftu.h"
 
-SDL_Surface	*sdl_load_surface(const char *path, int is_format)
+SDL_Surface	*sdl_load_surface(const char *path, int is_format, size_t format)
 {
 	SDL_Surface		*out;
 	SDL_Surface		*temp;
@@ -28,8 +28,8 @@ SDL_Surface	*sdl_load_surface(const char *path, int is_format)
 	}
 	if (is_format)
 	{
-		fmt = (SDL_PixelFormat){.BytesPerPixel = 4,
-		.BitsPerPixel = 32, .format = SDL_PIXELFORMAT_ARGB8888};
+		fmt = (SDL_PixelFormat){.BytesPerPixel = 4, .BitsPerPixel = 32,
+								.format = format};
 		if ((out = SDL_ConvertSurface(temp, &fmt, 0)) == NULL)
 		{
 			ft_putendl(SDL_GetError());

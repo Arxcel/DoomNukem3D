@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 18:35:50 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 22:33:16 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ static void	add_save_current_texture_pos(point p, point *spos,
 	++(h->t->tmax);
 }
 
-static bool	add_scale_surface(t_hinit *h, point scale)
+static bool	add_scale_surface(t_hinit *h, float scale)
 {
 	SDL_Surface		*temp;
 	SDL_Rect		dst_rect;
 
-	_NOTIS_F(temp = sdl_load_surface(WPNS_MAP, 1));
-	dst_rect = (SDL_Rect){0, 0, temp->w * scale.w, temp->h * scale.h};
-	h->t->surf = SDL_CreateRGBSurfaceWithFormat(0, dst_rect.w, dst_rect.h, 32,
-												SDL_PIXELFORMAT_ARGB8888);
+	_NOTIS_F(temp = sdl_load_surface(WPNS_MAP, IS_FORMAT_SURF, PIXEL_FORMAT));
+	dst_rect = (SDL_Rect){0, 0, temp->w * scale, temp->h * scale};
+	h->t->surf = SDL_CreateRGBSurfaceWithFormat(0, dst_rect.w, dst_rect.h,
+			32, PIXEL_FORMAT);
 	_IS(SDL_BlitScaled(temp, NULL, h->t->surf, &dst_rect) < 0);
 	_NOTIS_F(h->t->pxls = h->t->surf->pixels);
 	h->t->s = (point) {h->t->surf->w, h->t->surf->h};
@@ -74,7 +74,7 @@ static bool	add_scale_surface(t_hinit *h, point scale)
 	return (true);
 }
 
-bool		dn_init_ck_map(t_hinit h, point scale)
+bool		dn_init_ck_map(t_hinit h, float scale)
 {
 	point		p;
 	point		spos[h.max_textures];

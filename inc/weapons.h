@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:51:08 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 20:24:44 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 22:34:22 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 # include "doom_nukem.h"
 
 # define PSHIFT_X(i)	(((p.x - w->spos[i].x) + W) / 2)
-# define PSHIFT_Y(i)	((H + w->epos[i].y) - w->spos[i].y)
+# define PSHIFT_Y(i)	(H - (w->epos[i].y - p.y))
 
-# define WEAPON_SCALE_W	2
-# define WEAPON_SCALE_H	WEAPON_SCALE_W
+# define WEAPON_SCALE	2.22
 
 typedef enum	e_state
 {

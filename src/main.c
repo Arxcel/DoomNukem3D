@@ -6,15 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2019/03/27 17:21:48 by tmaluh           ###   ########.fr       */
-=======
-/*   Updated: 2019/03/26 16:54:36 by tmaluh           ###   ########.fr       */
->>>>>>> added scaling Surface for normal weapons size
-=======
-/*   Updated: 2019/03/26 18:49:21 by tmaluh           ###   ########.fr       */
->>>>>>> minor fixes & shift dont work
+/*   Updated: 2019/03/27 17:24:01 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
