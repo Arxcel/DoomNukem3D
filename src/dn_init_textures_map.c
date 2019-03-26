@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 12:07:04 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 17:35:24 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,33 @@ static void	add_save_current_texture_pos(point p, point *spos,
 	++(h->t->tmax);
 }
 
+static bool	add_scale_surface(t_hinit *h)
+{
+	SDL_Surface		*temp;
+	SDL_Rect		scale;
+
+	_NOTIS_F(temp = sdl_load_surface(WPNS_MAP, 1));
+	scale = (SDL_Rect){0, 0, temp->w * 10, temp->h * 10};
+	h->t->surf = SDL_CreateRGBSurfaceWithFormat(0, scale.w, scale.h, 32,
+												SDL_PIXELFORMAT_ARGB8888);
+	_IS(SDL_BlitScaled(temp, NULL, h->t->surf, &scale) < 0);
+	_NOTIS_F(h->t->pxls = h->t->surf->pixels);
+	h->t->s = (point) {h->t->surf->w, h->t->surf->h};
+	SDL_FreeSurface(temp);
+	return (true);
+}
+
 bool		dn_init_ck_map(t_hinit h)
 {
-	point	p;
-	point	spos[h.max_textures];
-	point	epos[h.max_textures];
-	int		which_texture_skip;
+	point		p;
+	point		spos[h.max_textures];
+	point		epos[h.max_textures];
+	int			which_texture_skip;
 
 	p.y = -1;
 	h.t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(h.t->surf = sdl_load_surface(h.path, IS_FORMAT_SURF));
-	_NOTIS_F(h.t->pxls = h.t->surf->pixels);
-	h.t->s = (point) {h.t->surf->w, h.t->surf->h};
+	_NOTIS_F(add_scale_surface(&h));
 	while(++(p.y) < h.t->s.h && (p.x = -1))
 		while (++(p.x) < h.t->s.w)
 			if (h.t->pxls[p.y * h.t->s.w + p.x] == h.ck_color)
@@ -82,11 +96,4 @@ bool		dn_init_ck_map(t_hinit h)
 					add_save_current_texture_pos(p, spos, epos, &h);
 			}
 	return (add_copy_pos(&h, spos, epos));
-}
-
-bool		dn_init_textures_map(t_textures *t)
-{
-	_NOTIS_F(dn_init_ck_map((t_hinit){&t->wpns, WPNS_MAP, WPNS_TEX_BG,
-									WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
-	return (true);
 }

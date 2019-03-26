@@ -67,7 +67,7 @@ SOURCES =   main.c \
 			line.c \
 			minimap.c \
 			weapons/dn_init_weapons.c \
-			weapons/dn_choose_current_weapon_render.c \
+			weapons/dn_choose_weapon_render.c \
 			weapons/dn_render_pistol.c \
 			weapons/dn_render_pistol_states.c \
 			weapons/dn_sdl_handle_key_wchoose_wstate.c
@@ -81,7 +81,6 @@ $(NAME): $(OBJS) $(EXTENSIONS)
 		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) \
 		-L $(LIBFTSDL) -lftSDL -L $(LIBJSON) -lJSON \
 		$(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft
-
 
 libs: 
 	make -C $(LIBFT)
@@ -117,8 +116,13 @@ fclean: clean
 		make fclean -C $(LIBFTSDL)
 		make fclean -C $(LIBJSON)
 
+pre_clean:
+		rm -rf $(DIR_O)/$(DIR_OW)
+		rm -rf $(DIR_O)
+pre: pre_clean all
+
 re: fclean all
 
-.PHONY: all, obj, norme, clean, fclean, re
-.NOTPARALLEL:  all, obj, norme, clean, fclean, re
+.PHONY: all, obj, norme, clean, fclean, re, pre
+.NOTPARALLEL:  all, obj, norme, clean, fclean, re, pre
 .SILENT:
