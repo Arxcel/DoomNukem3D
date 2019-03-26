@@ -24,7 +24,7 @@ static void		transform_player(t_map *map)
 	s = -1;
 	while (++s < sect->number_vertices)
 		if(sect->neighbors[s] >= 0 &&
-		intersects(&map->player, vert[s], vert[s + 1]))
+			intersects(&map->player, vert[s], vert[s + 1]))
 		{
 			map->player.sector_number = sect->neighbors[s];
 			printf("player in sector: %zu\n", map->player.sector_number);
@@ -43,7 +43,7 @@ static void player_vertical_movement(t_main *m)
 
 	player_sector = &m->map.sectors[m->map.player.sector_number];
     eyeheight = m->map.player.is_crouching ? CROUCHINGHEIGHT : STANDHEIGHT;
-    m->map.player.velocity.z -= 0.01f;
+    m->map.player.velocity.z -= m->delta_time * GRAVITY;
     nextz = m->map.player.position.z + m->map.player.velocity.z;
     if (m->map.player.velocity.z < 0 &&
 							nextz < player_sector->floor_height + eyeheight)
@@ -117,7 +117,7 @@ void move_player(t_main *m)
 	if (m->map.player.is_moving)
 		player_horizontal_movement(m);
 	get_player_direction(m);
-	moveDir = get_player_velocity(&m->map.player);
+	moveDir = get_player_velocity(m);
 	pushing = m->map.player.dir.forward || m->map.player.dir.backward ||
 	m->map.player.dir.right || m->map.player.dir.left || m->map.player.is_falling;
 	acceleration = pushing ? 0.4 : 0.2;
