@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 17:35:24 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 18:35:50 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,23 @@ static void	add_save_current_texture_pos(point p, point *spos,
 	++(h->t->tmax);
 }
 
-static bool	add_scale_surface(t_hinit *h)
+static bool	add_scale_surface(t_hinit *h, point scale)
 {
 	SDL_Surface		*temp;
-	SDL_Rect		scale;
+	SDL_Rect		dst_rect;
 
 	_NOTIS_F(temp = sdl_load_surface(WPNS_MAP, 1));
-	scale = (SDL_Rect){0, 0, temp->w * 10, temp->h * 10};
-	h->t->surf = SDL_CreateRGBSurfaceWithFormat(0, scale.w, scale.h, 32,
+	dst_rect = (SDL_Rect){0, 0, temp->w * scale.w, temp->h * scale.h};
+	h->t->surf = SDL_CreateRGBSurfaceWithFormat(0, dst_rect.w, dst_rect.h, 32,
 												SDL_PIXELFORMAT_ARGB8888);
-	_IS(SDL_BlitScaled(temp, NULL, h->t->surf, &scale) < 0);
+	_IS(SDL_BlitScaled(temp, NULL, h->t->surf, &dst_rect) < 0);
 	_NOTIS_F(h->t->pxls = h->t->surf->pixels);
 	h->t->s = (point) {h->t->surf->w, h->t->surf->h};
 	SDL_FreeSurface(temp);
 	return (true);
 }
 
-bool		dn_init_ck_map(t_hinit h)
+bool		dn_init_ck_map(t_hinit h, point scale)
 {
 	point		p;
 	point		spos[h.max_textures];
@@ -84,7 +84,7 @@ bool		dn_init_ck_map(t_hinit h)
 	p.y = -1;
 	h.t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(add_scale_surface(&h));
+	_NOTIS_F(add_scale_surface(&h, scale));
 	while(++(p.y) < h.t->s.h && (p.x = -1))
 		while (++(p.x) < h.t->s.w)
 			if (h.t->pxls[p.y * h.t->s.w + p.x] == h.ck_color)

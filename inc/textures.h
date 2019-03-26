@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 18:29:22 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 18:37:15 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,9 @@ typedef struct	s_copy_helper
 	int		max;
 }				t_hcp;
 
-
-bool	dn_init_textures_map(t_textures *tmap);
-int		dn_check_saved_texture(point p, int already_saved_textures,
-								point *spos, point *epos);
-bool	dn_init_ck_map(t_hinit h);
+bool			dn_init_textures_map(t_textures *tmap);
+int				dn_check_saved_texture(point p, int already_saved_textures,
+										point *spos, point *epos);
+bool			dn_init_ck_map(t_hinit h, point scale);
 
 #endif
