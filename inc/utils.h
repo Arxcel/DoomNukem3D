@@ -13,7 +13,6 @@
 #ifndef UTILS_H
 # define UTILS_H
 # include "structure.h"
-# include "enum.h"
 
 float		minf(float a, float b);
 float		maxf(float a, float b);

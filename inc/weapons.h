@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:51:08 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 22:34:22 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 16:23:45 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define PSHIFT_X(i)	(((p.x - w->spos[i].x) + W) / 2)
 # define PSHIFT_Y(i)	(H - (w->epos[i].y - p.y))
 
-# define WEAPON_SCALE	2.22
+# define WEAPON_SCALE	2.35
 
 typedef enum	e_state
 {
@@ -80,6 +80,8 @@ void			preload(t_weapon *w, t_tmap *t, t_img *i);
 void			pdraw(t_weapon *w, t_tmap *t, t_img *i);
 void			phide(t_weapon *w, t_tmap *t, t_img *i);
 
-typedef void (*fn_ptr)(t_weapon*, t_tmap*, t_img*);
+# define _FPTR_ST typedef void (*fptr_st)(t_weapon*, t_tmap*, t_img*);
+
+_FPTR_ST;
 
 #endif

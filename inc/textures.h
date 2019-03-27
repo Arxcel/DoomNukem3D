@@ -6,14 +6,13 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:18:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 22:31:57 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 16:25:51 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEXTURES_H
 # define TEXTURES_H
 
-# include "enum.h"
 # include "structure.h"
 
 # define WALL_SIZE	64
@@ -26,15 +25,15 @@
 # ifdef __APPLE__
 #  define WPNS_TEX_BG	0xff00ffff
 #  define WPNS_MAP_BG	0xff95b1c8
-#  define IS_FORMAT_SURF	0
 #  define PIXEL_FORMAT	SDL_PIXELFORMAT_ARGB8888
+#  define IS_FORMAT_SURF	0
 # endif
 
 # ifdef __linux__
 #  define WPNS_TEX_BG	0xffff
 #  define WPNS_MAP_BG	0x95b1c8
-#  define IS_FORMAT_SURF	1
 #  define PIXEL_FORMAT	SDL_PIXELFORMAT_RGB888
+#  define IS_FORMAT_SURF	1
 # endif
 
 /*
@@ -151,10 +150,10 @@ typedef struct	s_textures_map
 	int			tmax;
 }				t_tmap;
 
-typedef struct		s_textures
+typedef struct	s_textures
 {
 	t_tmap	wpns;
-}					t_textures;
+}				t_textures;
 
 typedef struct	s_init_helper
 {

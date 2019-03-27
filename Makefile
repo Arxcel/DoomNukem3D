@@ -5,11 +5,13 @@ KEYS := #-Wall -Wextra -Werror
 FLAGS := -g
 
 EXT := doom_nukem.h \
-		enum.h \
 		structure.h \
 		utils.h \
 		player.h \
-		graphics_renderer.h
+		graphics_renderer.h \
+		weapons.h \
+		textures.h \
+		macroses.h
 IDIR := $(CURDIR)/inc
 EXTENSIONS := $(addprefix $(IDIR)/,$(EXT))
 
@@ -44,11 +46,12 @@ SDL2_P := -rpath @loader_path/libSDL/
 
 HEADER := inc
 _DEPS := doom_nukem.h \
-		enum.h \
 		structure.h \
 		utils.h \
 		player.h \
 		graphics_renderer.h \
+		weapons.h \
+		textures.h \
 		macroses.h
 DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 

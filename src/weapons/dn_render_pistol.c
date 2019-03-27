@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:05:09 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 13:52:14 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 16:22:20 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	dn_render_pistol(t_weapon *w, t_tmap *t, t_state s, t_img *img)
 {
-	const fn_ptr	fn_states[] = {pidle, pshot, preload, pdraw, phide};
+	const fptr_st	fn_states[] = {pidle, pshot, preload, pdraw, phide};
 	int				i;
 
 	i = -1;
