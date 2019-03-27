@@ -192,6 +192,16 @@ typedef struct		s_wall
 	int				ncyb;
 }					t_wall;
 
+typedef struct s_interpolator
+{
+	int				current;
+	int				step;
+	int				target_length;
+	int				basic_length;
+	int				temp;
+
+}					t_interp;
+
 typedef struct	s_textures_map
 {
 	SDL_Surface	*surf;
@@ -202,10 +212,17 @@ typedef struct	s_textures_map
 	int			tmax;
 }				t_tmap;
 
-typedef struct	s_textures
+typedef struct	s_texture_blocks
 {
-	t_tmap	wpns;
-}				t_textures;
+	SDL_Surface	**textures;
+	size_t		numTextures;
+}				t_tblocks;
+
+typedef struct		s_textures
+{
+	t_tmap			wpns;
+	t_tblocks		t;
+}					t_textures;
 
 typedef struct	s_init_helper
 {
