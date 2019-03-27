@@ -58,7 +58,7 @@ DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 DIR_S := src
 DIR_O := obj
 DIR_OW := weapons
-SOURCES :=   main.c \
+SOURCES :=  main.c \
 			sdl_handle.c \
 			player_movement.c \
 			player_direction.c \
