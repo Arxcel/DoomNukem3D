@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-#include "graphics_renderer.h"
 #include <math.h>
 
 void		drawMinimap(t_img *img, t_map *map)

@@ -8,8 +8,8 @@ EXT := doom_nukem.h \
 		enum.h \
 		structure.h \
 		utils.h \
-		player.h \
-		graphics_renderer.h
+		player.h 
+
 IDIR := $(CURDIR)/inc
 EXTENSIONS := $(addprefix $(IDIR)/,$(EXT))
 
@@ -48,7 +48,6 @@ _DEPS := doom_nukem.h \
 		structure.h \
 		utils.h \
 		player.h \
-		graphics_renderer.h \
 		macroses.h
 DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 

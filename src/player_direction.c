@@ -31,30 +31,30 @@ void			get_player_direction(t_main *m)
 	m->map.player.anglecos = cosf(m->map.player.angle);
 }
 
-t_vertex		get_player_velocity(t_player *p)
+t_vertex		get_player_velocity(t_main *m)
 {
 	t_vertex res;
 
 	ft_bzero(&res, sizeof(res));
-	if (p->dir.forward)
+	if (m->map.player.dir.forward)
 	{
-		res.x += p->anglecos * 0.1f;
-		res.y += p->anglesin * 0.1f;
+		res.x += m->map.player.anglecos * m->delta_time * SPEED;
+		res.y += m->map.player.anglesin * m->delta_time * SPEED;
 	}
-	if (p->dir.backward)
+	if (m->map.player.dir.backward)
 	{
-		res.x -= p->anglecos * 0.1f;
-		res.y -= p->anglesin * 0.1f;
+		res.x -= m->map.player.anglecos * m->delta_time * SPEED;
+		res.y -= m->map.player.anglesin * m->delta_time * SPEED;
 	}
-	if (p->dir.left)
+	if (m->map.player.dir.left)
 	{
-		res.x += p->anglesin * 0.1f;
-		res.y -= p->anglecos * 0.1f;
+		res.x += m->map.player.anglesin * m->delta_time * SPEED;
+		res.y -= m->map.player.anglecos * m->delta_time * SPEED;
 	}
-	if (p->dir.right)
+	if (m->map.player.dir.right)
 	{
-		res.x -= p->anglesin * 0.1f;
-		res.y += p->anglecos * 0.1f;
+		res.x -= m->map.player.anglesin * m->delta_time * SPEED;
+		res.y += m->map.player.anglecos * m->delta_time * SPEED;
 	}
 	return (res);
 }

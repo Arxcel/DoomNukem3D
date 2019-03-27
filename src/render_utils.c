@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics_renderer.h"
 #include "doom_nukem.h"
 #include <stdlib.h>
 

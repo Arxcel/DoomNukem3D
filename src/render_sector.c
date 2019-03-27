@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-#include "graphics_renderer.h"
 
 static double ray_segment_intersaction(t_vertex v1, t_vertex v2, t_vertex v3)
 {
@@ -146,7 +145,7 @@ static void check_wall(t_renderer *r, t_map *map, int s, t_render_item const *cu
 		r->t1.x  = maxf(fabs(r->t1.x), 0.1f);
 }
 
-void				render_sector(t_img *img, t_map *map, t_renderer *r,
+void				render_sector(t_main *m, t_renderer *r,
 										t_render_item const *current_sector)
 {
 	int			s;
@@ -154,24 +153,24 @@ void				render_sector(t_img *img, t_map *map, t_renderer *r,
 	t_wall		wall;
 
 	s = -1;
-	sect = &map->sectors[current_sector->sectorno];
+	sect = &m->map.sectors[current_sector->sectorno];
 	while (++s < sect->number_vertices)
 	{
-		r->t1 = calculate_edges(&map->player, &sect->vertices[s]);
-		r->t2 = calculate_edges(&map->player, &sect->vertices[s + 1]);
+		r->t1 = calculate_edges(&m->map.player, &sect->vertices[s]);
+		r->t2 = calculate_edges(&m->map.player, &sect->vertices[s + 1]);
 		if (r->t1.z < 0 && r->t2.z < 0)
 			continue;
 		if (r->t1.z <= 0 || r->t2.z <= 0)
 			clamp_edges_with_player_view(r);
 		clamp_values(r);
-		check_wall(r, map, s, current_sector);
-		wall = do_perspective(r, img->w, img->h);
+		check_wall(r, &m->map, s, current_sector);
+		wall = do_perspective(r, m->sdl.img.w, m->sdl.img.h);
 		if (wall.x1 >= wall.x2 || wall.x2 < current_sector->limit_x_left ||
 										wall.x1 > current_sector->limit_x_right)
 			continue;
 		wall.neighbor = sect->neighbors[s];
-		get_wall_height(map, &wall, sect, r);
-		render_wall(img, r, &wall, current_sector);
+		get_wall_height(&m->map, &wall, sect, r);
+		render_wall(m, r, &wall, current_sector);
 	}
 }
 

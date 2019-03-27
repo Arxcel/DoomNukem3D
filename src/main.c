@@ -16,6 +16,13 @@
 #include <stdlib.h>
 #include <math.h>
 
+static void calcDeltaTime(t_main *m)
+{
+	m->prev_time = m->curr_time;
+	m->curr_time = SDL_GetPerformanceCounter();
+	m->delta_time += (m->curr_time - m->prev_time) / (float)(SDL_GetPerformanceFrequency());
+}
+
 static void LoadData(t_map *map)
 {
 	FILE* fp = fopen("maps/map.txt", "rt");
@@ -25,7 +32,6 @@ static void LoadData(t_map *map)
 	}
 
 	char Buf[256], word[256], *ptr;
-	// struct xy* vert = NULL, v;
 	t_vertex *vert;
 	t_vertex v;
 
@@ -117,12 +123,17 @@ void				sdl_loop(t_main *m)
 {
 	while (m->sdl.running)
 	{
+		calcDeltaTime(m);
 		sdl_hook(m);
-		draw_screen(&m->sdl.img, &m->map);
-		drawMinimap(&m->sdl.img, &m->map);
-		sdl_put_image(&m->sdl);
-		move_player(m);
-		SDL_Delay(10);
+		if (m->delta_time > 0.016f)
+		{
+			draw_screen(m);
+			drawMinimap(&m->sdl.img, &m->map);
+			sdl_put_image(&m->sdl);
+			move_player(m);
+			printf("Delta time: %f\n", m->delta_time);
+			m->delta_time = 0.f;
+		}
 	}
 }
 

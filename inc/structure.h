@@ -125,6 +125,68 @@ typedef struct		s_map
 }					t_map;
 
 /*
+**	start or rendering help structures
+*/
+typedef struct		s_render_item
+{
+	int				sectorno;
+	int				limit_x_left;
+	int				limit_x_right;
+}					t_render_item;
+
+typedef struct		s_renderer
+{
+	t_render_item	queue[MaxQueue];
+	t_render_item	*head;
+	t_render_item	*tail;
+	int				*rendered_sectors;
+	int				*top_limit;
+	int				*bottom_limit;
+	t_vector		t1;
+	t_vector		t2;
+	int				w;
+	int				h;
+}					t_renderer;
+
+typedef struct		s_vline
+{
+	int				x;
+	int				y_top;
+	int				y_bottom;
+	int				color_top;
+	int				color_main;
+	int				color_bottom;
+}					t_vline;
+
+typedef struct		s_wall
+{
+	int				x1;
+	int				y1[2];
+	int				x2;
+	int				y2[2];
+	t_vertex		scale1;
+	t_vertex		scale2;
+
+	float			ceil;
+	float			floor;
+
+	int				neighbor;
+	float			neighbor_ceil;
+	float			neighbor_floor;
+	int				neighbor_y1[2];
+	int				neighbor_y2[2];
+
+	int				cya;
+	int				cyb;
+	int				ncya;
+	int				ncyb;
+}					t_wall;
+
+/*
+**	end or rendering help structures
+*/
+
+/*
 **	spos - start positions of textures on texture map
 **	epos - end positions of textures on texture map
 **	w & h - is surf(pxls), but not of each texture on texture map
@@ -159,4 +221,14 @@ typedef struct	s_init_helper
 **	End of Staff for work with textures.
 */
 
+
+typedef struct		s_main
+{
+	t_sdl		sdl;
+	t_map		map;
+	t_textures	tex;
+	float		prev_time;
+	float		curr_time;
+	float		delta_time;
+}					t_main;
 #endif
