@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:46:33 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/25 14:40:49 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/26 22:33:16 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			dn_check_saved_texture(point p, int already_saved_textures,
 									point *spos, point *epos)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < already_saved_textures)
 		if ((p.y >= spos[i].y && p.y < epos[i].y)
@@ -24,6 +24,22 @@ int			dn_check_saved_texture(point p, int already_saved_textures,
 			return (i + 1);
 	return (false);
 }
+
+static bool	add_copy_pos(t_hinit *h, point *spos, point *epos)
+{
+	int	i;
+
+	i = -1;
+	_ISZ(point, h->t->spos, h->t->tmax);
+	_ISZ(point, h->t->epos, h->t->tmax);
+	while (++i < h->t->tmax)
+	{
+		h->t->spos[i] = spos[i];
+		h->t->epos[i] = epos[i];
+	}
+	return (true);
+}
+
 
 static void	add_save_current_texture_pos(point p, point *spos,
 										point *epos, t_hinit *h)
@@ -42,34 +58,33 @@ static void	add_save_current_texture_pos(point p, point *spos,
 	++(h->t->tmax);
 }
 
-static bool	add_copy_textures_pos_to_map(t_hinit *h, point *spos, point *epos)
+static bool	add_scale_surface(t_hinit *h, float scale)
 {
-	int	i;
+	SDL_Surface		*temp;
+	SDL_Rect		dst_rect;
 
-	i = -1;
-	_ISZ(point, h->t->spos, h->t->tmax);
-	_ISZ(point, h->t->epos, h->t->tmax);
-	while (++i < h->t->tmax)
-	{
-		h->t->spos[i] = spos[i];
-		h->t->epos[i] = epos[i];
-	}
+	_NOTIS_F(temp = sdl_load_surface(WPNS_MAP, IS_FORMAT_SURF, PIXEL_FORMAT));
+	dst_rect = (SDL_Rect){0, 0, temp->w * scale, temp->h * scale};
+	h->t->surf = SDL_CreateRGBSurfaceWithFormat(0, dst_rect.w, dst_rect.h,
+			32, PIXEL_FORMAT);
+	_IS(SDL_BlitScaled(temp, NULL, h->t->surf, &dst_rect) < 0);
+	_NOTIS_F(h->t->pxls = h->t->surf->pixels);
+	h->t->s = (point) {h->t->surf->w, h->t->surf->h};
+	SDL_FreeSurface(temp);
 	return (true);
 }
 
-bool		dn_init_ck_map(t_hinit h)
+bool		dn_init_ck_map(t_hinit h, float scale)
 {
-	point	p;
-	point	spos[h.max_textures];
-	point	epos[h.max_textures];
-	int		which_texture_skip;
+	point		p;
+	point		spos[h.max_textures];
+	point		epos[h.max_textures];
+	int			which_texture_skip;
 
 	p.y = -1;
 	h.t->tmax = 0;
 	which_texture_skip = 0;
-	_NOTIS_F(h.t->surf = sdl_load_surface(h.path, IS_FORMAT_SURF));
-	_NOTIS_F(h.t->pxls = h.t->surf->pixels);
-	h.t->s = (point) {h.t->surf->w, h.t->surf->h};
+	_NOTIS_F(add_scale_surface(&h, scale));
 	while(++(p.y) < h.t->s.h && (p.x = -1))
 		while (++(p.x) < h.t->s.w)
 			if (h.t->pxls[p.y * h.t->s.w + p.x] == h.ck_color)
@@ -80,31 +95,5 @@ bool		dn_init_ck_map(t_hinit h)
 				else
 					add_save_current_texture_pos(p, spos, epos, &h);
 			}
-	return (add_copy_textures_pos_to_map(&h, spos, epos));
-}
-
-bool		dn_init_textures_map(t_textures *t)
-{
-	point	p;
-	int		i;
-
-	i = -1;
-	p = (point){0, 0};
-	_NOTIS_F(t->walls.surf = sdl_load_surface(TEXUTRES_MAP, IS_FORMAT_SURF));
-	_NOTIS_F(t->walls.pxls = t->walls.surf->pixels);
-	t->walls.s = (point){t->walls.surf->w, t->walls.surf->h};
-	t->walls.tmax = WALL_MAX_TEXTURES;
-	_ISZ(point, t->walls.spos, t->walls.tmax);
-	_ISZ(point, t->walls.epos, t->walls.tmax);
-	while (++i < t->walls.tmax)
-	{
-		t->walls.spos[i] = (point){p.x, p.y};
-		t->walls.epos[i] = (point){p.x + WALL_SIZE, p.y + WALL_SIZE};
-		p.x += WALL_SIZE;
-		if (i + 1 == t->walls.tmax / 2)
-			p = (point){0, p.y + WALL_SIZE};
-	}
-	_NOTIS_F(dn_init_ck_map((t_hinit){&t->wpns, WPNS_MAP, WPNS_TEX_BG,
-									WPNS_MAP_BG, WPNS_MAX_TEXTURES}));
-	return (true);
+	return (add_copy_pos(&h, spos, epos));
 }

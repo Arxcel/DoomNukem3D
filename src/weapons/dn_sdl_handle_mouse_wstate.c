@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macroses.h                                         :+:      :+:    :+:   */
+/*   dn_sdl_handle_mouse_wstate.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/18 16:54:00 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 15:03:47 by tmaluh           ###   ########.fr       */
+/*   Created: 2019/03/27 16:48:23 by tmaluh            #+#    #+#             */
+/*   Updated: 2019/03/27 17:00:04 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROSES_H
-# define MACROSES_H
+#include "doom_nukem.h"
 
-# define _NOTIS_F(ex) if (!(ex)) return (false)
-# define _Z(type, dest, x) ft_bzero(dest, sizeof(type) * (x))
-# define _ISZ(t, d, x) _NOTIS_F(d = (t*)malloc(sizeof(t)*(x))); _Z(t, d, x)
-# define _IS(ex) if ((ex)) return (false);
+void	dn_handle_mbdown_wstate(t_wsys *wsys, SDL_MouseButtonEvent *b)
+{
 
-#endif
+}
+
+void	dn_handle_mbup_wstate(t_wsys *wsys, SDL_MouseButtonEvent *b)
+{
+
+}

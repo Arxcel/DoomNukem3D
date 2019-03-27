@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macroses.h                                         :+:      :+:    :+:   */
+/*   dn_render_pistol.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/18 16:54:00 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 15:03:47 by tmaluh           ###   ########.fr       */
+/*   Created: 2019/03/26 12:05:09 by tmaluh            #+#    #+#             */
+/*   Updated: 2019/03/27 16:22:20 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROSES_H
-# define MACROSES_H
+#include "doom_nukem.h"
 
-# define _NOTIS_F(ex) if (!(ex)) return (false)
-# define _Z(type, dest, x) ft_bzero(dest, sizeof(type) * (x))
-# define _ISZ(t, d, x) _NOTIS_F(d = (t*)malloc(sizeof(t)*(x))); _Z(t, d, x)
-# define _IS(ex) if ((ex)) return (false);
+void	dn_render_pistol(t_weapon *w, t_tmap *t, t_state s, t_img *img)
+{
+	const fptr_st	fn_states[] = {pidle, pshot, preload, pdraw, phide};
+	int				i;
 
-#endif
+	i = -1;
+	while (++i < max_anim_states)
+		if (s == i)
+			fn_states[i](w, t, img);
+}
