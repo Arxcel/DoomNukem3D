@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:51:08 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/27 16:23:45 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 17:01:33 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ typedef struct	s_weapons_system
 
 bool			dn_init_weapons(t_wsys *wsys, t_tmap *t);
 
-void			dn_handle_wchange_wstate(t_wsys *wsys, int key);
+void			dn_handle_kdown_wchange_wstate(t_wsys *wsys, int key);
+void			dn_handle_mbdown_wstate(t_wsys *wsys, SDL_MouseButtonEvent *b);
+void			dn_handle_mbup_wstate(t_wsys *wsys, SDL_MouseButtonEvent *b);
 
 void			dn_choose_weapon_render(t_wsys *wsys, t_tmap *t, t_img *i);
 
