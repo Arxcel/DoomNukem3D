@@ -237,8 +237,10 @@ typedef struct		s_main
 	t_sdl		sdl;
 	t_map		map;
 	t_textures	tex;
+	t_wsys		*wsys;
 	float		prev_time;
 	float		curr_time;
 	float		delta_time;
 }					t_main;
+
 #endif

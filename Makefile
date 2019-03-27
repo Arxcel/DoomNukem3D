@@ -13,7 +13,7 @@ EXT := doom_nukem.h \
 		textures.h \
 		macroses.h
 IDIR := $(CURDIR)/inc
-EXTENSIONS := $(addprefix $(IDIR)/,$(EXT))
+EXTENSIONS := $(addprefix $(IDIR)/, $(EXT))
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -33,9 +33,9 @@ CFLAGS := -I$(IDIR) \
 		-I./libJson/inc/
 endif
 
-LIBFT = libft
-LIBJSON = libJson
-LIBFTSDL = libftSDL
+LIBFT := libft
+LIBJSON := libJson
+LIBFTSDL := libftSDL
 
 ifeq ($(UNAME), Linux)
 SDL2_F := -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lm
@@ -58,7 +58,7 @@ DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 DIR_S := src
 DIR_O := obj
 DIR_OW := weapons
-SOURCES =   main.c \
+SOURCES :=   main.c \
 			sdl_handle.c \
 			player_movement.c \
 			player_direction.c \
@@ -76,8 +76,8 @@ SOURCES =   main.c \
 			weapons/dn_render_pistol_states.c \
 			weapons/dn_sdl_handle_key_wchoose_wstate.c \
 			weapons/dn_sdl_handle_mouse_wstate.c
-SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
-OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
+SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
+OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
 all: obj $(NAME)
 

@@ -6,11 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/03/27 17:24:01 by tmaluh           ###   ########.fr       */
-=======
-/*   Updated: 2019/03/27 16:27:32 by tmaluh           ###   ########.fr       */
->>>>>>> norme & enum.h -> structures.h to above norme
+/*   Updated: 2019/03/27 17:43:17 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +150,7 @@ int					main(int ac, char **av)
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
 	_NOTIS_F(dn_init_ck_map((t_hinit){&m.tex.wpns, WPNS_MAP, WPNS_TEX_BG,
-									WPNS_MAP_BG, WPNS_MAX_TEXTURES},
-							(point){WEAPON_SCALE_W, WEAPON_SCALE_H}));
+							WPNS_MAP_BG, WPNS_MAX_TEXTURES}, WEAPON_SCALE));
 	_NOTIS_F(dn_init_weapons(m.wsys, &m.tex.wpns));
 	sdl_loop(&m);
 	UnloadData(&m.map);
