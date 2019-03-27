@@ -74,7 +74,8 @@ SOURCES =   main.c \
 			weapons/dn_choose_weapon_render.c \
 			weapons/dn_render_pistol.c \
 			weapons/dn_render_pistol_states.c \
-			weapons/dn_sdl_handle_key_wchoose_wstate.c
+			weapons/dn_sdl_handle_key_wchoose_wstate.c \
+			weapons/dn_sdl_handle_mouse_wstate.c
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 

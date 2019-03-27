@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:48:11 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/03/26 13:43:49 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/27 17:01:21 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	add_change_weapons_handler(t_wsys *wsys, int key)
 		wsys->wcurr = bfg;
 }
 
-void	dn_handle_wchange_wstate(t_wsys *wsys, int key)
+void	dn_handle_kdown_wchange_wstate(t_wsys *wsys, int key)
 {
 	if (wsys->no_action)
 	{
