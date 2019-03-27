@@ -12,7 +12,6 @@
 
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
-# include "enum.h"
 # include "ft_sdl.h"
 # include <ctype.h>
 
@@ -37,6 +36,17 @@ typedef union
 # define _POINT	typedef t_upoint	point
 
 _POINT;
+
+enum
+{
+	MaxQueue = 32
+};
+
+enum	e_bool {false, true} __attribute__((packed));
+
+# define _BOOL  typedef enum e_bool	bool
+
+_BOOL;
 
 typedef struct		s_vector
 {
