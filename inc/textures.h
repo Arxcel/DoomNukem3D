@@ -140,39 +140,6 @@
 # define PGS2	55
 # define PG		56
 
-typedef struct	s_textures_map
-{
-	SDL_Surface	*surf;
-	Uint32		*pxls;
-	point		s;
-	point		*spos;
-	point		*epos;
-	int			tmax;
-}				t_tmap;
-
-typedef struct	s_textures
-{
-	t_tmap	wpns;
-}				t_textures;
-
-typedef struct	s_init_helper
-{
-	t_tmap	*t;
-	char	*path;
-	Uint32	ck_color;
-	Uint32	bg_color;
-	int		max_textures;
-}				t_hinit;
-
-typedef struct	s_copy_helper
-{
-	point	*ssrc;
-	point	*esrc;
-	point	*sdst;
-	point	*edst;
-	int		max;
-}				t_hcp;
-
 bool			dn_init_textures_map(t_textures *tmap);
 int				dn_check_saved_texture(point p, int already_saved_textures,
 										point *spos, point *epos);

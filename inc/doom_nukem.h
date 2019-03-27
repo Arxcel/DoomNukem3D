@@ -13,9 +13,6 @@
 #ifndef FT_DOOM_NUKEM_H
 # define FT_DOOM_NUKEM_H
 
-# define W 1280
-# define H 720
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
@@ -28,8 +25,8 @@
 # include "textures.h"
 # include "weapons.h"
 
-# define W 800
-# define H 600
+# define W 1280
+# define H 720
 
 # define GRAVITY	1.0f
 # define SPEED		10

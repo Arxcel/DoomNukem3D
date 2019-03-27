@@ -128,7 +128,7 @@ void				sdl_loop(t_main *m)
 		if (m->delta_time > 0.016f)
 		{
 			draw_screen(m);
-			dn_choose_current_weapon_render(m->wsys, &m->tex.wpns);
+			dn_choose_weapon_render(m->wsys, &m->tex.wpns,&m->sdl.img);
 			drawMinimap(&m->sdl.img, &m->map);
 			sdl_put_image(&m->sdl);
 			move_player(m);

@@ -192,15 +192,6 @@ typedef struct		s_wall
 	int				ncyb;
 }					t_wall;
 
-/*
-**	end or rendering help structures
-*/
-
-/*
-**	spos - start positions of textures on texture map
-**	epos - end positions of textures on texture map
-**	w & h - is surf(pxls), but not of each texture on texture map
-*/
 typedef struct	s_textures_map
 {
 	SDL_Surface	*surf;
@@ -211,12 +202,10 @@ typedef struct	s_textures_map
 	int			tmax;
 }				t_tmap;
 
-
-typedef struct		s_textures
+typedef struct	s_textures
 {
-	t_tmap	walls;
 	t_tmap	wpns;
-}					t_textures;
+}				t_textures;
 
 typedef struct	s_init_helper
 {
@@ -227,10 +216,62 @@ typedef struct	s_init_helper
 	int		max_textures;
 }				t_hinit;
 
-/*
-**	End of Staff for work with textures.
-*/
+typedef struct	s_copy_helper
+{
+	point	*ssrc;
+	point	*esrc;
+	point	*sdst;
+	point	*edst;
+	int		max;
+}				t_hcp;
 
+
+typedef enum	e_state
+{
+	idle,
+	shot,
+	reload,
+	draw,
+	hide,
+	max_anim_states
+} __attribute__((packed))				t_state;
+
+typedef enum	e_current_weapon
+{
+	hands,
+	pistol,
+	sgun,
+	ssgun,
+	plasg,
+	chsaw,
+	rockl,
+	cgun,
+	bfg,
+	max_weapons
+} __attribute__((packed))				t_curr_w;
+
+typedef struct	s_weapon
+{
+	int		fcount;
+	point	*spos;
+	point	*epos;
+}				t_weapon;
+
+typedef struct	s_weapons_system
+{
+	t_weapon	*hands;
+	t_weapon	*pistol;
+	t_weapon	*sgun;
+	t_weapon	*ssgun;
+	t_weapon	*plasg;
+	t_weapon	*chsaw;
+	t_weapon	*rockl;
+	t_weapon	*cgun;
+	t_weapon	*bfg;
+	t_curr_w	wcurr;
+	t_state		state;
+	bool		no_action;
+}				t_wsys;
 
 typedef struct		s_main
 {

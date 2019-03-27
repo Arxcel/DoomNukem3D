@@ -8,7 +8,6 @@ EXT := doom_nukem.h \
 		structure.h \
 		utils.h \
 		player.h \
-		graphics_renderer.h \
 		weapons.h \
 		textures.h \
 		macroses.h
@@ -49,7 +48,6 @@ _DEPS := doom_nukem.h \
 		structure.h \
 		utils.h \
 		player.h \
-		graphics_renderer.h \
 		weapons.h \
 		textures.h \
 		macroses.h
