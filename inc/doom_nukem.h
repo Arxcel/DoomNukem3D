@@ -56,6 +56,7 @@ void				init_renderer(t_renderer *r, t_img *img, int n_sectors);
 void				free_renderer(t_renderer *r);
 void				clamp_point(t_vector *point, t_vertex *i1, t_vertex *i2);
 void				draw_line(t_img *img, t_vline *vline);
+void				draw_line2(t_main *m, t_vline *vline, t_interp ty, unsigned txtx);
 
 void				plot_line(t_img *img, t_line *l);
 

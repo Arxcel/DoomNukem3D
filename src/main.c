@@ -119,6 +119,23 @@ static void UnloadData(t_map *m)
 	m->sectors  = NULL;
 }
 
+static void testWalls(t_main *m)
+{
+	int w = m->sdl.img.w / 2;
+	int h = m->sdl.img.h / 2;
+	int *pix = m->tex.t.textures[2]->pixels;
+
+	int y = -1;
+	while (++y < h)
+	{
+		int x = m->sdl.img.w / 2 - 1;
+		while (++x < w + m->sdl.img.w / 2)
+		{
+			sdl_pixel_put(&m->sdl.img, x, y, pix[x % 1024 + (y % 1024) * m->tex.t.textures[2]->w]);
+		}
+	}
+}
+
 void				sdl_loop(t_main *m)
 {
 	while (m->sdl.running)

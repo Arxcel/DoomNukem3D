@@ -54,10 +54,13 @@ static t_vector		calculate_edges(t_player *player, t_vertex *vertex)
 	return (res);
 }
 
-static void			clamp_edges_with_player_view(t_renderer *renderer)
+static void			clamp_edges_with_player_view(t_renderer *renderer, t_wall *w)
 {
 	t_vertex	i1;
 	t_vertex	i2;
+	t_vertex	org1;
+	t_vertex	org2;
+
 
 	i1 = intersect_line((t_vertex){renderer->t1.x, renderer->t1.z},
 						(t_vertex){renderer->t2.x, renderer->t2.z},
@@ -67,10 +70,22 @@ static void			clamp_edges_with_player_view(t_renderer *renderer)
 						(t_vertex){renderer->t2.x, renderer->t2.z},
 						(t_vertex){NEAR_SIDE, NEAR_Z},
 						(t_vertex){FAR_SIDE, FAR_Z});
+	org1 = (t_vertex){renderer->t1.x, renderer->t1.z};
+	org2 = (t_vertex){renderer->t2.x, renderer->t2.z};
 	if (renderer->t1.z < NEAR_Z)
 		clamp_point(&renderer->t1, &i1, &i2);
 	if (renderer->t2.z < NEAR_Z)
 		clamp_point(&renderer->t2, &i1, &i2);
+	if(fabsf(renderer->t2.x - renderer->t1.x) > fabsf(renderer->t2.z - renderer->t1.z))
+	{
+		w->u0 = (renderer->t1.x - org1.x) * 1023 / (org2.x - org1.x);
+		w->u1 = (renderer->t2.x - org1.x) * 1023 / (org2.x - org1.x);
+	}
+	else
+	{
+		w->u0 = (renderer->t1.z - org1.y) * 1023 / (org2.y - org1.y);
+		w->u1 = (renderer->t2.z - org1.y) * 1023 / (org2.y - org1.y);
+	}
 }
 
 static t_wall		do_perspective(t_renderer *renderer, int width, int height)
@@ -154,6 +169,8 @@ void				render_sector(t_main *m, t_renderer *r,
 
 	s = -1;
 	sect = &m->map.sectors[current_sector->sectorno];
+	wall.u0 = 0;
+	wall.u1 = 1023;
 	while (++s < sect->number_vertices)
 	{
 		r->t1 = calculate_edges(&m->map.player, &sect->vertices[s]);
@@ -161,7 +178,7 @@ void				render_sector(t_main *m, t_renderer *r,
 		if (r->t1.z < 0 && r->t2.z < 0)
 			continue;
 		if (r->t1.z <= 0 || r->t2.z <= 0)
-			clamp_edges_with_player_view(r);
+			clamp_edges_with_player_view(r, &wall);
 		clamp_values(r);
 		check_wall(r, &m->map, s, current_sector);
 		wall = do_perspective(r, m->sdl.img.w, m->sdl.img.h);

@@ -166,6 +166,7 @@ typedef struct		s_vline
 	int				color_top;
 	int				color_main;
 	int				color_bottom;
+	int				texture_id;
 }					t_vline;
 
 typedef struct		s_wall
@@ -186,10 +187,19 @@ typedef struct		s_wall
 	int				neighbor_y1[2];
 	int				neighbor_y2[2];
 
+	int				ya;
+	int				yb;
+	int				nya;
+	int				nyb;
+
 	int				cya;
 	int				cyb;
 	int				ncya;
 	int				ncyb;
+
+	int				u0;
+	int				u1;
+	int				txtx;
 }					t_wall;
 
 typedef struct s_interpolator

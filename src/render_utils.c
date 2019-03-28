@@ -57,6 +57,32 @@ void		draw_line(t_img *img, t_vline *vline)
 	}
 }
 
+void		draw_line2(t_main *m, t_vline *vline, t_interp ty, unsigned txtx)
+{
+	int y;
+	int *pix;
+	int id;
+
+	id = vline->texture_id % m->tex.t.numTextures;
+	pix = m->tex.t.textures[id]->pixels;
+	vline->y_top = clampf(vline->y_top, 0, m->sdl.img.h - 1);
+	vline->y_bottom = clampf(vline->y_bottom, 0, m->sdl.img.h - 1);
+	y = vline->y_top;
+	while (++y <= vline->y_bottom)
+	{
+		unsigned txty = interp_next(&ty);
+		sdl_pixel_put(&m->sdl.img, vline->x, y, pix[txtx % m->tex.t.textures[id]->w + (txty % m->tex.t.textures[id]->h) * m->tex.t.textures[id]->w]);
+	}
+
+	// pix += y1 * W2 + x;
+    // for(int y = y1; y <= y2; ++y)
+    // {
+    //     unsigned txty = Scaler_Next(&ty);
+    //     *pix = t->texture[txtx % 1024][txty % 1024];
+    //     pix += W2;
+    // }
+}
+
 void		clamp_point(t_vector *point, t_vertex *i1, t_vertex *i2)
 {
 	if (i1->y > 0)
