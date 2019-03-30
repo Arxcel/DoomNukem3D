@@ -167,7 +167,7 @@ static void	load_block_textures(const char *path, SDL_Surface **target)
 static void			load_textures(t_main *m)
 {
 	m->tex.t.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 10);
-	load_block_textures("assets/walls/1.JPG", &m->tex.t.textures[m->tex.t.numTextures++]);
+	load_block_textures("assets/weapon/PC Computer - Doom Doom II - Weapons Prototype.png", &m->tex.t.textures[m->tex.t.numTextures++]);
 	load_block_textures("assets/walls/2.JPG", &m->tex.t.textures[m->tex.t.numTextures++]);
 	load_block_textures("assets/walls/3.JPG", &m->tex.t.textures[m->tex.t.numTextures++]);
 	load_block_textures("assets/walls/4.JPG", &m->tex.t.textures[m->tex.t.numTextures++]);
