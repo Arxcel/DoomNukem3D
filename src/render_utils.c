@@ -39,21 +39,21 @@ void		free_renderer(t_renderer *renderer)
 	free(renderer->bottom_limit);
 }
 
-void		draw_line(t_img *img, t_vline *vline)
+void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp ty)
 {
-	int y;
+	int			y;
+	int			*pix;
+	SDL_Surface	*current;
 
-	vline->y_top = clampf(vline->y_top, 0, img->h - 1);
-	vline->y_bottom = clampf(vline->y_bottom, 0, img->h - 1);
-	if (vline->y_bottom == vline->y_top)
-		sdl_pixel_put(img, vline->x, vline->y_top, vline->color_main);
-	else if (vline->y_bottom > vline->y_top)
+	current = m->tex.t.textures[v->texture_id];
+	pix = current->pixels;
+	v->y_top = clampf(v->y_top, 0, m->sdl.img.h - 1);
+	v->y_bottom = clampf(v->y_bottom, 0, m->sdl.img.h - 1);
+	y = v->y_top;
+	while (++y <= v->y_bottom)
 	{
-		sdl_pixel_put(img, vline->x, vline->y_top, vline->color_top);
-		y = vline->y_top;
-		while (++y < vline->y_bottom)
-			sdl_pixel_put(img, vline->x, y, vline->color_main);
-		sdl_pixel_put(img, vline->x, vline->y_bottom, vline->color_bottom);
+		w->txty = interp_next(&ty);
+		sdl_pixel_put(&m->sdl.img, v->x, y, pix[w->txtx % current->w + (w->txty % current->h) * current->w]);
 	}
 }
 

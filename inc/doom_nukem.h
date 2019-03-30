@@ -55,7 +55,7 @@ void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 void				init_renderer(t_renderer *r, t_img *img, int n_sectors);
 void				free_renderer(t_renderer *r);
 void				clamp_point(t_vector *point, t_vertex *i1, t_vertex *i2);
-void				draw_line(t_img *img, t_vline *vline);
+void				draw_line(t_main *m, t_wall *w, t_vline *v, t_interp ty);
 
 void				plot_line(t_img *img, t_line *l);
 

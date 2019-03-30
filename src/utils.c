@@ -42,3 +42,14 @@ int			intersects(t_player const *p, t_vertex v1, t_vertex v2)
 	return (intersect_box(p_old_pos, p_new_pos, v1, v2) &&
 							point_side(p_new_pos, v1, v2) < 0);
 }
+
+int			interp_next(t_interp *i)
+{
+	i->temp += i->target_length;
+	while (i->temp >= i->basic_length)
+	{
+		i->current += i->step;
+		i->temp -= i->basic_length;
+	}
+    return i->current;
+}

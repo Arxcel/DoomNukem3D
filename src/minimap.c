@@ -18,15 +18,6 @@ void		drawMinimap(t_img *img, t_map *map)
 	int w = img->w / 2;
 	int h = img->h / 2;
 
-	int y = -1;
-	while (++y < h)
-	{
-		int x = -1;
-		while (++x < w)
-		{
-			sdl_pixel_append(img, x, y, 0x111111);
-		}
-	}
 	int s = -1;
 	while (++s < map->number_sectors)
 	{

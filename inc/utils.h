@@ -24,5 +24,5 @@ t_vertex	intersect_line(t_vertex v1, t_vertex v2, t_vertex v3, t_vertex v4);
 float		point_side(t_vertex p, t_vertex v1, t_vertex v2);
 int			intersects(t_player const *p, t_vertex v1, t_vertex v2);
 double		v_dot(t_vertex v1, t_vertex v2);
-
+int			interp_next(t_interp *i);
 #endif
