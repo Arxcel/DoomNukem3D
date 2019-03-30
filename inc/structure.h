@@ -163,9 +163,6 @@ typedef struct		s_vline
 	int				x;
 	int				y_top;
 	int				y_bottom;
-	int				color_top;
-	int				color_main;
-	int				color_bottom;
 	int				texture_id;
 }					t_vline;
 
@@ -199,7 +196,16 @@ typedef struct		s_wall
 
 	int				u0;
 	int				u1;
+	
 	int				txtx;
+	int				txty;
+
+	int				upper_id;
+	int				lower_id;
+	int				solid_id;
+	int				floor_id;
+	int				ceil_id;
+
 }					t_wall;
 
 typedef struct s_interpolator
@@ -209,7 +215,6 @@ typedef struct s_interpolator
 	int				target_length;
 	int				basic_length;
 	int				temp;
-
 }					t_interp;
 
 typedef struct	s_textures_map

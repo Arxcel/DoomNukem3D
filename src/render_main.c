@@ -14,6 +14,9 @@
 
 static void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 {
+	SDL_Surface		*current;
+
+	current = m->tex.t.textures[wall->solid_id];
 	wall->ya = (x - wall->x1) * (wall->y2[0] - wall->y1[0]) /
 										(wall->x2 - wall->x1) + wall->y1[0];
 	wall->yb = (x - wall->x1) * (wall->y2[1] - wall->y1[1]) /
@@ -21,29 +24,67 @@ static void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 	wall->cya = clampf(wall->ya, r->top_limit[x], r->bottom_limit[x]);
 	wall->cyb = clampf(wall->yb, r->top_limit[x], r->bottom_limit[x]);
 	if (wall->neighbor < 0)
-		draw_line2(m, &(t_vline){ x, wall->cya, wall->cyb, 0,0,0,2}, (t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0,1023), wall->txtx);
+		draw_line(m, wall, &(t_vline){x, wall->cya, wall->cyb, wall->solid_id},(t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current->w));
 }
 
 static void		draw_neighbor_wall(t_main *m, t_wall *wall,
 												t_renderer *r, int x)
 {
+	SDL_Surface		*current_upper;
+	SDL_Surface		*current_lower;
+
+	current_upper = m->tex.t.textures[wall->upper_id];
+	current_lower = m->tex.t.textures[wall->lower_id];
 	wall->nya = (x - wall->x1) * (wall->neighbor_y2[0] - wall->neighbor_y1[0]) /
 								(wall->x2 - wall->x1) + wall->neighbor_y1[0];
 	wall->nyb = (x - wall->x1) * (wall->neighbor_y2[1] - wall->neighbor_y1[1]) /
 								(wall->x2 - wall->x1) + wall->neighbor_y1[1];
 	wall->ncya = clampf(wall->nya, r->top_limit[x], r->bottom_limit[x]);
 	wall->ncyb = clampf(wall->nyb, r->top_limit[x], r->bottom_limit[x]);
-	draw_line2(m, &(t_vline){ x, wall->cya, wall->ncya - 1, 0, 0, 0, 5}, (t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0,1023), wall->txtx);
-	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya),
-												r->top_limit[x], m->sdl.img.h - 1);
-	draw_line2(m, &(t_vline){ x, wall->ncyb, wall->cyb, 0, 0, 0, 5}, (t_interp)INIT_INTERP(wall->ya, wall->ncyb, wall->yb, 0,1023), wall->txtx);
-	r->bottom_limit[x] = clampf(minf(wall->cyb, wall->ncyb),
-														0, r->bottom_limit[x]);
+	draw_line(m, wall, &(t_vline){x, wall->cya, wall->ncya - 1, wall->upper_id},(t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current_upper->w));
+	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya), r->top_limit[x], m->sdl.img.h - 1);
+	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1, wall->cyb, wall->lower_id}, (t_interp)INIT_INTERP(wall->ya, wall->ncyb + 1, wall->yb, 0, current_lower->w));
+	r->bottom_limit[x] = clampf(minf(wall->cyb, wall->ncyb), 0, r->bottom_limit[x]);
 }
 
-static void reverse_perspective()
+static t_vertex reverse_perspective(t_main *m, int x, int y, float height)
 {
+	t_vertex	r;
+	float		rtx;
+	float		rty;
 
+	r.y = height * VFOV * m->sdl.img.h / ((m->sdl.img.h / 2.0 - y) - m->map.player.pitch * VFOV * m->sdl.img.h);
+	r.x = r.y * (m->sdl.img.w / 2.0 - x) / (HFOV * m->sdl.img.w);
+	rtx = r.y * m->map.player.anglecos + r.x * m->map.player.anglesin;
+	rty = r.y * m->map.player.anglesin - r.x * m->map.player.anglecos;
+	r.x = rtx + m->map.player.position.x;
+	r.y = rty + m->map.player.position.y;
+	return (r);
+}
+
+static void draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
+{
+	int			y;
+	t_vertex	t;
+	unsigned	tex[2];
+	int			*pix;
+	SDL_Surface	*current;
+
+	y = r->top_limit[x] - 1;
+	while (++y <= r->bottom_limit[x])
+	{
+		if(y >= w->cya && y <= w->cyb)
+		{
+			y = w->cyb;
+			continue;
+		}
+		t = reverse_perspective(m, x, y, y < w->cya ? w->ceil : w->floor);
+		tex[0] = (t.x * 2048);
+		tex[1] = (t.y * 2048);
+		current = y < w->cya ? m->tex.t.textures[w->floor_id] : m->tex.t.textures[w->ceil_id];
+		pix = current->pixels;
+		sdl_pixel_put(&m->sdl.img, x, y, pix[tex[0] % current->w + (tex[1] % current->h) * current->w]);
+	}
 }
 
 void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
@@ -58,38 +99,8 @@ void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 	x = beginx - 1;
 	while (++x <= endx)
 	{
-		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.z) + wall->u1*((x-wall->x1) * renderer->t1.z)) / ((wall->x2-x) * renderer->t2.z + (x - wall->x1) * renderer->t1.z);
-		#define CeilingFloorScreenCoordinatesToMapCoordinates(player, mapY,screenX,screenY,X,Z) \
-				do { \
-					Z = mapY * VFOV * H / ((H / 2 - screenY) - player.pitch * VFOV * H); \
-					X = Z * (W / 2 - screenX) / (HFOV * W); \
-					RelativeMapCoordinatesToAbsoluteOnes(player,X,Z); \
-				} while(0)
-
-		#define RelativeMapCoordinatesToAbsoluteOnes(player,X,Z) \
-				do { \
-					float rtx = Z * player.anglecos + X * player.anglesin; \
-					float rtz = Z * player.anglesin - X * player.anglecos; \
-					X = rtx + player.position.x; \
-					Z = rtz + player.position.y; \
-				} while(0)
-
-				for(int y = renderer->top_limit[x]; y <= renderer->bottom_limit[x]; ++y)
-				{
-					if(y >= wall->cya && y <= wall->cyb)
-					{
-						y = wall->cyb;
-						continue;
-					}
-					float hei = y < wall->cya ? wall->ceil : wall->floor;
-					float mapx, mapz;
-					CeilingFloorScreenCoordinatesToMapCoordinates(m->map.player, hei, x,y, mapx, mapz);
-					unsigned txtx = (mapx * 256), txtz = (mapz * 256);
-					int *pix = y < wall->cya ? m->tex.t.textures[1]->pixels : m->tex.t.textures[0]->pixels;
-					sdl_pixel_put(&m->sdl.img, x, y, pix[txtx % m->tex.t.textures[3]->w + (txtz % m->tex.t.textures[3]->h) * m->tex.t.textures[3]->w]);
-					// ((int*)surface->pixels)[y*W2+x] = pel;
-				}
-		
+		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.z) + wall->u1 * ((x-wall->x1) * renderer->t1.z)) / ((wall->x2-x) * renderer->t2.z + (x - wall->x1) * renderer->t1.z);
+		draw_ceil_floor(m, renderer, wall, x);
 		draw_local_wall(m, wall, renderer, x);
 		if (wall->neighbor >= 0)
 			draw_neighbor_wall(m, wall, renderer, x);
