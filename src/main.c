@@ -157,7 +157,7 @@ void				sdl_loop(t_main *m)
 
 static void	load_block_textures(const char *path, SDL_Surface **target)
 {
-	if ((*target = IMG_Load(path)) == NULL)
+	if ((*target = sdl_load_surface(path, IS_FORMAT_SURF, PIXEL_FORMAT)) == NULL)
 	{
 		ft_putendl(SDL_GetError());
 		exit(-3);
