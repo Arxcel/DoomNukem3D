@@ -7,7 +7,6 @@ FLAGS := -g
 EXT := doom_nukem.h \
 		structure.h \
 		utils.h \
-		player.h \
 		weapons.h \
 		textures.h \
 		macroses.h
@@ -47,7 +46,6 @@ HEADER := inc
 _DEPS := doom_nukem.h \
 		structure.h \
 		utils.h \
-		player.h \
 		weapons.h \
 		textures.h \
 		macroses.h
@@ -73,7 +71,8 @@ SOURCES :=  main.c \
 			weapons/dn_render_pistol.c \
 			weapons/dn_render_pistol_states.c \
 			weapons/dn_sdl_handle_key_wchoose_wstate.c \
-			weapons/dn_sdl_handle_mouse_wstate.c
+			weapons/dn_sdl_handle_mouse_wstate.c \
+			cast_ray.c
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 

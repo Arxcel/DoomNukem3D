@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/27 18:22:19 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/03/31 13:36:53 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void				sdl_loop(t_main *m)
 		{
 			draw_screen(m);
 			dn_choose_weapon_render(m->wsys, &m->tex.wpns,&m->sdl.img);
-			drawMinimap(&m->sdl.img, &m->map);
+			draw_minimap(m);
 			sdl_put_image(&m->sdl);
 			move_player(m);
 			// printf("Delta time: %f\n", m->delta_time);

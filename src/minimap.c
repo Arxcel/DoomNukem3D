@@ -6,57 +6,75 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 13:28:46 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/31 13:38:10 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 #include <math.h>
 
-void		drawMinimap(t_img *img, t_map *map)
+static void			draw_player(t_img *img, int w, int h)
 {
-	int w = img->w / 2;
-	int h = img->h / 2;
+	int		y;
+	int		x;
+	int		player_size;
 
-	int s = -1;
-	while (++s < map->number_sectors)
+	player_size = 3;
+	y = h / 2 - player_size;
+	while (++y < h / 2 + player_size)
 	{
-		int a = -1;
-		while (++a < map->sectors[s].number_vertices)
+		x = w / 2 - player_size;
+		while (++x < w / 2 + player_size)
 		{
-				t_vector res1;
-				t_vector res2;
-
-			res1.x = (map->sectors[s].vertices[a].x * 20 - map->player.position.x * 20) * map->player.anglesin -
-								(map->sectors[s].vertices[a].y * 40 - map->player.position.y * 40) * map->player.anglecos;
-			res1.z = (map->sectors[s].vertices[a].x * 20 - map->player.position.x * 20) * map->player.anglecos +
-								(map->sectors[s].vertices[a].y * 40 - map->player.position.y * 40) * map->player.anglesin;
-
-			res2.x = (map->sectors[s].vertices[a+1].x * 20 - map->player.position.x * 20) * map->player.anglesin -
-								(map->sectors[s].vertices[a+1].y * 40 - map->player.position.y * 40) * map->player.anglecos;
-			res2.z = (map->sectors[s].vertices[a+1].x * 20 - map->player.position.x * 20) * map->player.anglecos +
-								(map->sectors[s].vertices[a+1].y * 40 - map->player.position.y * 40) * map->player.anglesin;
-			float x1 = w / 2 - res1.x;
-			float y1 = h / 2 - res1.z;
-
-			float x2 = w / 2 - res2.x;
-			float y2 = h / 2 - res2.z;
-			t_line l;
-			l.from  = (t_vertex){x1, y1};
-			l.to  = (t_vertex){x2, y2};
-			l.color = 0xFFFF00;
-			l.limit_min = (t_vertex){0, 0};
-			l.limit_max = (t_vertex){w, h};
-			plot_line(img, &l);
-		}
-	} 
-	int yp = h / 2 - 3;
-	while (++yp < h / 2 + 2)
-	{
-		int xp = w / 2 - 3;
-		while (++xp < w / 2 + 2)
-		{
-			sdl_pixel_put(img, xp, yp, 0xFF0000);
+			sdl_pixel_put(img, x, y, 0xFF00FF);
 		}
 	}
+}
+
+static t_vertex		get_scaled_edge(t_main *m, t_vertex ver, int s_x, int s_y)
+{
+	t_vertex e;
+
+	e.x = (ver.x - m->map.player.position.x) * m->map.player.anglesin * s_x -
+			(ver.y - m->map.player.position.y) * m->map.player.anglecos * s_y;
+	e.y = (ver.x - m->map.player.position.x) * m->map.player.anglecos * s_x +
+			(ver.y - m->map.player.position.y) * m->map.player.anglesin * s_y;
+	return (e);
+}
+
+static void			draw_sector(t_main *m, int w, int h, int s_i)
+{
+	int		a;
+	t_line	l;
+
+	l.color = 0xFFFF00;
+	l.limit_min = (t_vertex){0, 0};
+	l.limit_max = (t_vertex){w, h};
+	a = -1;
+	while (++a < m->map.sectors[s_i].number_vertices)
+	{
+		l.from = get_scaled_edge(m, m->map.sectors[s_i].vertices[a], 20, 40);
+		l.to = get_scaled_edge(m, m->map.sectors[s_i].vertices[a + 1], 20, 40);
+		l.from.x = w / 2 - l.from.x;
+		l.from.y = h / 2 - l.from.y;
+		l.to.x = w / 2 - l.to.x;
+		l.to.y = h / 2 - l.to.y;
+		plot_line(&m->sdl.img, &l);
+	}
+}
+
+void				draw_minimap(t_main *m)
+{
+	int w;
+	int h;
+	int s;
+
+	w = m->sdl.img.w / 2;
+	h = m->sdl.img.h / 2;
+	s = -1;
+	while (++s < m->map.number_sectors)
+	{
+		draw_sector(m, w, h, s);
+	}
+	draw_player(&m->sdl.img, w, h);
 }

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 13:12:32 by vkozlov           #+#    #+#             */
-/*   Updated: 2018/01/15 16:31:51 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/31 14:30:29 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static void		put_line_pixel(t_img *img, t_line *l, int x, int y)
 {
-	if(x < l->limit_max.x && x > l->limit_min.x &&
+	if (x < l->limit_max.x && x > l->limit_min.x &&
 						y < l->limit_max.y && y > l->limit_min.y)
 		sdl_pixel_put(img, x, y, l->color);
 }

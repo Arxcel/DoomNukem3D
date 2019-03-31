@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 13:51:15 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 15:20:57 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/31 14:00:58 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void			get_player_direction(t_main *m)
 {
-	int x;
-	int y;
-	float pitch;
+	int		x;
+	int		y;
+	float	pitch;
 
 	pitch = 0;
 	SDL_GetRelativeMouseState(&x, &y);
