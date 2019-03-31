@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:31:29 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 13:00:07 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/31 14:14:49 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,21 @@ void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp ty)
 	while (++y <= v->y_bottom)
 	{
 		w->txty = interp_next(&ty);
-		sdl_pixel_put(&m->sdl.img, v->x, y, pix[w->txtx % current->w + (w->txty % current->h) * current->w]);
+		sdl_pixel_put(&m->sdl.img, v->x, y, pix[w->txtx % current->w +
+									(w->txty % current->h) * current->w]);
 	}
 }
 
-void		clamp_point(t_vector *point, t_vertex *i1, t_vertex *i2)
+void		clamp_point(t_vertex *point, t_vertex *i1, t_vertex *i2)
 {
 	if (i1->y > 0)
 	{
 		point->x = i1->x;
-		point->z = i1->y;
+		point->y = i1->y;
 	}
 	else if (i2->y > 0)
 	{
 		point->x = i2->x;
-		point->z = i2->y;
+		point->y = i2->y;
 	}
 }

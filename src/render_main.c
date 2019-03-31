@@ -6,13 +6,13 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 13:28:46 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/03/31 14:23:11 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
+static void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 {
 	SDL_Surface		*current;
 
@@ -24,10 +24,10 @@ static void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 	wall->cya = clampf(wall->ya, r->top_limit[x], r->bottom_limit[x]);
 	wall->cyb = clampf(wall->yb, r->top_limit[x], r->bottom_limit[x]);
 	if (wall->neighbor < 0)
-		draw_line(m, wall, &(t_vline){x, wall->cya, wall->cyb, wall->solid_id},(t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current->w));
+		draw_line(m, wall, &(t_vline){x, wall->cya, wall->cyb, wall->solid_id}, (t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current->w));
 }
 
-static void		draw_neighbor_wall(t_main *m, t_wall *wall,
+static void			draw_neighbor_wall(t_main *m, t_wall *wall,
 												t_renderer *r, int x)
 {
 	SDL_Surface		*current_upper;
@@ -41,13 +41,13 @@ static void		draw_neighbor_wall(t_main *m, t_wall *wall,
 								(wall->x2 - wall->x1) + wall->neighbor_y1[1];
 	wall->ncya = clampf(wall->nya, r->top_limit[x], r->bottom_limit[x]);
 	wall->ncyb = clampf(wall->nyb, r->top_limit[x], r->bottom_limit[x]);
-	draw_line(m, wall, &(t_vline){x, wall->cya, wall->ncya - 1, wall->upper_id},(t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current_upper->w));
+	draw_line(m, wall, &(t_vline){x, wall->cya, wall->ncya - 1, wall->upper_id}, (t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current_upper->w));
 	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya), r->top_limit[x], m->sdl.img.h - 1);
 	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1, wall->cyb, wall->lower_id}, (t_interp)INIT_INTERP(wall->ya, wall->ncyb + 1, wall->yb, 0, current_lower->w));
 	r->bottom_limit[x] = clampf(minf(wall->cyb, wall->ncyb), 0, r->bottom_limit[x]);
 }
 
-static t_vertex reverse_perspective(t_main *m, int x, int y, float height)
+static t_vertex		reverse_perspective(t_main *m, int x, int y, float height)
 {
 	t_vertex	r;
 	float		rtx;
@@ -62,7 +62,7 @@ static t_vertex reverse_perspective(t_main *m, int x, int y, float height)
 	return (r);
 }
 
-static void draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
+static void			draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 {
 	int			y;
 	t_vertex	t;
@@ -73,7 +73,7 @@ static void draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 	y = r->top_limit[x] - 1;
 	while (++y <= r->bottom_limit[x])
 	{
-		if(y >= w->cya && y <= w->cyb)
+		if (y >= w->cya && y <= w->cyb)
 		{
 			y = w->cyb;
 			continue;
@@ -87,7 +87,7 @@ static void draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 	}
 }
 
-void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
+void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 											t_render_item const *current_sector)
 {
 	int		beginx;
@@ -99,7 +99,7 @@ void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 	x = beginx - 1;
 	while (++x <= endx)
 	{
-		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.z) + wall->u1 * ((x-wall->x1) * renderer->t1.z)) / ((wall->x2-x) * renderer->t2.z + (x - wall->x1) * renderer->t1.z);
+		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.y) + wall->u1 * ((x - wall->x1) * renderer->t1.y)) / ((wall->x2 - x) * renderer->t2.y + (x - wall->x1) * renderer->t1.y);
 		draw_ceil_floor(m, renderer, wall, x);
 		draw_local_wall(m, wall, renderer, x);
 		if (wall->neighbor >= 0)
@@ -113,7 +113,7 @@ void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 	}
 }
 
-void			draw_screen(t_main *m)
+void				draw_screen(t_main *m)
 {
 	t_renderer		r;
 	t_render_item	current_sector;

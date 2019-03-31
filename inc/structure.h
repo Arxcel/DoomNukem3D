@@ -152,8 +152,8 @@ typedef struct		s_renderer
 	int				*rendered_sectors;
 	int				*top_limit;
 	int				*bottom_limit;
-	t_vector		t1;
-	t_vector		t2;
+	t_vertex		t1;
+	t_vertex		t2;
 	int				w;
 	int				h;
 }					t_renderer;
