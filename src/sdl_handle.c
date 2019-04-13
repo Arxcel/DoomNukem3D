@@ -6,24 +6,19 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 11:49:17 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:44:55 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static void			handle_key(t_main *m, int key)
+static void			vertical_movement(t_main *m, int key)
 {
-	if (key == SDLK_q)
-		m->sdl.running = 0;
-	else if (key == SDLK_w)
-		m->map.player.dir.forward = m->sdl.e.type == SDL_KEYDOWN;
-	else if (key == SDLK_s)
-		m->map.player.dir.backward = m->sdl.e.type == SDL_KEYDOWN;
-	else if (key == SDLK_a)
-		m->map.player.dir.left = m->sdl.e.type == SDL_KEYDOWN;
-	else if (key == SDLK_d)
-		m->map.player.dir.right = m->sdl.e.type == SDL_KEYDOWN;
+	if (key == SDLK_r)
+	{
+		m->map.player.velocity.z += 0.1f;
+		m->map.player.is_falling = true;
+	}
 	else if (key == ' ')
 	{
 		if (m->map.player.is_standing)
@@ -37,6 +32,23 @@ static void			handle_key(t_main *m, int key)
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
 		m->map.player.is_falling = true;
 	}
+}
+
+static void			handle_key(t_main *m, int key)
+{
+	if (key == SDLK_q)
+		m->sdl.running = 0;
+	else if (key == SDLK_w)
+		m->map.player.dir.forward = m->sdl.e.type == SDL_KEYDOWN;
+	else if (key == SDLK_s)
+		m->map.player.dir.backward = m->sdl.e.type == SDL_KEYDOWN;
+	else if (key == SDLK_a)
+		m->map.player.dir.left = m->sdl.e.type == SDL_KEYDOWN;
+	else if (key == SDLK_d)
+		m->map.player.dir.right = m->sdl.e.type == SDL_KEYDOWN;
+	else if (key == SDLK_LSHIFT)
+		m->map.player.is_running = m->sdl.e.type == SDL_KEYDOWN;
+	vertical_movement(m, key);
 }
 
 void				sdl_hook(t_main *m)

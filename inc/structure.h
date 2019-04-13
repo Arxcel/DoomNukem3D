@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 15:15:53 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:24:35 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct		s_player
 	bool			is_crouching;
 	bool			is_standing;
 	bool			is_falling;
+	bool			is_running;
 
 	t_dir			dir;
 }					t_player;

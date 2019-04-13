@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 13:51:15 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 14:00:58 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:48:01 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,37 @@ void			get_player_direction(t_main *m)
 	m->map.player.anglecos = cosf(m->map.player.angle);
 }
 
-t_vertex		get_player_velocity(t_main *m)
+static void		calc_velocity(t_vertex *res, t_main *m, int speed)
 {
-	t_vertex res;
-
-	ft_bzero(&res, sizeof(res));
 	if (m->map.player.dir.forward)
 	{
-		res.x += m->map.player.anglecos * m->delta_time * SPEED;
-		res.y += m->map.player.anglesin * m->delta_time * SPEED;
+		res->x += m->map.player.anglecos * m->delta_time * speed;
+		res->y += m->map.player.anglesin * m->delta_time * speed;
 	}
 	if (m->map.player.dir.backward)
 	{
-		res.x -= m->map.player.anglecos * m->delta_time * SPEED;
-		res.y -= m->map.player.anglesin * m->delta_time * SPEED;
+		res->x -= m->map.player.anglecos * m->delta_time * speed;
+		res->y -= m->map.player.anglesin * m->delta_time * speed;
 	}
 	if (m->map.player.dir.left)
 	{
-		res.x += m->map.player.anglesin * m->delta_time * SPEED;
-		res.y -= m->map.player.anglecos * m->delta_time * SPEED;
+		res->x += m->map.player.anglesin * m->delta_time * speed;
+		res->y -= m->map.player.anglecos * m->delta_time * speed;
 	}
 	if (m->map.player.dir.right)
 	{
-		res.x -= m->map.player.anglesin * m->delta_time * SPEED;
-		res.y += m->map.player.anglecos * m->delta_time * SPEED;
+		res->x -= m->map.player.anglesin * m->delta_time * speed;
+		res->y += m->map.player.anglecos * m->delta_time * speed;
 	}
+}
+
+t_vertex		get_player_velocity(t_main *m)
+{
+	t_vertex	res;
+	int			speed;
+
+	speed = m->map.player.is_running ? RUN_SPEED : SPEED;
+	ft_bzero(&res, sizeof(res));
+	calc_velocity(&res, m, speed);
 	return (res);
 }

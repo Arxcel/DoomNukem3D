@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:03:46 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:40:54 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define H 720
 
 # define GRAVITY				1.0f
-# define SPEED					10
+# define SPEED					5
+# define RUN_SPEED					10
 # define MOUSE_SENSIVITY_X		3
 # define MOUSE_SENSIVITY_Y		5
 
