@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 13:50:11 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 15:23:39 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ static void		draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 			continue;
 		}
 		t = reverse_perspective(m, x, y, y < w->cya ? w->ceil : w->floor);
-		tex[0] = (t.x * 2048);
-		tex[1] = (t.y * 2048);
+		tex[0] = (t.x * 64);
+		tex[1] = (t.y * 64);
 		current = y < w->cya ? m->tex.t.textures[w->floor_id] :
 												m->tex.t.textures[w->ceil_id];
 		pix = current->pixels;

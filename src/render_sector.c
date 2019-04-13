@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:40:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 14:26:39 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 15:33:20 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void				render_sector(t_main *m, t_renderer *r,
 	ft_bzero(&wall, sizeof(wall));
 	while (++s < sect->number_vertices)
 	{
-		setup_wall_texture(m, &wall, s);
+		setup_wall_texture(m, &wall, sect->textures[s], (t_pt){0, 1});
 		r->t1 = calculate_edges(&m->map.player, &sect->vertices[s]);
 		r->t2 = calculate_edges(&m->map.player, &sect->vertices[s + 1]);
 		if (r->t1.y < 0 && r->t2.y < 0)
