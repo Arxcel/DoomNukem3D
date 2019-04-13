@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 11:47:26 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 12:53:16 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 13:44:08 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,7 @@ float		clampf(float a, float min, float max)
 	return (minf(maxf(a, min), max));
 }
 
-int			intersects(t_player const *p, t_vertex v1, t_vertex v2)
-{
-	t_vertex p_old_pos;
-	t_vertex p_new_pos;
-
-	p_old_pos = (t_vertex) { p->position.x, p->position.y };
-	p_new_pos = (t_vertex) { p->position.x + p->velocity.x,
-									p->position.y + p->velocity.y };
-	return (intersect_box(p_old_pos, p_new_pos, v1, v2) &&
-							point_side(p_new_pos, v1, v2) < 0);
-}
-
-t_interp	*init_interp(t_point from, int c, t_point to)
+t_interp	*init_interp(t_pt from, int c, t_pt to)
 {
 	t_interp *i;
 

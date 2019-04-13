@@ -6,13 +6,13 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 12:56:00 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 13:50:11 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
+static void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 {
 	SDL_Surface		*current;
 	t_interp		*i;
@@ -24,53 +24,45 @@ static void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 										(wall->x2 - wall->x1) + wall->y1[1];
 	wall->cya = clampf(wall->ya, r->top_limit[x], r->bottom_limit[x]);
 	wall->cyb = clampf(wall->yb, r->top_limit[x], r->bottom_limit[x]);
-	i = init_interp((t_point){wall->ya, wall->cya}, wall->yb, (t_point){0, current->w});
+	i = init_interp((t_pt){wall->ya, wall->cya},
+									wall->yb, (t_pt){0, current->w});
 	if (wall->neighbor < 0)
-		draw_line(m, wall, &(t_vline){x, wall->cya, wall->cyb, wall->solid_id}, i);
+		draw_line(m, wall, &(t_vline){x, wall->cya,
+										wall->cyb, wall->solid_id}, i);
 	free(i);
 }
 
-static void			draw_neighbor_wall(t_main *m, t_wall *wall,
+static void		draw_neighbor_wall(t_main *m, t_wall *wall,
 												t_renderer *r, int x)
 {
-	SDL_Surface		*current_upper;
-	SDL_Surface		*current_lower;
+	SDL_Surface		*cu;
+	SDL_Surface		*cl;
 	t_interp		*i;
 
-	current_upper = m->tex.t.textures[wall->upper_id];
-	current_lower = m->tex.t.textures[wall->lower_id];
-	wall->nya = (x - wall->x1) * (wall->neighbor_y2[0] - wall->neighbor_y1[0]) /
-								(wall->x2 - wall->x1) + wall->neighbor_y1[0];
-	wall->nyb = (x - wall->x1) * (wall->neighbor_y2[1] - wall->neighbor_y1[1]) /
-								(wall->x2 - wall->x1) + wall->neighbor_y1[1];
+	cu = m->tex.t.textures[wall->upper_id];
+	cl = m->tex.t.textures[wall->lower_id];
+	wall->nya = (x - wall->x1) * (wall->neighbor_y2[0] - wall->neighbor_y1[0])
+	/ (wall->x2 - wall->x1) + wall->neighbor_y1[0];
+	wall->nyb = (x - wall->x1) * (wall->neighbor_y2[1] - wall->neighbor_y1[1])
+	/ (wall->x2 - wall->x1) + wall->neighbor_y1[1];
 	wall->ncya = clampf(wall->nya, r->top_limit[x], r->bottom_limit[x]);
 	wall->ncyb = clampf(wall->nyb, r->top_limit[x], r->bottom_limit[x]);
-	i = init_interp((t_point){wall->ya, wall->cya}, wall->yb, (t_point){0, current_upper->w});
-	draw_line(m, wall, &(t_vline){x, wall->cya, wall->ncya - 1, wall->upper_id}, i);
-	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya), r->top_limit[x], m->sdl.img.h - 1);
+	i = init_interp((t_pt){wall->ya, wall->cya}, wall->yb, (t_pt){0, cu->w});
+	draw_line(m, wall, &(t_vline){x, wall->cya,
+										wall->ncya - 1, wall->upper_id}, i);
+	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya),
+										r->top_limit[x], m->sdl.img.h - 1);
 	free(i);
-	i = init_interp((t_point){wall->ya, wall->ncyb + 1}, wall->yb, (t_point){0, current_lower->w});
-	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1, wall->cyb, wall->lower_id}, i);
-	r->bottom_limit[x] = clampf(minf(wall->cyb, wall->ncyb), 0, r->bottom_limit[x]);
+	i = init_interp((t_pt){wall->ya, wall->ncyb + 1},
+	wall->yb, (t_pt){0, cl->w});
+	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1,
+	wall->cyb, wall->lower_id}, i);
+	r->bottom_limit[x] = clampf(minf(wall->cyb,
+	wall->ncyb), 0, r->bottom_limit[x]);
 	free(i);
 }
 
-static t_vertex		reverse_perspective(t_main *m, int x, int y, float height)
-{
-	t_vertex	r;
-	float		rtx;
-	float		rty;
-
-	r.y = height * VFOV * m->sdl.img.h / ((m->sdl.img.h / 2.0 - y) - m->map.player.pitch * VFOV * m->sdl.img.h);
-	r.x = r.y * (m->sdl.img.w / 2.0 - x) / (HFOV * m->sdl.img.w);
-	rtx = r.y * m->map.player.anglecos + r.x * m->map.player.anglesin;
-	rty = r.y * m->map.player.anglesin - r.x * m->map.player.anglecos;
-	r.x = rtx + m->map.player.position.x;
-	r.y = rty + m->map.player.position.y;
-	return (r);
-}
-
-static void			draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
+static void		draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 {
 	int			y;
 	t_vertex	t;
@@ -89,13 +81,15 @@ static void			draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 		t = reverse_perspective(m, x, y, y < w->cya ? w->ceil : w->floor);
 		tex[0] = (t.x * 2048);
 		tex[1] = (t.y * 2048);
-		current = y < w->cya ? m->tex.t.textures[w->floor_id] : m->tex.t.textures[w->ceil_id];
+		current = y < w->cya ? m->tex.t.textures[w->floor_id] :
+												m->tex.t.textures[w->ceil_id];
 		pix = current->pixels;
-		sdl_pixel_put(&m->sdl.img, x, y, pix[tex[0] % current->w + (tex[1] % current->h) * current->w]);
+		sdl_pixel_put(&m->sdl.img, x, y, pix[tex[0] % current->w +
+										(tex[1] % current->h) * current->w]);
 	}
 }
 
-void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
+void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 											t_render_item const *current_sector)
 {
 	int		beginx;
@@ -107,7 +101,9 @@ void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 	x = beginx - 1;
 	while (++x <= endx)
 	{
-		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.y) + wall->u1 * ((x - wall->x1) * renderer->t1.y)) / ((wall->x2 - x) * renderer->t2.y + (x - wall->x1) * renderer->t1.y);
+		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.y) + wall->u1 *
+		((x - wall->x1) * renderer->t1.y)) / ((wall->x2 - x) * renderer->t2.y +
+		(x - wall->x1) * renderer->t1.y);
 		draw_ceil_floor(m, renderer, wall, x);
 		draw_local_wall(m, wall, renderer, x);
 		if (wall->neighbor >= 0)
@@ -121,13 +117,14 @@ void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 	}
 }
 
-void				draw_screen(t_main *m)
+void			draw_screen(t_main *m)
 {
 	t_renderer		r;
 	t_render_item	current_sector;
 
 	init_renderer(&r, &m->sdl.img, m->map.number_sectors);
-	(*r.head) = (t_render_item){m->map.player.sector_number, 0, m->sdl.img.w - 1};
+	(*r.head) = (t_render_item){m->map.player.sector_number,
+												0, m->sdl.img.w - 1};
 	++r.head;
 	if (r.head == r.queue + MaxQueue)
 		r.head = r.queue;

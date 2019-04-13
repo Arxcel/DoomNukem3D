@@ -63,7 +63,11 @@ SOURCES :=  main.c \
 			cast_ray.c \
 			init_parser.c \
 			parser_utils.c \
-			remove_parser.c
+			remove_parser.c \
+			intersections.c \
+			textures.c \
+			perspective.c \
+			basic_edges.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))

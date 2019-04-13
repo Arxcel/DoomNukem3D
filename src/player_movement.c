@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 13:29:55 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 14:00:07 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 13:16:01 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ static void			player_horizontal_movement(t_main *m)
 {
 	t_sector	*sect;
 	int			s;
-	float		hole_low;
-	float		hole_high;
+	t_vertex	hole;
 
 	sect = &m->map.sectors[m->map.player.sector_number];
 	s = -1;
@@ -84,11 +83,11 @@ static void			player_horizontal_movement(t_main *m)
 		if (intersects(&m->map.player, sect->vertices[s],
 										sect->vertices[s + 1]))
 		{
-			hole_low = sect->neighbors[s] < 0 ? -1 : maxf(sect->floor_height,
+			hole.x = sect->neighbors[s] < 0 ? -1 : maxf(sect->floor_height,
 							m->map.sectors[sect->neighbors[s]].floor_height);
-			hole_high = sect->neighbors[s] < 0 ? -1 : minf(sect->ceil_height,
+			hole.y = sect->neighbors[s] < 0 ? -1 : minf(sect->ceil_height,
 							m->map.sectors[sect->neighbors[s]].ceil_height);
-			if (hole_high < m->map.player.position.z + HEADMARGIN || hole_low >
+			if (hole.y < m->map.player.position.z + HEADMARGIN || hole.x >
 			m->map.player.position.z - (m->map.player.is_crouching ?
 			CROUCHINGHEIGHT : STANDHEIGHT) + KNEEHEIGHT)
 			{

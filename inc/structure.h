@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/09 11:32:42 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 11:32:42 by vkozlov          ###   ########.fr       */
+/*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
+/*   Updated: 2019/04/13 13:43:59 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct		s_point
 {
 	int				x;
 	int				y;
-}					t_point;
+}					t_pt;
 
 typedef struct		s_line
 {
@@ -59,13 +59,13 @@ typedef struct		s_line
 	t_vertex		limit_max;
 }					t_line;
 
-typedef struct	s_dir
+typedef struct		s_dir
 {
-	bool	forward;
-	bool	backward;
-	bool	right;
-	bool	left;
-}				t_dir;
+	bool			forward;
+	bool			backward;
+	bool			right;
+	bool			left;
+}					t_dir;
 
 typedef struct		s_sector
 {
@@ -181,7 +181,7 @@ typedef struct		s_wall
 
 	int				u0;
 	int				u1;
-	
+
 	int				txtx;
 	int				txty;
 
@@ -193,7 +193,7 @@ typedef struct		s_wall
 
 }					t_wall;
 
-typedef struct s_interpolator
+typedef struct		s_interpolator
 {
 	int				current;
 	int				step;
@@ -202,11 +202,11 @@ typedef struct s_interpolator
 	int				temp;
 }					t_interp;
 
-typedef struct	s_texture_blocks
+typedef struct		s_texture_blocks
 {
-	SDL_Surface	**textures;
-	size_t		numTextures;
-}				t_tblocks;
+	SDL_Surface		**textures;
+	size_t			num_textures;
+}					t_tblocks;
 
 typedef struct		s_textures
 {

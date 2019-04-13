@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/09 11:30:55 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/09 11:30:55 by vkozlov          ###   ########.fr       */
+/*   Created: 2019/04/13 13:02:24 by vkozlov           #+#    #+#             */
+/*   Updated: 2019/04/13 13:44:22 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ float		point_side(t_vertex p, t_vertex v1, t_vertex v2);
 int			intersects(t_player const *p, t_vertex v1, t_vertex v2);
 double		v_dot(t_vertex v1, t_vertex v2);
 int			interp_next(t_interp *i);
-t_interp	*init_interp(t_point from, int c, t_point to);
+t_interp	*init_interp(t_pt from, int c, t_pt to);
 #endif

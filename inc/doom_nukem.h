@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 12:49:06 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 14:30:50 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);
 
+void				do_perspective(t_renderer *renderer, t_wall *w,
+													int width, int height);
+t_vertex			reverse_perspective(t_main *m, int x, int y, float height);
+
 t_vertex			get_player_velocity(t_main *m);
 void				get_player_direction(t_main *m);
 void				move_player(t_main *m);
@@ -65,9 +69,9 @@ void				draw_minimap(t_main *m);
 void				draw_screen(t_main *m);
 
 void				render_sector(t_main *m, t_renderer *renderer,
-								t_render_item const *currentSector);
+								t_render_item const *current_sector);
 void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
-								t_render_item const *currentSector);
+								t_render_item const *current_sector);
 
 void				init_renderer(t_renderer *r, t_img *img, int n_sectors);
 void				free_renderer(t_renderer *r);
@@ -76,5 +80,12 @@ void				draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty);
 double				cast_ray_2line(t_vertex ray_origin,
 					t_vertex ray_direction, t_vertex point1, t_vertex point2);
 void				plot_line(t_img *img, t_line *l);
+
+void				load_textures(t_main *m);
+void				clear_textures(t_main *m);
+void				setup_wall_texture(t_main *m, t_wall *w, int s);
+
+t_vertex			calculate_edges(t_player *player, t_vertex *vertex);
+void				clamp_edges_with_player_view(t_renderer *r, t_wall *w);
 
 #endif

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:36:42 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/13 12:37:14 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/13 13:34:35 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map_parser.h"
 #include <sys/stat.h>
 
-int				vertex_field(t_map *map, json_value *value)
+int						vertex_field(t_map *map, json_value *value)
 {
-	int 		i;
+	int			i;
 	int			j;
 	int			cnt;
 	json_value	*js;
@@ -29,7 +29,7 @@ int				vertex_field(t_map *map, json_value *value)
 	{
 		j = 0;
 		js = value->u.array.values[i];
-		while(j < js->u.object.values[1].value->u.array.length)
+		while (j < js->u.object.values[1].value->u.array.length)
 		{
 			map->vertices[cnt].x =
 				(float)js->u.object.values[1].value->u.array.values[j]->u.dbl;
@@ -42,7 +42,7 @@ int				vertex_field(t_map *map, json_value *value)
 	return (0);
 }
 
-int				analyze_value(t_map *map, json_object_entry js)
+int						analyze_value(t_map *map, json_object_entry js)
 {
 	if (!ft_strcmp(js.name, "vertex"))
 	{
@@ -51,7 +51,8 @@ int				analyze_value(t_map *map, json_object_entry js)
 	}
 	else if (!ft_strcmp(js.name, "sector"))
 	{
-		if (map->sectors || !map->vertices || !map->number_vertices || !js.value ||
+		if (map->sectors || !map->vertices ||
+			!map->number_vertices || !js.value ||
 			js.value->type != json_array || sector_field(map, js.value))
 			return (1);
 	}
@@ -65,7 +66,7 @@ int				analyze_value(t_map *map, json_object_entry js)
 	return (0);
 }
 
-int				parser_loop(t_map *map, json_value *value)
+int						parser_loop(t_map *map, json_value *value)
 {
 	int			i;
 
@@ -83,9 +84,9 @@ int				parser_loop(t_map *map, json_value *value)
 	return (0);
 }
 
-json_value		*init_json(char *file_name)
+json_value				*init_json(char *file_name)
 {
-	FILE*		fp;
+	FILE		*fp;
 	struct stat	filestatus;
 	size_t		file_size;
 	char		*file_contents;
@@ -96,7 +97,7 @@ json_value		*init_json(char *file_name)
 	file_size = (size_t)filestatus.st_size;
 	if (!(fp = fopen(file_name, "rt")))
 		MSG("Unable to open file\n");
-	if (!(file_contents = (char*)malloc(file_size))) 
+	if (!(file_contents = (char*)malloc(file_size)))
 		MSG("Memory error: unable to allocate memory\n");
 	if (fread(file_contents, file_size, 1, fp) != 1 || fclose(fp))
 	{
@@ -109,7 +110,7 @@ json_value		*init_json(char *file_name)
 	return (value);
 }
 
-int		parser(t_map *map, char *file_name)
+int						parser(t_map *map, char *file_name)
 {
 	json_value	*value;
 
@@ -117,7 +118,7 @@ int		parser(t_map *map, char *file_name)
 	map->number_sectors = 0;
 	map->number_sptites = 0;
 	map->number_enemies = 0;
-	if(!(value = init_json(file_name)) || parser_loop(map, value))
+	if (!(value = init_json(file_name)) || parser_loop(map, value))
 		MSG("Wrong data format");
 	json_value_free(value);
 	return (0);
