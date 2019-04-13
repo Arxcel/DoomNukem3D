@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/27 17:00:12 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/04/13 11:49:17 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void			handle_key(t_main *m, int key)
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
 		m->map.player.is_falling = true;
 	}
-	dn_handle_kdown_wchange_wstate(m->wsys, key);
 }
 
 void				sdl_hook(t_main *m)
@@ -54,9 +53,9 @@ void				sdl_hook(t_main *m)
 		else if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_KEYUP)
 			handle_key(m, m->sdl.e.key.keysym.sym);
 		else if (m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
-			dn_handle_mbdown_wstate(m->wsys, &m->sdl.e.button);
+			;
 		else if (m->sdl.e.type == SDL_MOUSEBUTTONUP)
-			dn_handle_mbup_wstate(m->wsys, &m->sdl.e.button);
+			;
 		else if (m->sdl.e.type == SDL_MOUSEMOTION)
 			;
 		else if (m->sdl.e.type == SDL_MOUSEWHEEL)

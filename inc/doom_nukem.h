@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 14:22:32 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 11:48:45 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include "ft_libftu.h"
 # include "structure.h"
 # include "utils.h"
-# include "macroses.h"
-# include "textures.h"
-# include "weapons.h"
 
 # define W 1280
 # define H 720
@@ -43,6 +40,24 @@
 # define FAR_Z		5
 # define NEAR_SIDE	1e-5f
 # define FAR_SIDE	20.f
+
+# ifdef __APPLE__
+#  define WPNS_TEX_BG	0xff00ffff
+#  define WPNS_MAP_BG	0xff95b1c8
+#  define PIXEL_FORMAT	SDL_PIXELFORMAT_ARGB8888
+#  define IS_FORMAT_SURF	0
+# endif
+
+# ifdef __linux__
+#  define WPNS_TEX_BG	0xffff
+#  define WPNS_MAP_BG	0x95b1c8
+#  define PIXEL_FORMAT	SDL_PIXELFORMAT_RGB888
+#  define IS_FORMAT_SURF	1
+# endif
+
+# define INIT_INTERP(a,b,c,d,f) \
+		{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
+		abs(f-d), abs(c-a), (int)((b-1-a) * abs(f-d)) % abs(c-a) }
 
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);

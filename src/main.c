@@ -6,15 +6,11 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 13:36:53 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 11:47:04 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-#include "utils.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 
 static void calcDeltaTime(t_main *m)
 {
@@ -145,7 +141,6 @@ void				sdl_loop(t_main *m)
 		if (m->delta_time > 0.016f)
 		{
 			draw_screen(m);
-			dn_choose_weapon_render(m->wsys, &m->tex.wpns,&m->sdl.img);
 			draw_minimap(m);
 			sdl_put_image(&m->sdl);
 			move_player(m);
@@ -191,15 +186,11 @@ int					main(int ac, char **av)
 	t_main			m;
 	(void)av;
 	ft_bzero(&m, sizeof(t_main));
-	_ISZ(t_wsys, m.wsys, 1);
 	load_textures(&m);
 	LoadData(&m.map);
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	_NOTIS_F(dn_init_ck_map((t_hinit){&m.tex.wpns, WPNS_MAP, WPNS_TEX_BG,
-							WPNS_MAP_BG, WPNS_MAX_TEXTURES}, WEAPON_SCALE));
-	_NOTIS_F(dn_init_weapons(m.wsys, &m.tex.wpns));
 	sdl_loop(&m);
 	clear_textures(&m);
 	UnloadData(&m.map);

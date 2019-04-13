@@ -6,10 +6,8 @@ FLAGS := -g
 
 EXT := doom_nukem.h \
 		structure.h \
-		utils.h \
-		weapons.h \
-		textures.h \
-		macroses.h
+		utils.h
+
 IDIR := $(CURDIR)/inc
 EXTENSIONS := $(addprefix $(IDIR)/, $(EXT))
 
@@ -45,15 +43,12 @@ SDL2_P := -rpath @loader_path/libSDL/
 HEADER := inc
 _DEPS := doom_nukem.h \
 		structure.h \
-		utils.h \
-		weapons.h \
-		textures.h \
-		macroses.h
+		utils.h 
+
 DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 
 DIR_S := src
 DIR_O := obj
-DIR_OW := weapons
 SOURCES :=  main.c \
 			sdl_handle.c \
 			player_movement.c \
@@ -63,16 +58,10 @@ SOURCES :=  main.c \
 			render_sector.c \
 			render_main.c \
 			geom_utils.c \
-			dn_init_textures_map.c \
 			line.c \
 			minimap.c \
-			weapons/dn_init_weapons.c \
-			weapons/dn_choose_weapon_render.c \
-			weapons/dn_render_pistol.c \
-			weapons/dn_render_pistol_states.c \
-			weapons/dn_sdl_handle_key_wchoose_wstate.c \
-			weapons/dn_sdl_handle_mouse_wstate.c \
 			cast_ray.c
+
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
@@ -91,7 +80,6 @@ libs:
 
 obj:
 	mkdir -p $(DIR_O)
-	mkdir -p $(DIR_O)/$(DIR_OW)
 
 $(DIR_O)/%.o: $(DIR_S)/%.c $(DEPS) $(EXTENSIONS)
 		$(CC) -c -o $@ $< $(FLAGS) $(CFLAGS)
