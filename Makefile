@@ -43,7 +43,9 @@ SDL2_P := -rpath @loader_path/libSDL/
 HEADER := inc
 _DEPS := doom_nukem.h \
 		structure.h \
-		utils.h 
+		utils.h \
+		map_parser.h \
+		map_editor.h
 
 DEPS := $(patsubst %,$(HEADER)/%,$(_DEPS))
 

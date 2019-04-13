@@ -1,5 +1,5 @@
 #include "map_editor.h"
-
+#include "doom_nukem.h"
 t_dot	module(t_dot a, t_dot b)
 {
 	t_dot d;
