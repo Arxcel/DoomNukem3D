@@ -1,8 +1,8 @@
-NAME := doom_nukem
+NAME := doom-nukem
 
 CC := clang
-KEYS := #-Wall -Wextra -Werror
-FLAGS := -g
+KEYS := -Wall -Wextra -Werror
+FLAGS := 
 
 EXT := doom_nukem.h \
 		structure.h \
@@ -123,4 +123,4 @@ re: fclean all
 
 .PHONY: all, obj, norme, clean, fclean, re, pre
 .NOTPARALLEL:  all, obj, norme, clean, fclean, re, pre
-# .SILENT:
+.SILENT:

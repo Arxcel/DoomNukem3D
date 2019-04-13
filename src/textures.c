@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 15:33:58 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:03:37 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void			clear_textures(t_main *m)
 	while (m->tex.t.num_textures)
 		SDL_FreeSurface(m->tex.t.textures[--m->tex.t.num_textures]);
 	free(m->tex.t.textures);
-
 }
 
 void			setup_wall_texture(t_main *m, t_wall *w, int wall, t_pt verical)

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 15:29:56 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:03:46 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void				plot_line(t_img *img, t_line *l);
 
 void				load_textures(t_main *m);
 void				clear_textures(t_main *m);
-void				setup_wall_texture(t_main *m, t_wall *w, int wall, t_pt verical);
+void				setup_wall_texture(t_main *m, t_wall *w,
+													int wall, t_pt verical);
 
 t_vertex			calculate_edges(t_player *player, t_vertex *vertex);
 void				clamp_edges_with_player_view(t_renderer *r, t_wall *w);
