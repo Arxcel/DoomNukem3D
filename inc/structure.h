@@ -39,6 +39,12 @@ typedef struct		s_vertex
 	float			y;
 }					t_vertex;
 
+typedef struct		s_point
+{
+	int				x;
+	int				y;
+}					t_point;
+
 typedef struct		s_line
 {
 	t_vertex		from;

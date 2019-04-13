@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 14:23:11 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 12:56:00 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 {
 	SDL_Surface		*current;
+	t_interp		*i;
 
 	current = m->tex.t.textures[wall->solid_id];
 	wall->ya = (x - wall->x1) * (wall->y2[0] - wall->y1[0]) /
@@ -23,8 +24,10 @@ static void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 										(wall->x2 - wall->x1) + wall->y1[1];
 	wall->cya = clampf(wall->ya, r->top_limit[x], r->bottom_limit[x]);
 	wall->cyb = clampf(wall->yb, r->top_limit[x], r->bottom_limit[x]);
+	i = init_interp((t_point){wall->ya, wall->cya}, wall->yb, (t_point){0, current->w});
 	if (wall->neighbor < 0)
-		draw_line(m, wall, &(t_vline){x, wall->cya, wall->cyb, wall->solid_id}, (t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current->w));
+		draw_line(m, wall, &(t_vline){x, wall->cya, wall->cyb, wall->solid_id}, i);
+	free(i);
 }
 
 static void			draw_neighbor_wall(t_main *m, t_wall *wall,
@@ -32,6 +35,7 @@ static void			draw_neighbor_wall(t_main *m, t_wall *wall,
 {
 	SDL_Surface		*current_upper;
 	SDL_Surface		*current_lower;
+	t_interp		*i;
 
 	current_upper = m->tex.t.textures[wall->upper_id];
 	current_lower = m->tex.t.textures[wall->lower_id];
@@ -41,10 +45,14 @@ static void			draw_neighbor_wall(t_main *m, t_wall *wall,
 								(wall->x2 - wall->x1) + wall->neighbor_y1[1];
 	wall->ncya = clampf(wall->nya, r->top_limit[x], r->bottom_limit[x]);
 	wall->ncyb = clampf(wall->nyb, r->top_limit[x], r->bottom_limit[x]);
-	draw_line(m, wall, &(t_vline){x, wall->cya, wall->ncya - 1, wall->upper_id}, (t_interp)INIT_INTERP(wall->ya, wall->cya, wall->yb, 0, current_upper->w));
+	i = init_interp((t_point){wall->ya, wall->cya}, wall->yb, (t_point){0, current_upper->w});
+	draw_line(m, wall, &(t_vline){x, wall->cya, wall->ncya - 1, wall->upper_id}, i);
 	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya), r->top_limit[x], m->sdl.img.h - 1);
-	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1, wall->cyb, wall->lower_id}, (t_interp)INIT_INTERP(wall->ya, wall->ncyb + 1, wall->yb, 0, current_lower->w));
+	free(i);
+	i = init_interp((t_point){wall->ya, wall->ncyb + 1}, wall->yb, (t_point){0, current_lower->w});
+	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1, wall->cyb, wall->lower_id}, i);
 	r->bottom_limit[x] = clampf(minf(wall->cyb, wall->ncyb), 0, r->bottom_limit[x]);
+	free(i);
 }
 
 static t_vertex		reverse_perspective(t_main *m, int x, int y, float height)

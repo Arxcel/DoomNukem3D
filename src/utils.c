@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 11:47:26 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 13:43:03 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 12:53:16 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,19 @@ int			intersects(t_player const *p, t_vertex v1, t_vertex v2)
 									p->position.y + p->velocity.y };
 	return (intersect_box(p_old_pos, p_new_pos, v1, v2) &&
 							point_side(p_new_pos, v1, v2) < 0);
+}
+
+t_interp	*init_interp(t_point from, int c, t_point to)
+{
+	t_interp *i;
+
+	i = (t_interp*)malloc(sizeof(t_interp));
+	i->current = to.x + (from.y - 1 - from.x) * (to.y - to.x) / (c - from.x);
+	i->step = ((to.y < to.x) ^ (c < from.x)) ? -1 : 1;
+	i->target_length = abs(to.y - to.x);
+	i->basic_length = abs(c - from.x);
+	i->temp = (int)((from.y - 1 - from.x) * abs(to.y - to.x)) % abs(c - from.x);
+	return (i);
 }
 
 int			interp_next(t_interp *i)

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 11:48:45 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 12:49:06 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,6 @@
 #  define IS_FORMAT_SURF	1
 # endif
 
-# define INIT_INTERP(a,b,c,d,f) \
-		{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
-		abs(f-d), abs(c-a), (int)((b-1-a) * abs(f-d)) % abs(c-a) }
-
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);
 
@@ -76,7 +72,7 @@ void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 void				init_renderer(t_renderer *r, t_img *img, int n_sectors);
 void				free_renderer(t_renderer *r);
 void				clamp_point(t_vertex *point, t_vertex *i1, t_vertex *i2);
-void				draw_line(t_main *m, t_wall *w, t_vline *v, t_interp ty);
+void				draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty);
 double				cast_ray_2line(t_vertex ray_origin,
 					t_vertex ray_direction, t_vertex point1, t_vertex point2);
 void				plot_line(t_img *img, t_line *l);

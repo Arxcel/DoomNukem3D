@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:31:29 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 14:14:49 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/13 12:47:54 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		free_renderer(t_renderer *renderer)
 	free(renderer->bottom_limit);
 }
 
-void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp ty)
+void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 {
 	int			y;
 	int			*pix;
@@ -52,7 +52,7 @@ void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp ty)
 	y = v->y_top;
 	while (++y <= v->y_bottom)
 	{
-		w->txty = interp_next(&ty);
+		w->txty = interp_next(ty);
 		sdl_pixel_put(&m->sdl.img, v->x, y, pix[w->txtx % current->w +
 									(w->txty % current->h) * current->w]);
 	}
