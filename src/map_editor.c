@@ -22,7 +22,7 @@ t_dot	direction(t_dot a, t_dot b)
 void	print_vector(t_dot a, t_main *main)
 {
 	if (a.x > -1 && a.y > -1 && a.x < main->sdl.win_w && a.y <  main->sdl.win_h)
-		sdl_pixel_put(&main->sdl.img, a.x, a.y, 0xFFFF00);
+		sdl_pixel_put(&main->sdl.img, a.x, a.y, a.color);
 }
 
 bool	compare(t_dot a, t_dot b)
@@ -165,6 +165,7 @@ int     map_editor_loop(t_main *m)
 					printf("x = %i y = %i\n", x, y);
 					sectors[num_sectors].wall_vertice[sectors[num_sectors].i].x = x;
 					sectors[num_sectors].wall_vertice[sectors[num_sectors].i].y = y;
+					sectors[num_sectors].wall_vertice[sectors[num_sectors].i].color = 0xFFFF00;
 					sectors[num_sectors].i++;
 					printf("i = %i\n", sectors[num_sectors].i);
 				}
@@ -180,6 +181,7 @@ int     map_editor_loop(t_main *m)
 							if (intersect(sectors[cnt_sec].wall_vertice[j], sectors[cnt_sec].wall_vertice[j+1], d))
 							{
 								puts("intersect");
+								sectors[cnt_sec].wall_vertice[j].color = 0x0000FF;
 								break;
 							}
 							j++;

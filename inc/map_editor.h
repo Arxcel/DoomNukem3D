@@ -5,6 +5,8 @@ typedef struct  s_dot
 {
    int x;
    int y;
+   int color;
+   int intersect;
 }               t_dot;
 
 typedef struct	s_text_sector
