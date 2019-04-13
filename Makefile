@@ -67,7 +67,8 @@ SOURCES :=  main.c \
 			intersections.c \
 			textures.c \
 			perspective.c \
-			basic_edges.c
+			basic_edges.c \
+			map_editor.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))

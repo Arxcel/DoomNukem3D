@@ -12,6 +12,7 @@
 
 #include "doom_nukem.h"
 #include "map_parser.h"
+#include "map_editor.h"
 
 static void			calc_delta_time(t_main *m)
 {
@@ -44,14 +45,22 @@ int					main(int ac, char **av)
 
 	(void)av;
 	ft_bzero(&m, sizeof(t_main));
-	load_textures(&m);
-	parser(&m.map, av[1]);
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	sdl_loop(&m);
-	clear_textures(&m);
-	remove_data(&m.map);
+	if (ac > 1 && !ft_strcmp("-edit_map", av[1]))
+	{
+		init_map_editor(&m);
+		map_editor_loop(&m);
+	}
+	else
+	{
+		load_textures(&m);
+		parser(&m.map, av[1]);
+		sdl_loop(&m);
+		clear_textures(&m);
+		remove_data(&m.map);
+	}
 	SDL_Quit();
 	return (0);
 }

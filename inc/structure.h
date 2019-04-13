@@ -222,6 +222,7 @@ typedef struct		s_main
 	float		prev_time;
 	float		curr_time;
 	float		delta_time;
+	TTF_Font	*font;
 }					t_main;
 
 #endif
