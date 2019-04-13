@@ -19,10 +19,11 @@ t_dot	direction(t_dot a, t_dot b)
 }
 
 
-void	print_vector(t_dot a, t_main *main)
+void	print_vector(t_editor_wall wall, t_main *main)
 {
-	if (a.x > -1 && a.y > -1 && a.x < main->sdl.win_w && a.y <  main->sdl.win_h)
-		sdl_pixel_put(&main->sdl.img, a.x, a.y, a.color);
+	if (wall.begin.x > -1 && wall.begin.y > -1 &&
+		wall.begin.x < main->sdl.win_w && wall.begin.y <  main->sdl.win_h)
+		sdl_pixel_put(&main->sdl.img, wall.begin.x, wall.begin.y, wall.color);
 }
 
 bool	compare(t_dot a, t_dot b)
@@ -30,60 +31,60 @@ bool	compare(t_dot a, t_dot b)
 	return (a.x == b.x && a.y == b.y);
 }
 
-int		intersect(t_dot a, t_dot b, t_dot cur)
+int		intersect(t_editor_wall wall, t_dot cur)
 {
 	t_dot error;
 	t_dot d;
 	t_dot s;
 
-	d = module(a, b);
-	s = direction(a, b);
+	d = module(wall.begin, wall.end);
+	s = direction(wall.begin, wall.end);
 	error.x = (d.x > d.y ? d.x : -d.y) / 2;
 	while (1)
 	{
-		if (compare(a, cur))
+		if (compare(wall.begin, cur))
 			return (1);
-		if (a.x == b.x && a.y == b.y)
+		if (wall.begin.x == wall.end.x && wall.begin.y == wall.end.y)
 			break ;
 		error.y = error.x;
 		if (error.y > -d.x)
 		{
 			error.x -= d.y;
-			a.x += s.x;
+			wall.begin.x += s.x;
 		}
 		if (error.y < d.y)
 		{
 			error.x += d.x;
-			a.y += s.y;
+			wall.begin.y += s.y;
 		}
 	}
 	return (0);
 }
 
-int		line(t_dot a, t_dot b, t_main *main)
+int		line(t_editor_wall wall, t_main *main)
 {
 	t_dot error;
 	t_dot d;
 	t_dot s;
 
-	d = module(a, b);
-	s = direction(a, b);
+	d = module(wall.begin, wall.end);
+	s = direction(wall.begin, wall.end);
 	error.x = (d.x > d.y ? d.x : -d.y) / 2;
 	while (1)
 	{
-		print_vector(a, main);
-		if (a.x == b.x && a.y == b.y)
+		print_vector(wall, main);
+		if (wall.begin.x == wall.end.x && wall.begin.y == wall.end.y)
 			break ;
 		error.y = error.x;
 		if (error.y > -d.x)
 		{
 			error.x -= d.y;
-			a.x += s.x;
+			wall.begin.x += s.x;
 		}
 		if (error.y < d.y)
 		{
 			error.x += d.x;
-			a.y += s.y;
+			wall.begin.y += s.y;
 		}
 	}
 	return (0);
@@ -102,14 +103,21 @@ int		init_map_editor(t_main *main)
 }
 
 /*Returns number of walls in sector*/
-int		close_sector(t_main *m, int *i, t_dot *wall_vertice)
+int		close_sector(t_main *m, int i, t_text_sector *sector)
 {
-	if (*i > 2 && *i < WALLS_CNT)
+	if (sector[i].num_walls > 1 && sector[i].num_walls < WALLS_CNT)
 	{
-		wall_vertice[*i] = wall_vertice[0];
-		printf("Walls %i\n", *i);
-		(*i)++;
-		return (*i);
+		sector[i].wall_vertice[sector[i].num_walls].color = 0xFFFF00;
+		sector[i].wall_vertice[sector[i].num_walls].begin.x =
+			sector[i].wall_vertice[sector[i].num_walls - 1].end.x;
+		sector[i].wall_vertice[sector[i].num_walls].begin.y =
+			sector[i].wall_vertice[sector[i].num_walls - 1].end.y;
+		sector[i].wall_vertice[sector[i].num_walls].end.x = sector[i].wall_vertice[0].begin.x;
+		sector[i].wall_vertice[sector[i].num_walls].end.y = sector[i].wall_vertice[0].begin.y;
+
+		sector[i].num_walls++;
+		printf("Walls %i\n", sector[i].num_walls);
+		return (sector[i].num_walls);
 	}
 	return (0);
 }
@@ -130,14 +138,14 @@ int     map_editor_loop(t_main *m)
 	SDL_Rect dstrect = {m->sdl.win_w * 0.75,  15 , strlen("Sectors") * 15, 32};
 
 	//t_dot wall_vertice[WALLS_CNT];
-	//int i = 0;
+	int i = 0;
 	int j;
 	int num_sectors = 0;
 	t_text_sector sectors[SECTORS_CNT];
-	sectors[0].num_walls = 0;
-	sectors[0].i = 0;
+	sectors[0].num_walls = -1;
 	bool select_portal_mode = false;
 	int cnt_sec = -1;
+	
 	while(m->sdl.running)
 	{
 		while (SDL_PollEvent(&m->sdl.e))
@@ -146,45 +154,60 @@ int     map_editor_loop(t_main *m)
 			{
 				m->sdl.running = 0;
 			}
-			else if (num_sectors < SECTORS_CNT && !sectors[num_sectors].num_walls && m->sdl.e.key.keysym.sym == SDLK_RETURN)
+			else if (num_sectors < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN)
 			{
-				sectors[num_sectors].num_walls = close_sector(m, &sectors[num_sectors].i, sectors[num_sectors].wall_vertice);
-				if (sectors[num_sectors].num_walls)
+				if (close_sector(m, num_sectors, sectors))
 				{
 					num_sectors++;
-					sectors[num_sectors].num_walls = 0;
-					sectors[num_sectors].i = 0;
+					sectors[num_sectors].num_walls = -1;
+					i = 0;
 					select_portal_mode = true;
 				}
 			}
-			if (num_sectors < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type && sectors[num_sectors].i < WALLS_CNT - 1 && !sectors[num_sectors].num_walls)
+			if (num_sectors < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type && sectors[num_sectors].num_walls < WALLS_CNT - 1)
 			{
 				SDL_GetMouseState(&x, &y);
 				if (!select_portal_mode)
 				{
+					i = sectors[num_sectors].num_walls;
+					sectors[num_sectors].wall_vertice[i].color = 0xFFFF00;
 					printf("x = %i y = %i\n", x, y);
-					sectors[num_sectors].wall_vertice[sectors[num_sectors].i].x = x;
-					sectors[num_sectors].wall_vertice[sectors[num_sectors].i].y = y;
-					sectors[num_sectors].wall_vertice[sectors[num_sectors].i].color = 0xFFFF00;
-					sectors[num_sectors].i++;
-					printf("i = %i\n", sectors[num_sectors].i);
+					if (i == -1)
+					{
+						sectors[num_sectors].wall_vertice[0].begin.x = x;
+						sectors[num_sectors].wall_vertice[0].begin.y = y;
+					}
+					else
+					{
+						if (i > 0)
+						{
+							sectors[num_sectors].wall_vertice[i].begin.x =
+								sectors[num_sectors].wall_vertice[i - 1].end.x;
+							sectors[num_sectors].wall_vertice[i].begin.y =
+								sectors[num_sectors].wall_vertice[i - 1].end.y;
+						}
+						sectors[num_sectors].wall_vertice[i].end.x = x;
+						sectors[num_sectors].wall_vertice[i].end.y = y;
+					}
+					sectors[num_sectors].num_walls++;
+					// printf("i = %i\n", i);
+					// printf("Walls = %i\n", sectors[num_sectors].num_walls);
 				}
-				else
+				if (select_portal_mode)
 				{
 					cnt_sec = -1;
 					while(++cnt_sec < num_sectors + 1)
 					{
-						j = 0;
+						j = -1;
 						t_dot d = {x,y};
-						while (sectors[cnt_sec].i > 1 && j < sectors[cnt_sec].i - 1)
+						while (++j < sectors[cnt_sec].num_walls)
 						{
-							if (intersect(sectors[cnt_sec].wall_vertice[j], sectors[cnt_sec].wall_vertice[j+1], d))
+							if (intersect(sectors[cnt_sec].wall_vertice[j], d))
 							{
 								puts("intersect");
 								sectors[cnt_sec].wall_vertice[j].color = 0x0000FF;
 								break;
 							}
-							j++;
 						}
 					}
 				}
@@ -194,11 +217,10 @@ int     map_editor_loop(t_main *m)
 			cnt_sec = -1;
 			while(++cnt_sec < num_sectors + 1)
 			{
-				j = 0;
-				while (sectors[cnt_sec].i > 1 && j < sectors[cnt_sec].i - 1)
+				j = -1;
+				while (++j < sectors[cnt_sec].num_walls)
 				{
-					line(sectors[cnt_sec].wall_vertice[j], sectors[cnt_sec].wall_vertice[j+1], m);
-					j++;
+					line(sectors[cnt_sec].wall_vertice[j], m);
 				}
 			}
 			
