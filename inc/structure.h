@@ -73,6 +73,7 @@ typedef struct		s_sector
 	float			ceil_height;
 	short			*neighbors;
 	t_vertex		*vertices;
+	int				*textures;
 	size_t			number_vertices;
 	t_vertex		min;
 	t_vertex		max;

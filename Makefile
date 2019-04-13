@@ -60,7 +60,10 @@ SOURCES :=  main.c \
 			geom_utils.c \
 			line.c \
 			minimap.c \
-			cast_ray.c
+			cast_ray.c \
+			init_parser.c \
+			parser_utils.c \
+			remove_parser.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
