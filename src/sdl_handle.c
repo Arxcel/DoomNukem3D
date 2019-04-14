@@ -36,7 +36,7 @@ static void			vertical_movement(t_main *m, int key)
 
 static void			handle_key(t_main *m, int key)
 {
-	if (key == SDLK_q)
+	if (key == SDLK_q || key == SDLK_ESCAPE)
 		m->sdl.running = 0;
 	else if (key == SDLK_w)
 		m->map.player.dir.forward = m->sdl.e.type == SDL_KEYDOWN;
