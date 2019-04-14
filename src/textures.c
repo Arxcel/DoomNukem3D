@@ -6,11 +6,16 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:03:37 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/14 13:13:14 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+int				set_rgb(unsigned int r, unsigned int g, unsigned int b)
+{
+	return ((r << 16) | (g << 8) | b);
+}
 
 static void		load_block_textures(const char *path, t_tblocks *textures)
 {

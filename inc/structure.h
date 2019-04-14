@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:24:35 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/14 13:12:58 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct		s_map
 	size_t			number_sectors;
 	size_t			number_enemies;
 	size_t			number_sptites;
+	float			ligntness;
 }					t_map;
 
 /*
@@ -192,6 +193,7 @@ typedef struct		s_wall
 	int				floor_id;
 	int				ceil_id;
 
+	float			lz;
 }					t_wall;
 
 typedef struct		s_interpolator
