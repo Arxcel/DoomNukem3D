@@ -126,20 +126,23 @@ void	print_sectors(t_text_sector *sectors, int num_sectors)
 {
 	int i = -1;
 	t_editor_wall w;
+	int gl = -1;
 	while(++i < num_sectors)
 	{
 		printf("Sector %i\n", i);
 		int j = -1;
 		while (++j < sectors[i].num_walls)
 		{
+			sectors[i].wall_vertice[j].global_index = ++gl;
 			w = sectors[i].wall_vertice[j];
-			printf("Wall %i: begin x = %i, y = %i end x = %i, y = %i neighbor = %i\n",
-				j, w.begin.x, w.begin.y, w.end.x, w.end.y, sectors[i].neighbors[j]);
+			printf("Wall %i: begin x = %i, y = %i end x = %i, y = %i neighbor = %i global index = %i\n",
+				j, w.begin.x, w.begin.y, w.end.x, w.end.y, sectors[i].neighbors[j], w.global_index);
 		}
 	}
 	
 
 }
+
 void	shift_left(t_text_sector *sectors, int num_sectors)
 {
 	t_dot min = sectors[0].wall_vertice[0].begin;
@@ -195,6 +198,7 @@ int     map_editor_loop(t_main *m)
 	int cnt_sec = -1;
 	int intersected = -1;
 	j = -1;
+	int gl = 0;
 	while (++j < WALLS_CNT)
 		sectors[num_sectors].neighbors[j] = -1;
 	while(m->sdl.running)
