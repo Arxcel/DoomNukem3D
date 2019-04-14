@@ -28,7 +28,8 @@ void	print_vector(t_editor_wall wall, t_main *main)
 
 bool	compare(t_dot a, t_dot b)
 {
-	return (a.x == b.x && a.y == b.y);
+	return ((a.x == b.x - 1 && a.y == b.y - 1) || (a.x == b.x + 1 && a.y == b.y + 1) || (a.x == b.x && a.y == b.y)
+		|| (a.x == b.x - 1 && a.y == b.y + 1) || (a.x == b.x + 1 && a.y == b.y - 1));
 }
 
 int		intersect(t_editor_wall wall, t_dot cur)
@@ -145,7 +146,7 @@ int     map_editor_loop(t_main *m)
 	sectors[0].num_walls = -1;
 	bool select_portal_mode = false;
 	int cnt_sec = -1;
-	
+	int intersected = -1;
 	while(m->sdl.running)
 	{
 		while (SDL_PollEvent(&m->sdl.e))
@@ -156,21 +157,29 @@ int     map_editor_loop(t_main *m)
 			}
 			else if (num_sectors < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN)
 			{
-				if (close_sector(m, num_sectors, sectors))
+				if (close_sector(m, num_sectors, sectors) && !select_portal_mode)
+				{
+					select_portal_mode = true;
+					i = 0;
+				}
+				if (intersected != -1)
 				{
 					num_sectors++;
-					sectors[num_sectors].num_walls = -1;
-					i = 0;
-					select_portal_mode = true;
+					sectors[num_sectors].wall_vertice[0] = sectors[num_sectors - 1].wall_vertice[intersected];
+					sectors[num_sectors].num_walls = 1;
+					i = 2;
+					intersected = -1;
+					select_portal_mode = false;
+					
 				}
 			}
-			if (num_sectors < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type && sectors[num_sectors].num_walls < WALLS_CNT - 1)
+			if (num_sectors < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type )
 			{
 				SDL_GetMouseState(&x, &y);
-				if (!select_portal_mode)
+				if (!select_portal_mode && sectors[num_sectors].num_walls < WALLS_CNT - 1)
 				{
 					i = sectors[num_sectors].num_walls;
-					sectors[num_sectors].wall_vertice[i].color = 0xFFFF00;
+					sectors[num_sectors].wall_vertice[i].color = YELLOW;
 					printf("x = %i y = %i\n", x, y);
 					if (i == -1)
 					{
@@ -190,26 +199,32 @@ int     map_editor_loop(t_main *m)
 						sectors[num_sectors].wall_vertice[i].end.y = y;
 					}
 					sectors[num_sectors].num_walls++;
-					// printf("i = %i\n", i);
-					// printf("Walls = %i\n", sectors[num_sectors].num_walls);
 				}
-				if (select_portal_mode)
+				else
 				{
-					cnt_sec = -1;
-					while(++cnt_sec < num_sectors + 1)
+
+					j = -1;
+					t_dot d = {x,y};
+					while (++j < sectors[num_sectors].num_walls)
 					{
-						j = -1;
-						t_dot d = {x,y};
-						while (++j < sectors[cnt_sec].num_walls)
+						if (intersect(sectors[num_sectors].wall_vertice[j], d))
 						{
-							if (intersect(sectors[cnt_sec].wall_vertice[j], d))
+							if (intersected == j)
 							{
-								puts("intersect");
-								sectors[cnt_sec].wall_vertice[j].color = 0x0000FF;
-								break;
+								intersected = -1;
+								sectors[num_sectors].wall_vertice[j].intersected = false;
+								sectors[num_sectors].wall_vertice[j].color = YELLOW;
 							}
+							else if (intersected == -1)
+							{
+								intersected = j;
+								sectors[num_sectors].wall_vertice[j].intersected = true;
+								sectors[num_sectors].wall_vertice[j].color = BLUE;
+							}
+							break;
 						}
 					}
+					
 				}
 				
 

@@ -1,7 +1,8 @@
 #include "structure.h"
 #define WALLS_CNT 10
-#define SECTORS_CNT 10
-
+#define SECTORS_CNT 100
+#define YELLOW 0xFFFF00
+#define BLUE 0x0000FF
 typedef struct  s_dot
 {
    int x;
@@ -13,10 +14,9 @@ typedef struct	s_editor_wall
 	t_dot		begin;
 	t_dot		end;
 	int color;
-	int intersect;
+	bool intersected;
 
 }				t_editor_wall;
-
 
 typedef struct	s_text_sector
 {
