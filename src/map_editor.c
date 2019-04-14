@@ -140,6 +140,35 @@ void	print_sectors(t_text_sector *sectors, int num_sectors)
 	
 
 }
+void	shift_left(t_text_sector *sectors, int num_sectors)
+{
+	t_dot min = sectors[0].wall_vertice[0].begin;
+	int i, j;
+	i = -1;
+	while (++i < num_sectors)
+	{
+		j = -1;
+		while (++j < sectors[i].num_walls)
+		{
+			if (sectors[i].wall_vertice[j].begin.x < min.x)
+				min.x = sectors[i].wall_vertice[j].begin.x;
+			if (sectors[i].wall_vertice[j].begin.y < min.y)
+				min.y = sectors[i].wall_vertice[j].begin.y;
+		}
+	}
+	i = -1;
+	while (++i < num_sectors)
+	{
+		j = -1;
+		while (++j < sectors[i].num_walls)
+		{
+			sectors[i].wall_vertice[j].begin.x -= min.x;
+			sectors[i].wall_vertice[j].begin.y -= min.y;
+			sectors[i].wall_vertice[j].end.x -= min.x;
+			sectors[i].wall_vertice[j].end.y -= min.y;
+		}
+	}	
+}
 
 int     map_editor_loop(t_main *m)
 {
@@ -204,6 +233,11 @@ int     map_editor_loop(t_main *m)
 			{
 				puts("Saving");
 				print_sectors(sectors, num_sectors);
+			}
+			if (m->sdl.e.key.keysym.sym == SDLK_l && !select_portal_mode && num_sectors)
+			{
+				puts("Left shift");
+				shift_left(sectors, num_sectors + 1);
 			}
 			if (num_sectors < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type )
 			{
@@ -270,9 +304,7 @@ int     map_editor_loop(t_main *m)
 					line(sectors[cnt_sec].wall_vertice[j], m);
 				}
 			}
-			
 
-		
 			// sdl_put_image(&m->sdl);
 			SDL_UpdateTexture(m->sdl.texture, NULL,
 			m->sdl.img.pixels, m->sdl.img.w * sizeof(unsigned int));
