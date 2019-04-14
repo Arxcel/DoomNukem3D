@@ -24,6 +24,7 @@ typedef struct	s_text_sector
 	SDL_Texture 	*text_texture;
 	SDL_Rect		dstrect;
 	t_editor_wall	wall_vertice[WALLS_CNT];
+	int				neighbors[WALLS_CNT];
 	int				num_walls;
 	int				color;
 

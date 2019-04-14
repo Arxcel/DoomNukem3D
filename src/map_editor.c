@@ -122,6 +122,24 @@ int		close_sector(t_main *m, int i, t_text_sector *sector)
 	}
 	return (0);
 }
+void	print_sectors(t_text_sector *sectors, int num_sectors)
+{
+	int i = -1;
+	t_editor_wall w;
+	while(++i < num_sectors)
+	{
+		printf("Sector %i\n", i);
+		int j = -1;
+		while (++j < sectors[i].num_walls)
+		{
+			w = sectors[i].wall_vertice[j];
+			printf("Wall %i: begin x = %i, y = %i end x = %i, y = %i neighbor = %i\n",
+				j, w.begin.x, w.begin.y, w.end.x, w.end.y, sectors[i].neighbors[j]);
+		}
+	}
+	
+
+}
 
 int     map_editor_loop(t_main *m)
 {
@@ -147,6 +165,9 @@ int     map_editor_loop(t_main *m)
 	bool select_portal_mode = false;
 	int cnt_sec = -1;
 	int intersected = -1;
+	j = -1;
+	while (++j < WALLS_CNT)
+		sectors[num_sectors].neighbors[j] = -1;
 	while(m->sdl.running)
 	{
 		while (SDL_PollEvent(&m->sdl.e))
@@ -157,21 +178,32 @@ int     map_editor_loop(t_main *m)
 			}
 			else if (num_sectors < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN)
 			{
-				if (close_sector(m, num_sectors, sectors) && !select_portal_mode)
+				if (!select_portal_mode && close_sector(m, num_sectors, sectors))
 				{
 					select_portal_mode = true;
 					i = 0;
 				}
 				if (intersected != -1)
 				{
+					puts("here");
+					sectors[num_sectors].neighbors[intersected] = num_sectors + 1;
 					num_sectors++;
 					sectors[num_sectors].wall_vertice[0] = sectors[num_sectors - 1].wall_vertice[intersected];
 					sectors[num_sectors].num_walls = 1;
+					sectors[num_sectors].neighbors[0] = num_sectors - 1;
+					j = 0;
+					while (++j < WALLS_CNT)
+						sectors[num_sectors].neighbors[j] = -1;
 					i = 2;
 					intersected = -1;
 					select_portal_mode = false;
 					
 				}
+			}
+			if (m->sdl.e.key.keysym.sym == SDLK_s && !select_portal_mode && num_sectors)
+			{
+				puts("Saving");
+				print_sectors(sectors, num_sectors);
 			}
 			if (num_sectors < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type )
 			{
