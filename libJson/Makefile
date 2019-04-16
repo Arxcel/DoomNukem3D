@@ -20,7 +20,7 @@ DIR_O = obj
 
 HEADER = inc
 
-SOURCES = json.c
+SOURCES = json.c json-builder.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

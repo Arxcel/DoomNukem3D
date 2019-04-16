@@ -127,7 +127,7 @@ void	print_sectors(t_text_sector *sectors, int num_sectors)
 	int i = -1;
 	t_editor_wall w;
 	int gl = -1;
-	while(++i < num_sectors)
+	while(++i <= num_sectors)
 	{
 		printf("Sector %i\n", i);
 		int j = -1;
@@ -233,12 +233,13 @@ int     map_editor_loop(t_main *m)
 					
 				}
 			}
-			if (m->sdl.e.key.keysym.sym == SDLK_s && !select_portal_mode && num_sectors)
+			if (m->sdl.e.key.keysym.sym == SDLK_s && select_portal_mode)
 			{
 				puts("Saving");
 				print_sectors(sectors, num_sectors);
+				serialize_map(sectors, num_sectors);
 			}
-			if (m->sdl.e.key.keysym.sym == SDLK_l && !select_portal_mode && num_sectors)
+			if (m->sdl.e.key.keysym.sym == SDLK_l && select_portal_mode)
 			{
 				puts("Left shift");
 				shift_left(sectors, num_sectors + 1);

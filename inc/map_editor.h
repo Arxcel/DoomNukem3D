@@ -36,3 +36,4 @@ typedef struct		s_text_sector
 }					t_text_sector;
 int					init_map_editor(t_main *main);
 int					map_editor_loop(t_main *m);
+int     			serialize_map(t_text_sector *sectors, int num_sectors);

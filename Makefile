@@ -70,7 +70,8 @@ SOURCES :=  main.c \
 			textures.c \
 			perspective.c \
 			basic_edges.c \
-			map_editor.c
+			map_editor.c \
+			serialize_map.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
