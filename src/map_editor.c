@@ -135,7 +135,7 @@ int		close_sector(t_main *m, int i, t_text_sector *sector)
 	}
 	return (0);
 }
-void	print_sectors(t_text_sector *sectors, int num_sectors)
+void	print_sectors(t_text_sector *sectors, int n)
 {
 	int				i;
 	int				j;
@@ -144,7 +144,7 @@ void	print_sectors(t_text_sector *sectors, int num_sectors)
 
 	i = -1;
 	gl = -1;
-	while(++i <= num_sectors)
+	while(++i <= n)
 	{
 		printf("Sector %i\n", i);
 		j = -1;
@@ -160,7 +160,7 @@ void	print_sectors(t_text_sector *sectors, int num_sectors)
 
 }
 
-void	shift_left(t_text_sector *sectors, int num_sectors)
+void	shift_left(t_text_sector *sectors, int n)
 {
 	t_dot	min;
 	int		i;
@@ -168,7 +168,7 @@ void	shift_left(t_text_sector *sectors, int num_sectors)
 
 	min = sectors[0].wall_vertice[0].begin;
 	i = -1;
-	while (++i < num_sectors && (j = -1))
+	while (++i < n && (j = -1))
 		while (++j < sectors[i].num_walls)
 		{
 			if (sectors[i].wall_vertice[j].begin.x < min.x)
@@ -177,7 +177,7 @@ void	shift_left(t_text_sector *sectors, int num_sectors)
 				min.y = sectors[i].wall_vertice[j].begin.y;
 		}
 	i = -1;
-	while (++i < num_sectors && (j = -1))
+	while (++i < n && (j = -1))
 		while (++j < sectors[i].num_walls)
 		{
 			sectors[i].wall_vertice[j].begin.x -= min.x;
@@ -187,26 +187,26 @@ void	shift_left(t_text_sector *sectors, int num_sectors)
 		}
 }
 
-int		check_intersection(t_text_sector *sectors, int num_sectors, int intersected, t_dot mouse)
+int		check_intersection(t_text_sector *sectors, int n, int intersected, t_dot mouse)
 {
 	int j;
 
 	j = -1;
-	while (++j < sectors[num_sectors].num_walls)
+	while (++j < sectors[n].num_walls)
 	{
-		if (intersect(sectors[num_sectors].wall_vertice[j], mouse))
+		if (intersect(sectors[n].wall_vertice[j], mouse))
 		{
 			if (intersected == j)
 			{
 				intersected = -1;
-				sectors[num_sectors].wall_vertice[j].intersected = false;
-				sectors[num_sectors].wall_vertice[j].color = YELLOW;
+				sectors[n].wall_vertice[j].intersected = false;
+				sectors[n].wall_vertice[j].color = YELLOW;
 			}
 			else if (intersected == -1)
 			{
 				intersected = j;
-				sectors[num_sectors].wall_vertice[j].intersected = true;
-				sectors[num_sectors].wall_vertice[j].color = BLUE;
+				sectors[n].wall_vertice[j].intersected = true;
+				sectors[n].wall_vertice[j].color = BLUE;
 			}
 			break;
 		}
@@ -223,21 +223,13 @@ int		create_wall(t_text_sector *sectors, int n, int intersected, bool select_por
 	{
 		sectors[n].wall_vertice[sectors[n].num_walls].color = YELLOW;
 		if (sectors[n].num_walls == -1)
-		{
-			sectors[n].wall_vertice[0].begin.x = mouse.x;
-			sectors[n].wall_vertice[0].begin.y = mouse.y;
-		}
+			sectors[n].wall_vertice[0].begin = mouse;
 		else
 		{
 			if (sectors[n].num_walls > 0)
-			{
-				sectors[n].wall_vertice[sectors[n].num_walls].begin.x =
-					sectors[n].wall_vertice[sectors[n].num_walls - 1].end.x;
-				sectors[n].wall_vertice[sectors[n].num_walls].begin.y =
-					sectors[n].wall_vertice[sectors[n].num_walls - 1].end.y;
-			}
-				sectors[n].wall_vertice[sectors[n].num_walls].end.x = mouse.x;
-				sectors[n].wall_vertice[sectors[n].num_walls].end.y = mouse.y;
+				sectors[n].wall_vertice[sectors[n].num_walls].begin =
+					sectors[n].wall_vertice[sectors[n].num_walls - 1].end;
+			sectors[n].wall_vertice[sectors[n].num_walls].end = mouse;
 		}
 		sectors[n].num_walls++;
 	}
@@ -246,6 +238,63 @@ int		create_wall(t_text_sector *sectors, int n, int intersected, bool select_por
 	return (intersected);
 }
 
+int		draw(t_main *m, t_text_sector *sectors, int n,
+			int intersected, bool select_portal_mode)
+{
+	int i;
+	int j;
+
+	if (n < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type )
+		intersected = create_wall(sectors, n, intersected, select_portal_mode);
+	i = -1;
+	while((j = -1) && ++i < n + 1)
+		while (++j < sectors[i].num_walls)
+			line(sectors[i].wall_vertice[j], m);
+	SDL_UpdateTexture(m->sdl.texture, NULL,
+	m->sdl.img.pixels, m->sdl.img.w * sizeof(unsigned int));
+	SDL_RenderCopy(m->sdl.ren, m->sdl.texture, NULL, NULL);
+	// SDL_RenderCopy(m->sdl.ren, mTexture, &srcrect, &dstrect);
+	SDL_RenderPresent(m->sdl.ren);
+	return (intersected);
+}
+
+void		pool_event(t_main *m, t_text_sector *sectors, int intersected, bool select_portal_mode, int n)
+{
+	int j;
+		while (SDL_PollEvent(&m->sdl.e))
+		{
+			if (m->sdl.e.type == SDL_QUIT ||  m->sdl.e.key.keysym.sym == SDLK_ESCAPE)
+				m->sdl.running = 0;
+			else if (n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN)
+			{
+				if (!select_portal_mode && close_sector(m, n, sectors))
+					select_portal_mode = true;
+				if (intersected != -1)
+				{
+					sectors[n].neighbors[intersected] = n + 1;
+					n++;
+					sectors[n].wall_vertice[0] = sectors[n - 1].wall_vertice[intersected];
+					sectors[n].num_walls = 1;
+					sectors[n].neighbors[0] = n - 1;
+					j = 0;
+					while (++j < WALLS_CNT)
+						sectors[n].neighbors[j] = -1;
+					intersected = -1;
+					select_portal_mode = false;
+					
+				}
+			}
+			if (m->sdl.e.key.keysym.sym == SDLK_s && select_portal_mode)
+			{
+				puts("Saving");
+				shift_left(sectors, n + 1);
+				print_sectors(sectors, n);
+				// serialize_map(sectors, n);
+			}
+			intersected = draw(m, sectors, n, intersected, select_portal_mode);
+		}
+
+}
 int     map_editor_loop(t_main *m)
 {
 	// SDL_Color foregroundColor = { 255, 255, 255 };
@@ -260,37 +309,38 @@ int     map_editor_loop(t_main *m)
 	// SDL_Rect dstrect = {m->sdl.win_w * 0.75,  15 , strlen("Sectors") * 15, 32};
 
 	//t_dot wall_vertice[WALLS_CNT];
-	int i;
 	int j;
-	int num_sectors = 0;
+	int n;
 	t_text_sector sectors[SECTORS_CNT];
 	bool select_portal_mode = false;
 	int intersected = -1;
 
 	j = -1;
+	n = 0;
 	sectors[0].num_walls = -1;
 	while (++j < WALLS_CNT)
-		sectors[num_sectors].neighbors[j] = -1;
+		sectors[0].neighbors[j] = -1;
 	while(m->sdl.running)
 	{
+		// pool_event(m, sectors, intersected, select_portal_mode, n);
 		while (SDL_PollEvent(&m->sdl.e))
 		{
 			if (m->sdl.e.type == SDL_QUIT ||  m->sdl.e.key.keysym.sym == SDLK_ESCAPE)
 				m->sdl.running = 0;
-			else if (num_sectors < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN)
+			else if (n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN)
 			{
-				if (!select_portal_mode && close_sector(m, num_sectors, sectors))
+				if (!select_portal_mode && close_sector(m, n, sectors))
 					select_portal_mode = true;
 				if (intersected != -1)
 				{
-					sectors[num_sectors].neighbors[intersected] = num_sectors + 1;
-					num_sectors++;
-					sectors[num_sectors].wall_vertice[0] = sectors[num_sectors - 1].wall_vertice[intersected];
-					sectors[num_sectors].num_walls = 1;
-					sectors[num_sectors].neighbors[0] = num_sectors - 1;
+					sectors[n].neighbors[intersected] = n + 1;
+					n++;
+					sectors[n].wall_vertice[0] = sectors[n - 1].wall_vertice[intersected];
+					sectors[n].num_walls = 1;
+					sectors[n].neighbors[0] = n - 1;
 					j = 0;
 					while (++j < WALLS_CNT)
-						sectors[num_sectors].neighbors[j] = -1;
+						sectors[n].neighbors[j] = -1;
 					intersected = -1;
 					select_portal_mode = false;
 					
@@ -299,21 +349,11 @@ int     map_editor_loop(t_main *m)
 			if (m->sdl.e.key.keysym.sym == SDLK_s && select_portal_mode)
 			{
 				puts("Saving");
-				shift_left(sectors, num_sectors + 1);
-				print_sectors(sectors, num_sectors);
-				// serialize_map(sectors, num_sectors);
+				shift_left(sectors, n + 1);
+				print_sectors(sectors, n);
+				// serialize_map(sectors, n);
 			}
-			if (num_sectors < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type )
-				intersected = create_wall(sectors, num_sectors, intersected, select_portal_mode);
-			i = -1;
-			while((j = -1) && ++i < num_sectors + 1)
-				while (++j < sectors[i].num_walls)
-					line(sectors[i].wall_vertice[j], m);
-			SDL_UpdateTexture(m->sdl.texture, NULL,
-			m->sdl.img.pixels, m->sdl.img.w * sizeof(unsigned int));
-			SDL_RenderCopy(m->sdl.ren, m->sdl.texture, NULL, NULL);
-			// SDL_RenderCopy(m->sdl.ren, mTexture, &srcrect, &dstrect);
-			SDL_RenderPresent(m->sdl.ren);
+			intersected = draw(m, sectors, n, intersected, select_portal_mode);
 		}
 	}
 	return (0);
