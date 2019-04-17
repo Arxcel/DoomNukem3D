@@ -4,7 +4,7 @@
 
 int    write_map_to_file(char *buf, const char *filename)
 {
-    FILE * fp;
+    FILE *fp;
 
     if (!buf || !filename || !(fp = fopen(filename, "w")))
         return (1);
@@ -52,15 +52,10 @@ int     serialize_map(t_text_sector *sectors, int num_sect)
     json_object_push(obj, "sector", arr_sect);
     char *buf = malloc(json_measure(obj));
     json_serialize(buf, obj);
-
+    json_value_free(obj);
     printf("%s\n", buf);
     
     write_map_to_file(buf, "maps/test.json");
-    // FILE * fp;
-    // if (!buf || !(fp = fopen("maps/test.json","w")))
-    //     return (1);
-    // fprintf(fp, "%s", buf);
-    // fclose(fp);
-    // free(buf);
+    free(buf);
     return (0);
 }

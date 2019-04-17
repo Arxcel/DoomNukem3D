@@ -50,17 +50,17 @@ int					main(int ac, char **av)
 	sdl_init(&m.sdl);
 	if (ac > 1 && !ft_strcmp("-edit_map", av[1]))
 	{
-		init_map_editor(&m);
+		if (init_map_editor(&m))
+			return(editor_clear_sdl(&m.sdl));
 		map_editor_loop(&m);
+		TTF_CloseFont(m.font);
+		return (editor_clear_sdl(&m.sdl));
 	}
-	else
-	{
-		load_textures(&m);
-		parser(&m.map, av[1]);
-		sdl_loop(&m);
-		clear_textures(&m);
-		remove_data(&m.map);
-	}
+	load_textures(&m);
+	parser(&m.map, av[1]);		
+	sdl_loop(&m);
+	clear_textures(&m);
+	remove_data(&m.map);
 	SDL_Quit();
 	return (0);
 }
