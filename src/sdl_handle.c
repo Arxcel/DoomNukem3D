@@ -34,6 +34,16 @@ static void			vertical_movement(t_main *m, int key)
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
 		m->map.player.is_falling = true;
 	}
+	else if (key == SDLK_0)
+	{
+		if (m->map.facing_sector >= 0 && m->map.facing_sector < m->map.number_sectors)
+			m->map.sectors[m->map.sectors[m->map.player.sector_number].neighbors[m->map.facing_sector]].floor_height++;
+	}
+	else if (key == SDLK_9)
+	{
+		if (m->map.facing_sector >= 0 && m->map.facing_sector < m->map.number_sectors)
+			m->map.sectors[m->map.sectors[m->map.player.sector_number].neighbors[m->map.facing_sector]].floor_height--;
+	}
 }
 
 static void			handle_key(t_main *m, int key)

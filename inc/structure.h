@@ -82,11 +82,12 @@ typedef struct		s_sector
 typedef struct		s_sprite
 {
 	t_vector		position;
-	float			angle;
-	float			pitch;
-	float			anglesin;
-	float			anglecos;
-	size_t			sector_number;
+	unsigned		texture;
+	bool			isActive;
+	unsigned		w;
+	unsigned		h;
+	int				sprite_ceil;
+	int				sprite_floor;
 }					t_sprite;
 
 typedef struct		s_player
@@ -119,6 +120,7 @@ typedef struct		s_map
 	size_t			number_enemies;
 	size_t			number_sptites;
 	float			ligntness;
+	unsigned		facing_sector;
 }					t_map;
 
 /*
@@ -232,6 +234,24 @@ typedef struct		s_main
 	float		prev_time;
 	float		curr_time;
 	float		delta_time;
+
+	float vx1;
+	float vx2;
+	float vy1;
+	float vy2;
+	float y_ceil;
+	float y_floor;
+	float y1_a;
+	float y1_b;
+	float y2_a;
+	float y2_b;
+	int x1;
+	int begin_x;
+	int end_x;
+	float tz1;
+	float tz2;
+	float y_scale1;
+	float y_scale2;
 }					t_main;
 
 #endif

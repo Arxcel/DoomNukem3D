@@ -68,7 +68,13 @@ static void			check_wall(t_renderer *r, t_map *map,
 		(t_vertex){map->player.anglecos, map->player.anglesin},
 		sect->vertices[s], sect->vertices[s + 1]);
 	if (d > 0 && d < 3)
+	{
+		if (s == map->player.sector_number)
+			return ;
+		printf("facing sector %d\n", s);
+		map->facing_sector = s;
 		r->t1.x = maxf(fabs(r->t1.x), 0.1f);
+	}
 }
 
 void				render_sector(t_main *m, t_renderer *r,

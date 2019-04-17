@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 11:56:24 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 14:16:40 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include "structure.h"
 # include "utils.h"
 
-# define W 1280
-# define H 720
+# define W 			1200
+# define H 			800
 
 # define GRAVITY				1.0f
 # define SPEED					5
@@ -92,6 +92,8 @@ void				setup_wall_texture(t_main *m, t_wall *w,
 t_vertex			calculate_edges(t_player *player, t_vertex *vertex);
 void				clamp_edges_with_player_view(t_renderer *r, t_wall *w);
 
-void		init_sounds(t_main *m);
-void		load_sounds(t_main *m);
+void				init_sounds(t_main *m);
+void				load_sounds(t_main *m);
+void				draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x);
+void				renderSprites(t_main *m);
 #endif

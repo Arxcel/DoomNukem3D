@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-static void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
+void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 {
 	SDL_Surface		*current;
 	t_interp		*i;
