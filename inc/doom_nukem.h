@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 14:16:40 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 14:18:53 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);
 
-void				do_perspective(t_renderer *renderer, t_wall *w,
-													int width, int height);
+void				do_perspective(t_wall *w, int width, int height);
+
 t_vertex			reverse_perspective(t_main *m, int x, int y, float height);
 
 t_vertex			get_player_velocity(t_main *m);
@@ -90,10 +90,12 @@ void				setup_wall_texture(t_main *m, t_wall *w,
 													int wall, t_pt verical);
 
 t_vertex			calculate_edges(t_player *player, t_vertex *vertex);
-void				clamp_edges_with_player_view(t_renderer *r, t_wall *w);
 
 void				init_sounds(t_main *m);
 void				load_sounds(t_main *m);
-void				draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x);
-void				renderSprites(t_main *m);
+t_vertex			calculate_edges2(t_player *player, t_vertex *vertex);
+void				clamp_edges_with_player_view(t_wall *w);
+void				draw_local_wall(t_main *m, t_wall *wall,
+													t_renderer *r, int x);
+void				render_sprites(t_main *m);
 #endif

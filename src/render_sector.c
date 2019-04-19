@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:40:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 15:33:20 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 13:02:53 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,38 @@ static void			get_wall_height(t_map *map, t_wall *wall,
 													map->player.position.z;
 	}
 	wall->y1[0] = r->h / 2 - (int)((wall->ceil +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
 	wall->y1[1] = r->h / 2 - (int)((wall->floor +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
 	wall->y2[0] = r->h / 2 - (int)((wall->ceil +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
 	wall->y2[1] = r->h / 2 - (int)((wall->floor +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
 	wall->neighbor_y1[0] = r->h / 2 - (int)((wall->neighbor_ceil +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
 	wall->neighbor_y1[1] = r->h / 2 - (int)((wall->neighbor_floor +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
 	wall->neighbor_y2[0] = r->h / 2 - (int)((wall->neighbor_ceil +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
 	wall->neighbor_y2[1] = r->h / 2 - (int)((wall->neighbor_floor +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
 }
 
-static void			clamp_values(t_renderer *r)
+static void			clamp_values(t_wall *wall)
 {
 	int		sign;
 
-	sign = r->t1.y < 0 ? -1 : 1;
-	r->t1.y = sign * maxf(fabs(r->t1.y), 0.1f);
-	sign = r->t1.x < 0 ? -1 : 1;
-	r->t1.x = sign * maxf(fabs(r->t1.x), 0.1f);
-	sign = r->t2.y < 0 ? -1 : 1;
-	r->t2.y = sign * maxf(fabs(r->t2.y), 0.1f);
-	sign = r->t2.x < 0 ? -1 : 1;
-	r->t2.x = sign * maxf(fabs(r->t2.x), 0.1f);
+	sign = wall->t1.y < 0 ? -1 : 1;
+	wall->t1.y = sign * maxf(fabs(wall->t1.y), 0.1f);
+	sign = wall->t1.x < 0 ? -1 : 1;
+	wall->t1.x = sign * maxf(fabs(wall->t1.x), 0.1f);
+	sign = wall->t2.y < 0 ? -1 : 1;
+	wall->t2.y = sign * maxf(fabs(wall->t2.y), 0.1f);
+	sign = wall->t2.x < 0 ? -1 : 1;
+	wall->t2.x = sign * maxf(fabs(wall->t2.x), 0.1f);
 }
 
-static void			check_wall(t_renderer *r, t_map *map,
+static void			check_wall(t_wall *wall, t_map *map,
 							int s, t_render_item const *current_sector)
 {
 	double		d;
@@ -71,9 +71,7 @@ static void			check_wall(t_renderer *r, t_map *map,
 	{
 		if (s == map->player.sector_number)
 			return ;
-		printf("facing sector %d\n", s);
-		map->facing_sector = s;
-		r->t1.x = maxf(fabs(r->t1.x), 0.1f);
+		wall->t1.x = maxf(fabs(wall->t1.x), 0.1f);
 	}
 }
 
@@ -90,14 +88,14 @@ void				render_sector(t_main *m, t_renderer *r,
 	while (++s < sect->number_vertices)
 	{
 		setup_wall_texture(m, &wall, sect->textures[s], (t_pt){0, 1});
-		r->t1 = calculate_edges(&m->map.player, &sect->vertices[s]);
-		r->t2 = calculate_edges(&m->map.player, &sect->vertices[s + 1]);
-		if (r->t1.y < 0 && r->t2.y < 0)
+		wall.t1 = calculate_edges(&m->map.player, &sect->vertices[s]);
+		wall.t2 = calculate_edges(&m->map.player, &sect->vertices[s + 1]);
+		if (wall.t1.y < 0 && wall.t2.y < 0)
 			continue;
-		clamp_edges_with_player_view(r, &wall);
-		clamp_values(r);
-		check_wall(r, &m->map, s, current_sector);
-		do_perspective(r, &wall, m->sdl.img.w, m->sdl.img.h);
+		clamp_edges_with_player_view(&wall);
+		clamp_values(&wall);
+		check_wall(&wall, &m->map, s, current_sector);
+		do_perspective(&wall, m->sdl.img.w, m->sdl.img.h);
 		if (wall.x1 >= wall.x2 || wall.x2 < current_sector->limit_x_left ||
 									wall.x1 > current_sector->limit_x_right)
 			continue;

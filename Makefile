@@ -58,6 +58,7 @@ SOURCES :=  main.c \
 			render_utils.c \
 			render_sector.c \
 			render_main.c \
+			render_sprites.c \
 			geom_utils.c \
 			line.c \
 			minimap.c \

@@ -6,13 +6,13 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 11:57:06 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 14:08:31 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
+void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 {
 	SDL_Surface		*current;
 	t_interp		*i;
@@ -101,11 +101,11 @@ void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 	x = beginx - 1;
 	while (++x <= endx)
 	{
-		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.y) + wall->u1 *
-		((x - wall->x1) * renderer->t1.y)) / ((wall->x2 - x) * renderer->t2.y +
-		(x - wall->x1) * renderer->t1.y);
-		wall->lz = ((x - wall->x1) * (renderer->t2.y - renderer->t1.y) /
-							(wall->x2 - wall->x1) + renderer->t1.y) * DARKNESS;
+		wall->txtx = (wall->u0 * ((wall->x2 - x) * wall->t2.y) + wall->u1 *
+		((x - wall->x1) * wall->t1.y)) / ((wall->x2 - x) * wall->t2.y +
+		(x - wall->x1) * wall->t1.y);
+		wall->lz = ((x - wall->x1) * (wall->t2.y - wall->t1.y) /
+							(wall->x2 - wall->x1) + wall->t1.y) * DARKNESS;
 		draw_ceil_floor(m, renderer, wall, x);
 		draw_local_wall(m, wall, renderer, x);
 		if (wall->neighbor >= 0)
@@ -139,7 +139,7 @@ void			draw_screen(t_main *m)
 		if (r.rendered_sectors[current_sector.sectorno] == MaxQueue)
 			continue;
 		render_sector(m, &r, &current_sector);
-		r.rendered_sectors[current_sector.sectorno]++;
+		++r.rendered_sectors[current_sector.sectorno];
 	}
 	free_renderer(&r);
 }

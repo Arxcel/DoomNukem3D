@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/14 13:12:58 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 13:16:11 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct		s_sprite
 {
 	t_vector		position;
 	unsigned		texture;
-	bool			isActive;
+	bool			is_active;
 	unsigned		w;
 	unsigned		h;
 	int				sprite_ceil;
@@ -120,7 +120,6 @@ typedef struct		s_map
 	size_t			number_enemies;
 	size_t			number_sptites;
 	float			ligntness;
-	unsigned		facing_sector;
 }					t_map;
 
 /*
@@ -141,8 +140,6 @@ typedef struct		s_renderer
 	int				*rendered_sectors;
 	int				*top_limit;
 	int				*bottom_limit;
-	t_vertex		t1;
-	t_vertex		t2;
 	int				w;
 	int				h;
 }					t_renderer;
@@ -157,6 +154,9 @@ typedef struct		s_vline
 
 typedef struct		s_wall
 {
+	t_vertex		t1;
+	t_vertex		t2;
+
 	int				x1;
 	int				y1[2];
 	int				x2;
@@ -234,24 +234,6 @@ typedef struct		s_main
 	float		prev_time;
 	float		curr_time;
 	float		delta_time;
-
-	float vx1;
-	float vx2;
-	float vy1;
-	float vy2;
-	float y_ceil;
-	float y_floor;
-	float y1_a;
-	float y1_b;
-	float y2_a;
-	float y2_b;
-	int x1;
-	int begin_x;
-	int end_x;
-	float tz1;
-	float tz2;
-	float y_scale1;
-	float y_scale2;
 }					t_main;
 
 #endif

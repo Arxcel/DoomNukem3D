@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:44:55 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 12:08:39 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,9 @@ static void			vertical_movement(t_main *m, int key)
 		m->map.player.is_falling = true;
 	}
 	else if (key == SDLK_0)
-	{
-		if (m->map.facing_sector >= 0 && m->map.facing_sector < m->map.number_sectors)
-			m->map.sectors[m->map.sectors[m->map.player.sector_number].neighbors[m->map.facing_sector]].floor_height++;
-	}
+		++m->map.sectors[m->map.player.sector_number].floor_height;
 	else if (key == SDLK_9)
-	{
-		if (m->map.facing_sector >= 0 && m->map.facing_sector < m->map.number_sectors)
-			m->map.sectors[m->map.sectors[m->map.player.sector_number].neighbors[m->map.facing_sector]].floor_height--;
-	}
+		--m->map.sectors[m->map.player.sector_number].floor_height;
 }
 
 static void			handle_key(t_main *m, int key)
