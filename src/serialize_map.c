@@ -9,11 +9,11 @@ int    write_map_to_file(char *buf, const char *filename)
     if (!buf || !filename || !(fp = fopen(filename, "w")))
         return (1);
     fprintf(fp, "%s", buf);
-    // fclose(fp);
+    fclose(fp);
     return (0);
 }
 
-int     serialize_map(t_text_sector *sectors, int num_sect)
+int     serialize_map(t_editor_sector *sectors, int num_sect)
 {
     json_value * obj = json_object_new(3);
     json_value *vert = json_array_new(WALLS_CNT * SECTORS_CNT);
@@ -41,8 +41,8 @@ int     serialize_map(t_text_sector *sectors, int num_sect)
             json_array_push(textures, json_integer_new(sectors[i].wall_vertice[j].texture));
 
         }
-        json_object_push(sector, "floor_height", json_integer_new(0));
-        json_object_push(sector, "ceiling_height", json_integer_new(100));
+        json_object_push(sector, "floor_height", json_integer_new(sectors[i].floor_height));
+        json_object_push(sector, "ceiling_height", json_integer_new(sectors[i].ceiling_height));
         json_object_push(sector, "vertices", vertices);
         json_object_push(sector, "neighbors", neighbors);
         json_object_push(sector, "textures", textures);
