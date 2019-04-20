@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 18:38:09 by vkozlov           #+#    #+#              #
-#    Updated: 2019/03/24 21:45:43 by tmaluh           ###   ########.fr        #
+#    Updated: 2019/04/20 16:43:43 by vkozlov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ HEADERS := -I inc/ \
 		-I../libft/inc/
 endif
 
+HEADER := inc
 DIR_S := src
 DIR_O := obj
 SOURCES := sdl_clear_image.c \

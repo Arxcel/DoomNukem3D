@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:42:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2018/03/01 13:03:32 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 14:32:54 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void				sdl_init(t_sdl *sdl)
 								SDL_TEXTUREACCESS_STATIC,
 								sdl->win_w, sdl->win_h)))
 		MSG(SDL_GetError());
-	
 	SDL_ShowCursor(SDL_DISABLE);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_SetRenderDrawColor(sdl->ren, 255, 255, 255, 255);

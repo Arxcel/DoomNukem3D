@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 14:18:53 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 16:37:46 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@
 # define FAR_Z		5
 # define NEAR_SIDE	1e-5f
 # define FAR_SIDE	20.f
+
+# define SPRITE_SCALE_X		100
+# define SPRITE_SCALE_Y		100
 
 # ifdef __APPLE__
 #  define WPNS_TEX_BG	0xff00ffff
@@ -97,5 +100,10 @@ t_vertex			calculate_edges2(t_player *player, t_vertex *vertex);
 void				clamp_edges_with_player_view(t_wall *w);
 void				draw_local_wall(t_main *m, t_wall *wall,
 													t_renderer *r, int x);
+void				calc_sprite_edges(t_vector player_pos, t_vector sprite_pos,
+												t_wall *wall, float dist);
+void				setup_sprite_texture(t_main *m, t_wall *w, int wall);
 void				render_sprites(t_main *m);
+void				draw_sprite_line(t_main *m, t_wall *w,
+													t_vline *v, t_interp *ty);
 #endif

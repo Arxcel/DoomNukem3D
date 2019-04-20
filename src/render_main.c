@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 14:08:31 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 16:30:48 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 	wall->cya = clampf(wall->ya, r->top_limit[x], r->bottom_limit[x]);
 	wall->cyb = clampf(wall->yb, r->top_limit[x], r->bottom_limit[x]);
 	i = init_interp((t_pt){wall->ya, wall->cya},
-									wall->yb, (t_pt){0, current->w});
+									wall->yb, (t_pt){0, current->h});
 	if (wall->neighbor < 0)
 		draw_line(m, wall, &(t_vline){x, wall->cya,
 										wall->cyb, wall->solid_id}, i);

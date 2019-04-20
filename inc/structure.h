@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 13:16:11 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 15:23:34 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,19 +216,19 @@ typedef struct		s_texture_blocks
 typedef struct		s_textures
 {
 	t_tblocks		t;
+	t_tblocks		s;
 }					t_textures;
 
-typedef struct 		s_music
+typedef struct		s_music
 {
 	Mix_Music		*msc[10];
 	Mix_Chunk		*snd[15];
 }					t_music;
 
-
 typedef struct		s_main
 {
 	t_sdl		sdl;
-	t_music     music;
+	t_music		music;
 	t_map		map;
 	t_textures	tex;
 	float		prev_time;
