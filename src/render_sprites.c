@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 16:41:14 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 17:09:26 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 	while (++x < end_x)
 	{
 		wall->txtx = interp_next(ix);
-		wall->lz = ((x - wall->x1) * (wall->t2.y - wall->t1.y) /
-							(wall->x2 - wall->x1) + wall->t1.y) * DARKNESS;
+		wall->lz = dist * DARKNESS * 4;
 		if (x < m->sdl.img.w && x > 0)
 			if (x > begin_x - 1)
 				draw_sprite_impl_y(m, wall, x, dist);

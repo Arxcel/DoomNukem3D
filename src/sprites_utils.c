@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 15:18:34 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 16:40:38 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 17:06:47 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ void		draw_sprite_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 	while (++y <= v->y_bottom)
 	{
 		w->txty = interp_next(ty);
-		color = c_darken(pix[w->txtx % current->w +
-						(w->txty % current->h) * current->w], w->lz);
+		color = pix[w->txtx % current->w +
+						(w->txty % current->h) * current->w];
 		if (color)
+		{
+			color = c_darken(color, w->lz);
 			sdl_pixel_put(&m->sdl.img, v->x, y, color);
+		}
 	}
 }

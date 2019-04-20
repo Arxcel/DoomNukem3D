@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 16:37:46 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 17:20:43 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define KNEEHEIGHT				2
 # define HFOV					0.73f
 # define VFOV					.2f
-# define DARKNESS				2
+# define DARKNESS				7
 
 # define NEAR_Z		1e-4f
 # define FAR_Z		5
