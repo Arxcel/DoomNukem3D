@@ -6,22 +6,17 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 17:09:26 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 20:23:59 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static float		calc_distance(t_vector v1, t_vector v2)
+static bool			need_to_render(t_main *m, t_wall *w, float d, int i)
 {
-	float	abx;
-	float	aby;
-	float	dist;
-
-	abx = (v1.x - v2.x);
-	aby = (v1.y - v2.y);
-	dist = (float)sqrt(abx * abx + aby * aby);
-	return (dist);
+	return (!m->map.sprites[i].is_active || (w->t1.y <= 0 && w->t2.y <= 0)
+			|| (d < 1 || d > 15 ||
+			m->map.sprites[i].position.z - m->map.player.position.z > 2));
 }
 
 static void			calc_sprite_h(t_sprite *s, t_wall *wall,
@@ -89,24 +84,27 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 void				render_sprites(t_main *m)
 {
 	t_wall		wall;
-	float		d;
 	int			i;
+	int			*s_order;
+	float		*s_dist;
+	int			j;
 
-	i = -1;
-	while (++i < m->map.number_sptites)
+	s_order = (int*)malloc(sizeof(int) * m->map.number_sprites);
+	s_dist = (float*)malloc(sizeof(float) * m->map.number_sprites);
+	sort_sprites(m, s_order, s_dist);
+	j = -1;
+	while (++j < m->map.number_sprites)
 	{
+		i = s_order[j];
 		setup_sprite_texture(m, &wall, m->map.sprites[i].texture);
-		d = calc_distance(m->map.player.position, m->map.sprites[i].position);
-		if (d < 1)
-			continue;
-		calc_sprite_edges(m->map.player.position, m->map.sprites[i].position,
-																	&wall, d);
-		wall.t1 = calculate_edges2(&m->map.player, &wall.t1);
-		wall.t2 = calculate_edges2(&m->map.player, &wall.t2);
-		if (wall.t1.y <= 0 && wall.t2.y <= 0)
-			return ;
+		calc_sprite_edges(&m->map.player, m->map.sprites[i].position,
+													&wall, s_dist[s_order[i]]);
+		if (need_to_render(m, &wall, s_dist[s_order[i]], i))
+			continue ;
 		do_perspective(&wall, m->sdl.img.w, m->sdl.img.h);
 		calc_sprite_h(&m->map.sprites[i], &wall, &m->map.player, m->sdl.img.h);
-		draw_sprite(m, &wall, d, i);
+		draw_sprite(m, &wall, s_dist[s_order[i]], i);
 	}
+	free(s_order);
+	free(s_dist);
 }

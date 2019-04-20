@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 15:26:36 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 18:54:06 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ static void		load_block_textures(const char *path, t_tblocks *textures)
 		ft_putendl(SDL_GetError());
 		exit(-3);
 	}
+}
+
+static void		load_sprites(t_main *m)
+{
+	m->tex.s.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 5);
+	load_block_textures("assets/sprites/ammo.png", &m->tex.s);
+	load_block_textures("assets/sprites/barrel.png", &m->tex.s);
+	load_block_textures("assets/sprites/helmet.png", &m->tex.s);
+	load_block_textures("assets/sprites/medkit.png", &m->tex.s);
+	load_block_textures("assets/sprites/rockets.png", &m->tex.s);
 }
 
 void			load_textures_snd(t_main *m)
@@ -42,8 +52,7 @@ void			load_textures_snd(t_main *m)
 	load_block_textures("assets/skies/s3.png", &m->tex.t);
 	load_block_textures("assets/skies/s4.png", &m->tex.t);
 	load_block_textures("assets/skies/s5.png", &m->tex.t);
-	m->tex.s.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 1);
-	load_block_textures("assets/sprites/barrel.png", &m->tex.s);
+	load_sprites(m);
 	init_sounds(m);
 }
 
@@ -51,7 +60,10 @@ void			clear_textures(t_main *m)
 {
 	while (m->tex.t.num_textures)
 		SDL_FreeSurface(m->tex.t.textures[--m->tex.t.num_textures]);
+	while (m->tex.s.num_textures)
+		SDL_FreeSurface(m->tex.s.textures[--m->tex.s.num_textures]);
 	free(m->tex.t.textures);
+	free(m->tex.s.textures);
 }
 
 void			setup_wall_texture(t_main *m, t_wall *w, int wall, t_pt verical)

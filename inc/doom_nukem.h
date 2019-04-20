@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 17:20:43 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 20:18:14 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define KNEEHEIGHT				2
 # define HFOV					0.73f
 # define VFOV					.2f
-# define DARKNESS				7
+# define DARKNESS				2
 
 # define NEAR_Z		1e-4f
 # define FAR_Z		5
@@ -100,10 +100,13 @@ t_vertex			calculate_edges2(t_player *player, t_vertex *vertex);
 void				clamp_edges_with_player_view(t_wall *w);
 void				draw_local_wall(t_main *m, t_wall *wall,
 													t_renderer *r, int x);
-void				calc_sprite_edges(t_vector player_pos, t_vector sprite_pos,
+void				calc_sprite_edges(t_player *p, t_vector sprite_pos,
 												t_wall *wall, float dist);
 void				setup_sprite_texture(t_main *m, t_wall *w, int wall);
 void				render_sprites(t_main *m);
 void				draw_sprite_line(t_main *m, t_wall *w,
 													t_vline *v, t_interp *ty);
+void				calk_sprite_collisions(t_main *m);
+float				calc_distance(t_vector v1, t_vector v2);
+void				sort_sprites(t_main *m, int *order, float *dist);
 #endif

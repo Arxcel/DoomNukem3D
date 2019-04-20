@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 15:23:34 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 18:50:20 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,15 @@ typedef struct		s_sprite
 	int				sprite_floor;
 }					t_sprite;
 
+typedef struct		s_stats
+{
+	int				ammo;
+	int				rockets;
+	int				hp;
+	int				armor;
+	int				active_weapon;
+}					t_stats;
+
 typedef struct		s_player
 {
 	t_vector		position;
@@ -107,6 +116,8 @@ typedef struct		s_player
 	bool			is_running;
 
 	t_dir			dir;
+
+	t_stats			stats;
 }					t_player;
 
 typedef struct		s_map
@@ -118,7 +129,7 @@ typedef struct		s_map
 	size_t			number_vertices;
 	size_t			number_sectors;
 	size_t			number_enemies;
-	size_t			number_sptites;
+	size_t			number_sprites;
 	float			ligntness;
 }					t_map;
 

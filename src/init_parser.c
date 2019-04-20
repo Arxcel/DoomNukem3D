@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:36:42 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/13 13:34:35 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 18:50:20 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int						parser(t_map *map, char *file_name)
 
 	map->number_vertices = 0;
 	map->number_sectors = 0;
-	map->number_sptites = 0;
+	map->number_sprites = 0;
 	map->number_enemies = 0;
 	if (!(value = init_json(file_name)) || parser_loop(map, value))
 		MSG("Wrong data format");

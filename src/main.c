@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 15:03:13 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 19:15:33 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void				sdl_loop(t_main *m)
 			render_sprites(m);
 			sdl_put_image(&m->sdl);
 			move_player(m);
+			calk_sprite_collisions(m);
 			m->delta_time = 0.f;
 		}
 	}
@@ -41,13 +42,20 @@ void				sdl_loop(t_main *m)
 
 static void			init_sprite(t_main *m)
 {
-	m->map.sprites = (t_sprite*)malloc(sizeof(t_sprite) * 1);
-	m->map.number_sptites = 1;
-	m->map.sprites[0].position = (t_vector){15.0, 15.0, 15.0};
-	m->map.sprites[0].w = 10;
-	m->map.sprites[0].h = 5;
-	m->map.sprites[0].is_active = true;
-	m->map.sprites[0].texture = 0;
+	int i;
+
+	i = -1;
+	m->map.number_sprites = 5;
+	m->map.sprites = (t_sprite*)malloc(sizeof(t_sprite) *
+													m->map.number_sprites);
+	while (++i < m->map.number_sprites)
+	{
+		m->map.sprites[i].position = (t_vector){15.0, 15.0 + 1 * i, 15.0};
+		m->map.sprites[i].w = 10;
+		m->map.sprites[i].h = 5;
+		m->map.sprites[i].is_active = true;
+		m->map.sprites[i].texture = i;
+	}
 }
 
 int					main(int ac, char **av)

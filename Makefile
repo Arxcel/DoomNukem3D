@@ -72,7 +72,8 @@ SOURCES :=  main.c \
 			basic_edges.c \
 			sprites_utils.c \
 			color.c \
-			sounds.c
+			sounds.c \
+			sprite_collisions.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))

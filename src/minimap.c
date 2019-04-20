@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 12:36:13 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 19:20:03 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,6 @@ static t_vertex		get_scaled_edge(t_main *m, t_vertex ver, int s_x, int s_y)
 	e.y = (ver.x - m->map.player.position.x) * m->map.player.anglecos * s_x +
 			(ver.y - m->map.player.position.y) * m->map.player.anglesin * s_y;
 	return (e);
-}
-
-static void			draw_sprites(t_main *m, int w, int h)
-{
-	int			y;
-	int			x;
-	int			i;
-	t_vertex	r_pos;
-
-	i = 0;
-	while (i < m->map.number_sptites)
-	{
-		r_pos = get_scaled_edge(m,
-					(t_vertex){m->map.sprites[i].position.x,
-						m->map.sprites[i].position.y}, 20, 40);
-		y = h / 2 - r_pos.y;
-		x = w / 2 - r_pos.x;
-		if (y < h && x < w)
-			sdl_pixel_put(&m->sdl.img, x, y, 0x00FF00);
-		i++;
-	}
 }
 
 static void			draw_sector(t_main *m, int w, int h, int s_i)
@@ -98,5 +77,4 @@ void				draw_minimap(t_main *m)
 		draw_sector(m, w, h, s);
 	}
 	draw_player(&m->sdl.img, w, h);
-	draw_sprites(m, w, h);
 }
