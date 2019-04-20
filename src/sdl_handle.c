@@ -21,8 +21,10 @@ static void			vertical_movement(t_main *m, int key)
 	}
 	else if (key == ' ')
 	{
+		
 		if (m->map.player.is_standing)
 		{
+			Mix_PlayChannel(-1,m->music.snd[0], 0);
 			m->map.player.velocity.z += 0.5f;
 			m->map.player.is_falling = true;
 		}
