@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/14 13:13:48 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 11:56:24 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void				get_player_direction(t_main *m);
 void				move_player(t_main *m);
 void				draw_minimap(t_main *m);
 void				draw_screen(t_main *m);
-int					set_rgb(unsigned int r, unsigned int g, unsigned int b);
+unsigned int		c_darken(unsigned int color, float darkness);
+unsigned int		c_rgb(unsigned int r, unsigned int g, unsigned int b);
 void				render_sector(t_main *m, t_renderer *renderer,
 								t_render_item const *current_sector);
 void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/14 14:00:13 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 11:57:06 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static void		draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 {
 	int			y;
 	t_vertex	t;
-	t_pt		tex;
+	unsigned	tex[2];
+	int			*pix;
 	SDL_Surface	*current;
 
 	y = r->top_limit[x] - 1;
@@ -78,16 +79,13 @@ static void		draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 			continue;
 		}
 		t = reverse_perspective(m, x, y, y < w->cya ? w->ceil : w->floor);
-		tex = (t_pt){(t.x * 64), (t.y * 64)};
+		tex[0] = (t.x * 64);
+		tex[1] = (t.y * 64);
 		current = y < w->cya ? m->tex.t.textures[w->floor_id] :
 												m->tex.t.textures[w->ceil_id];
-		tex.x = ((unsigned int*)current->pixels)[tex.x % current->w +
-										(tex.y % current->h) * current->w];
-		tex.x = set_rgb(
-			clampf(((tex.x & 0x00ff0000) >> 16) - m->map.ligntness, 0, 255),
-			clampf(((tex.x & 0x0000ff00) >> 8) - m->map.ligntness, 0, 255),
-			clampf((tex.x & 0x000000ff) - m->map.ligntness, 0, 255));
-		sdl_pixel_put(&m->sdl.img, x, y, tex.x);
+		pix = current->pixels;
+		sdl_pixel_put(&m->sdl.img, x, y, c_darken(pix[tex[0] % current->w +
+					(tex[1] % current->h) * current->w], m->map.ligntness));
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:31:29 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/14 13:08:41 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 11:59:06 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ void		free_renderer(t_renderer *renderer)
 
 void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 {
-	int			y;
-	int			*pix;
-	SDL_Surface	*current;
-	int			color;
+	int				y;
+	int				*pix;
+	SDL_Surface		*current;
 
 	current = m->tex.t.textures[v->texture_id];
 	pix = current->pixels;
@@ -54,13 +53,9 @@ void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 	while (++y <= v->y_bottom)
 	{
 		w->txty = interp_next(ty);
-		color = pix[w->txtx % current->w +
-									(w->txty % current->h) * current->w];
-		color = set_rgb(
-			clampf(((color & 0x00ff0000) >> 16) - w->lz, 0, 255),
-			clampf(((color & 0x0000ff00) >> 8) - w->lz, 0, 255),
-			clampf((color & 0x000000ff) - w->lz, 0, 255));
-		sdl_pixel_put(&m->sdl.img, v->x, y, color);
+		sdl_pixel_put(&m->sdl.img, v->x, y,
+			c_darken(pix[w->txtx % current->w +
+							(w->txty % current->h) * current->w], w->lz));
 	}
 }
 
