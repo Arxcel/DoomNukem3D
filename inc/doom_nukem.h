@@ -84,7 +84,7 @@ double				cast_ray_2line(t_vertex ray_origin,
 					t_vertex ray_direction, t_vertex point1, t_vertex point2);
 void				plot_line(t_img *img, t_line *l);
 
-void				load_textures(t_main *m);
+void				load_textures_snd(t_main *m);
 void				clear_textures(t_main *m);
 void				setup_wall_texture(t_main *m, t_wall *w,
 													int wall, t_pt verical);
@@ -92,4 +92,6 @@ void				setup_wall_texture(t_main *m, t_wall *w,
 t_vertex			calculate_edges(t_player *player, t_vertex *vertex);
 void				clamp_edges_with_player_view(t_renderer *r, t_wall *w);
 
+void		init_sounds(t_main *m);
+void		load_sounds(t_main *m);
 #endif

@@ -23,6 +23,7 @@ else
 CFLAGS := -I$(IDIR) \
 		-I./libft/inc/ \
 		-I./libSDL/SDL2.framework/Headers/ \
+		-I./libSDL/SDL2_mixer.framework/Headers/ \
 		-I./libSDL/SDL2_image.framework/Headers/ \
 		-I./libSDL/SDL2_ttf.framework/Headers/ \
 		-I./libftSDL/inc/ \
@@ -36,7 +37,7 @@ LIBFTSDL := libftSDL
 ifeq ($(UNAME), Linux)
 SDL2_F := -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lm
 else
-SDL2_F := -framework SDL2 -framework SDL2_image -framework SDL2_ttf -F ./libSDL/
+SDL2_F := -framework SDL2 -framework SDL2_mixer -framework SDL2_image -framework SDL2_ttf -F ./libSDL/
 endif
 SDL2_P := -rpath @loader_path/libSDL/
 

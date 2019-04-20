@@ -25,6 +25,7 @@ else
 HEADERS := -I inc/ \
 		-I../libSDL/SDL2.framework/Headers/ \
 		-I../libSDL/SDL2_image.framework/Headers/ \
+		-I../libSDL/SDL2_mixer.framework/Headers/ \
 		-I../libSDL/SDL2_ttf.framework/Headers/ \
 		-I../libft/inc/
 endif

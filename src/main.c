@@ -27,6 +27,7 @@ void				sdl_loop(t_main *m)
 	{
 		calc_delta_time(m);
 		sdl_hook(m);
+		
 		if (m->delta_time > 0.016f)
 		{
 			draw_screen(m);
@@ -41,10 +42,10 @@ void				sdl_loop(t_main *m)
 int					main(int ac, char **av)
 {
 	t_main			m;
-
+ 
 	(void)av;
 	ft_bzero(&m, sizeof(t_main));
-	load_textures(&m);
+	load_textures_snd(&m);
 	parser(&m.map, av[1]);
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
@@ -52,6 +53,7 @@ int					main(int ac, char **av)
 	sdl_loop(&m);
 	clear_textures(&m);
 	remove_data(&m.map);
+	Mix_CloseAudio();
 	SDL_Quit();
 	return (0);
 }
