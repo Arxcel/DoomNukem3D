@@ -6,34 +6,60 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:38:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 14:38:47 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:27:30 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
+static void		load_sound_mav(char *path, t_music *m, int i)
+{
+	char				*file_contents;
+	zip_file_t			*f;
+	zip_t				*z;
+	struct zip_stat		st;
+	SDL_RWops			*rwops;
+
+	z = zip_open(RESOURCES, 0, 0);
+	if (!z)
+		MSG(zip_strerror(z));
+	zip_stat_init(&st);
+	zip_stat(z, path, 0, &st);
+	if (st.size < 1)
+		MSG("No such sound");
+	file_contents = malloc(st.size);
+	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
+	if (!f)
+		MSG(zip_strerror(z));
+	if (zip_fread(f, file_contents, st.size) < 1 || zip_fclose(f))
+		MSG(zip_strerror(z));
+	rwops = SDL_RWFromMem(file_contents, st.size);
+	if (!(m->snd[i] =
+			Mix_LoadWAV_RW(rwops, SDL_TRUE)))
+		MSG(SDL_GetError());
+	zip_close(z);
+	free(file_contents);
+}
+
 void			init_sounds(t_main *m)
 {
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1500);
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
+													2, 1500) == -1)
+		MSG(Mix_GetError());
 	load_sounds(m);
-	Mix_PlayMusic(m->music.msc[0], -1);
 }
 
 void			load_sounds(t_main *m)
 {
-	m->music.msc[0] = Mix_LoadMUS("assets/sounds/m.mp3");
-	m->music.msc[1] = Mix_LoadMUS("assets/sounds/lvl2.mp3");
-	m->music.msc[2] = Mix_LoadMUS("assets/sounds/lvl3.mp3");
-	m->music.msc[3] = Mix_LoadMUS("assets/sounds/game_over.wav");
-	m->music.msc[4] = Mix_LoadMUS("assets/sounds/win.wav");
-	m->music.msc[5] = Mix_LoadMUS("assets/sounds/menu.mp3");
-	m->music.snd[0] = Mix_LoadWAV("assets/sounds/Knife.wav");
-	m->music.snd[1] = Mix_LoadWAV("assets/sounds/Pistol.wav");
-	m->music.snd[2] = Mix_LoadWAV("assets/sounds/Machine Gun.wav");
-	m->music.snd[3] = Mix_LoadWAV("assets/sounds/Gatling Gun.wav");
-	m->music.snd[4] = Mix_LoadWAV("assets/sounds/Pickup.wav");
-	m->music.snd[5] = Mix_LoadWAV("assets/sounds/Ammo.wav");
-	m->music.snd[6] = Mix_LoadWAV("assets/sounds/Key.wav");
-	m->music.snd[7] = Mix_LoadWAV("assets/sounds/Boss Gun.wav");
-	m->music.snd[8] = Mix_LoadWAV("assets/sounds/Boss Gun.wav");
+	int i;
+
+	i = -1;
+	load_sound_mav("assets/sounds/Knife.wav", &m->music, ++i);
+	load_sound_mav("assets/sounds/Pistol.wav", &m->music, ++i);
+	load_sound_mav("assets/sounds/Machine Gun.wav", &m->music, ++i);
+	load_sound_mav("assets/sounds/Gatling Gun.wav", &m->music, ++i);
+	load_sound_mav("assets/sounds/Pickup.wav", &m->music, ++i);
+	load_sound_mav("assets/sounds/Ammo.wav", &m->music, ++i);
+	load_sound_mav("assets/sounds/Key.wav", &m->music, ++i);
+	load_sound_mav("assets/sounds/Boss Gun.wav", &m->music, ++i);
 }

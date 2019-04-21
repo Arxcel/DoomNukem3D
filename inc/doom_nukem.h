@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 11:13:27 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:28:02 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define HFOV					0.73f
 # define VFOV					.2f
 # define DARKNESS				2
+
+# define RESOURCES				"./assets.res"
+# define RESOURCES_PASS			"lol"
 
 # define NEAR_Z		1e-4f
 # define FAR_Z		5

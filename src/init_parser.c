@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:36:42 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/21 12:28:05 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:29:48 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ json_value				*init_json(char *file_name)
 	zip_t				*z;
 	struct zip_stat		st;
 
-	z = zip_open("./assets.res", 0, 0);
+	z = zip_open(RESOURCES, 0, 0);
 	if (!z)
 		MSG(zip_strerror(z));
 	zip_stat_init(&st);
@@ -100,7 +100,7 @@ json_value				*init_json(char *file_name)
 	if (st.size < 1)
 		MSG("No such map");
 	file_contents = malloc(st.size);
-	f = zip_fopen_encrypted(z, file_name, 0, "lol");
+	f = zip_fopen_encrypted(z, file_name, 0, RESOURCES_PASS);
 	if (!f)
 		MSG(zip_strerror(z));
 	if (zip_fread(f, file_contents, st.size) < 1 || zip_fclose(f))
@@ -115,6 +115,7 @@ json_value				*init_json(char *file_name)
 int						parser(t_map *map, char *map_name)
 {
 	char			*name;
+	char			*full_name;
 	json_value		*value;
 
 	map->number_vertices = 0;
@@ -122,9 +123,11 @@ int						parser(t_map *map, char *map_name)
 	map->number_sprites = 0;
 	map->number_enemies = 0;
 	name = ft_strjoin("assets/maps/", map_name);
-	if (!(value = init_json(name)) || parser_loop(map, value))
+	full_name = ft_strjoin(name, ".json");
+	if (!(value = init_json(full_name)) || parser_loop(map, value))
 		MSG("Wrong data format");
 	json_value_free(value);
 	free(name);
+	free(full_name);
 	return (0);
 }

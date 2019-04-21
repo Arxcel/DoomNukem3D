@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sdl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:38:51 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/26 22:02:15 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/04/21 13:17:34 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void				ft_bzero(void *s, size_t n);
 void				*ft_memalloc(size_t size);
 SDL_Surface			*sdl_load_surface(const char *path,
 								int is_format, size_t format);
-
+SDL_Surface			*sdl_load_surface_from_res(SDL_RWops *src,
+								int is_format, size_t format);
 #endif

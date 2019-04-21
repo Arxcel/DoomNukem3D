@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 18:50:20 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:26:56 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,6 @@ typedef struct		s_textures
 
 typedef struct		s_music
 {
-	Mix_Music		*msc[10];
 	Mix_Chunk		*snd[15];
 }					t_music;
 

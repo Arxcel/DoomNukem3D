@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 18:54:06 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:21:17 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,31 @@
 
 static void		load_block_textures(const char *path, t_tblocks *textures)
 {
-	SDL_Surface **target;
+	char				*file_contents;
+	zip_file_t			*f;
+	zip_t				*z;
+	struct zip_stat		st;
+	SDL_RWops			*rwops;
 
-	target = &textures->textures[textures->num_textures++];
-	if (!(*target = sdl_load_surface(path, IS_FORMAT_SURF, PIXEL_FORMAT)))
-	{
-		ft_putendl(SDL_GetError());
-		exit(-3);
-	}
+	z = zip_open(RESOURCES, 0, 0);
+	if (!z)
+		MSG(zip_strerror(z));
+	zip_stat_init(&st);
+	zip_stat(z, path, 0, &st);
+	if (st.size < 1)
+		MSG("No such texture");
+	file_contents = malloc(st.size);
+	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
+	if (!f)
+		MSG(zip_strerror(z));
+	if (zip_fread(f, file_contents, st.size) < 1 || zip_fclose(f))
+		MSG(zip_strerror(z));
+	rwops = SDL_RWFromMem(file_contents, st.size);
+	if (!(textures->textures[textures->num_textures++] =
+			sdl_load_surface_from_res(rwops, IS_FORMAT_SURF, PIXEL_FORMAT)))
+		MSG(SDL_GetError());
+	zip_close(z);
+	free(file_contents);
 }
 
 static void		load_sprites(t_main *m)
