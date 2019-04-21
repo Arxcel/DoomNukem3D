@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:38:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 14:27:30 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 19:06:46 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		load_sound_mav(char *path, t_music *m, int i)
 	struct zip_stat		st;
 	SDL_RWops			*rwops;
 
-	z = zip_open(RESOURCES, 0, 0);
+	z = zip_open(RESOURCES, ZIP_CREATE, 0);
 	if (!z)
 		MSG(zip_strerror(z));
 	zip_stat_init(&st);

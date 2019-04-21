@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:36:42 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/21 14:29:48 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 19:07:17 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ json_value				*init_json(char *file_name)
 	zip_t				*z;
 	struct zip_stat		st;
 
-	z = zip_open(RESOURCES, 0, 0);
+	z = zip_open(RESOURCES, ZIP_CREATE, 0);
 	if (!z)
 		MSG(zip_strerror(z));
 	zip_stat_init(&st);
