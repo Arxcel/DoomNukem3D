@@ -235,12 +235,25 @@ typedef struct		s_music
 	Mix_Chunk		*snd[15];
 }					t_music;
 
+typedef struct		s_hud
+{
+	TTF_Font		*font;
+	SDL_Surface		*surface_message;
+	SDL_Texture		*message;
+	SDL_Rect		message_rect;
+	SDL_Surface		*surface_hud;
+	SDL_Texture		*hud;
+	SDL_Rect		hud_rect;
+
+}					t_hud;
+
 typedef struct		s_main
 {
 	t_sdl		sdl;
 	t_music		music;
 	t_map		map;
 	t_textures	tex;
+	t_hud		hud;
 	float		prev_time;
 	float		curr_time;
 	float		delta_time;
