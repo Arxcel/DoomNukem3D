@@ -15,7 +15,7 @@ EXTENSIONS := $(addprefix $(IDIR)/, $(EXT))
 
 
 
-LZIP_P := $(PDIR)/libzip/bin/lib
+LZIP_P := $(PDIR)/libzip/bin
 LZIP_SRC := ./libzip
 
 UNAME := $(shell uname)
@@ -36,8 +36,7 @@ CFLAGS := -I$(IDIR) \
 		-I./libSDL/SDL2_ttf.framework/Headers/ \
 		-I./libftSDL/inc/ \
 		-I./libJson/inc/ \
-		-I./libzip/bin/lib/include 
-
+		-I./libzip/bin/include 
 endif
 
 LIBFT := libft
@@ -49,8 +48,8 @@ SDL2_F := -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lm
 else
 SDL2_F := -framework SDL2 -framework SDL2_mixer -framework SDL2_image -framework SDL2_ttf -F ./libSDL/
 endif
-SDL2_P := -rpath @loader_path/libSDL/
-
+SDL2_P := -rpath @loader_path/libSDL/ \
+			-rpath @loader_path/libzip/bin/lib 
 
 HEADER := inc
 _DEPS := doom_nukem.h \
@@ -94,7 +93,7 @@ all: obj $(NAME)
 $(NAME): libs $(OBJS) $(EXTENSIONS)
 		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) \
 		-L $(LIBFTSDL) -lftSDL -L $(LIBJSON) -lJSON \
-		$(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft -L ./libzip/build/lib -lzip
+		$(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft -L libzip/bin/lib -lzip
 
 libs:
 	make -C $(LIBFT)
@@ -113,7 +112,7 @@ lz:
 		cd "$(LZIP_SRC)"; \
 		mkdir -p build ; \
 		cd build ; \
-		cmake .. -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX='$(LZIP_P)'; \
+		cmake .. -DCMAKE_INSTALL_PREFIX='$(LZIP_P)'; \
 		make ; \
 		make install ; \
 		cd $(PDIR) ; \
@@ -153,4 +152,4 @@ re: fclean all
 
 .PHONY: all, obj, norme, clean, fclean, re, pre
 .NOTPARALLEL:  all, obj, norme, clean, fclean, re, pre
-# .SILENT:
+.SILENT:
