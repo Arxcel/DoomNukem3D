@@ -3,11 +3,18 @@
 # define SECTORS_CNT 100
 # define YELLOW 0xFFFF00
 # define BLUE 0x0000FF
-# define TEXT_MENU 7
+# define TEXT_MENU 11
 # define LETTER_WIDTH 15
 # define LETTER_HEIGHT 30
-# define TEXT_MENU_ROW 4
+# define TEXT_MENU_ROW 6
 # define TEXTURE_MAX 10
+# define MAX_CEILING_HEIGHT 1000
+# define MIN_FLOOR_HEIGHT -20
+
+typedef	enum
+{
+	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, PORTAL
+}					e_select_mode;
 typedef struct		s_dot
 {
    int x;
