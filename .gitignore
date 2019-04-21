@@ -13,4 +13,6 @@ test/
 
 **/*.a
 **/*.o
+libzip/bin/
+libzip/build/
 doom-nukem

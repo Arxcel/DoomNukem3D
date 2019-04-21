@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 20:18:14 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 11:13:27 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include "zip.h"
 # include "ft_sdl.h"
 # include "ft_libftu.h"
 # include "structure.h"

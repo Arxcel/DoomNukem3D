@@ -4,12 +4,19 @@ CC := clang
 KEYS := -Wall -Wextra -Werror
 FLAGS := 
 
+PDIR := $(shell pwd)
+
 EXT := doom_nukem.h \
 		structure.h \
 		utils.h
 
 IDIR := $(CURDIR)/inc
 EXTENSIONS := $(addprefix $(IDIR)/, $(EXT))
+
+
+
+LZIP_P := $(PDIR)/libzip/bin/lib
+LZIP_SRC := ./libzip
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -19,6 +26,7 @@ CFLAGS := -I$(IDIR) \
 		-I./libJson/inc/ \
 		-I /usr/local/include/SDL2/ \
 		-I /usr/include/SDL2/
+		-I./libzip/bin/include 
 else
 CFLAGS := -I$(IDIR) \
 		-I./libft/inc/ \
@@ -27,7 +35,9 @@ CFLAGS := -I$(IDIR) \
 		-I./libSDL/SDL2_image.framework/Headers/ \
 		-I./libSDL/SDL2_ttf.framework/Headers/ \
 		-I./libftSDL/inc/ \
-		-I./libJson/inc/
+		-I./libJson/inc/ \
+		-I./libzip/bin/lib/include 
+
 endif
 
 LIBFT := libft
@@ -40,6 +50,7 @@ else
 SDL2_F := -framework SDL2 -framework SDL2_mixer -framework SDL2_image -framework SDL2_ttf -F ./libSDL/
 endif
 SDL2_P := -rpath @loader_path/libSDL/
+
 
 HEADER := inc
 _DEPS := doom_nukem.h \
@@ -80,22 +91,33 @@ OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
 all: obj $(NAME)
 
-$(NAME): $(OBJS) $(EXTENSIONS)
-		make libs
+$(NAME): libs $(OBJS) $(EXTENSIONS)
 		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) \
 		-L $(LIBFTSDL) -lftSDL -L $(LIBJSON) -lJSON \
-		$(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft
+		$(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft -L ./libzip/build/lib -lzip
 
-libs: 
+libs:
 	make -C $(LIBFT)
 	make -C $(LIBJSON)
 	make -C $(LIBFTSDL)
+	make lz
 
 obj:
 	mkdir -p $(DIR_O)
 
 $(DIR_O)/%.o: $(DIR_S)/%.c $(DEPS) $(EXTENSIONS)
 		$(CC) -c -o $@ $< $(FLAGS) $(CFLAGS)
+
+lz:
+	if ! [ -d "$(LZIP_SRC)/build" ]; then \
+		cd "$(LZIP_SRC)"; \
+		mkdir -p build ; \
+		cd build ; \
+		cmake .. -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX='$(LZIP_P)'; \
+		make ; \
+		make install ; \
+		cd $(PDIR) ; \
+	fi
 
 norme:
 		make norme -C $(LIBFT)
@@ -118,6 +140,8 @@ fclean: clean
 		make fclean -C $(LIBFT)
 		make fclean -C $(LIBFTSDL)
 		make fclean -C $(LIBJSON)
+		rm -rf "$(LZIP_SRC)/build"
+		rm -rf "$(LZIP_SRC)/bin"
 
 pre_clean:
 		rm -f $(DIR_O)/$(DIR_OW)/*.o
@@ -129,4 +153,4 @@ re: fclean all
 
 .PHONY: all, obj, norme, clean, fclean, re, pre
 .NOTPARALLEL:  all, obj, norme, clean, fclean, re, pre
-.SILENT:
+# .SILENT:
