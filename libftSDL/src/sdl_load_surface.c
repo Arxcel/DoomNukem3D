@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 17:01:44 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/04/21 13:17:16 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:57:30 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ SDL_Surface	*sdl_load_surface(const char *path, int is_format, size_t format)
 	return (is_format ? out : temp);
 }
 
-SDL_Surface	*sdl_load_surface_from_res(SDL_RWops *src, int is_format, size_t format)
+SDL_Surface	*sdl_load_surface_from_res(SDL_RWops *src,
+											int is_format, size_t format)
 {
 	SDL_Surface		*out;
 	SDL_Surface		*temp;
@@ -64,4 +65,3 @@ SDL_Surface	*sdl_load_surface_from_res(SDL_RWops *src, int is_format, size_t for
 	}
 	return (is_format ? out : temp);
 }
-

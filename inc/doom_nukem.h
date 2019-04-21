@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 14:28:02 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:48:41 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define GRAVITY				1.0f
 # define SPEED					5
 # define RUN_SPEED					10
-# define MOUSE_SENSIVITY_X		3
-# define MOUSE_SENSIVITY_Y		5
+# define MOUSE_SENSIVITY_X		1
+# define MOUSE_SENSIVITY_Y		2
 
 # define STANDHEIGHT			6
 # define CROUCHINGHEIGHT		2.5

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 14:03:33 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:53:22 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void			vertical_movement(t_main *m, int key)
 {
 	if (key == SDLK_r)
 	{
-		m->map.player.velocity.z += 0.1f;
+		m->map.player.velocity.z += 0.2f;
 		m->map.player.is_falling = true;
 	}
 	else if (key == ' ')

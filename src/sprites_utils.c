@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 15:18:34 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 20:18:03 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:30:32 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	sort(int num_sprites, int *order, float *dist)
 
 void		setup_sprite_texture(t_main *m, t_wall *w, int wall)
 {
-	w->solid_id = wall % m->tex.t.num_textures;
+	w->solid_id = wall % m->tex.s.num_textures;
 }
 
 void		sort_sprites(t_main *m, int *order, float *dist)
@@ -84,9 +84,9 @@ void		draw_sprite_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 
 	current = m->tex.s.textures[v->texture_id % m->tex.s.num_textures];
 	pix = current->pixels;
-	v->y_top = clampf(v->y_top, 0, m->sdl.img.h - 1);
-	v->y_bottom = clampf(v->y_bottom, 0, m->sdl.img.h - 1);
-	y = v->y_top;
+	v->y_top = clampf(v->y_top, 0, m->sdl.img.h);
+	v->y_bottom = clampf(v->y_bottom, 0, m->sdl.img.h);
+	y = v->y_top - 1;
 	while (++y <= v->y_bottom)
 	{
 		w->txty = interp_next(ty);

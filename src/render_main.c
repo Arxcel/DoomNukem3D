@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 16:30:48 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:42:52 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ static void		draw_neighbor_wall(t_main *m, t_wall *wall,
 	draw_line(m, wall, &(t_vline){x, wall->cya,
 										wall->ncya - 1, wall->upper_id}, i);
 	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya),
-										r->top_limit[x], m->sdl.img.h - 1);
+										r->top_limit[x], m->sdl.img.h);
 	free(i);
-	i = init_interp((t_pt){wall->ya, wall->ncyb + 1},
+	i = init_interp((t_pt){wall->ya, wall->ncyb},
 	wall->yb, (t_pt){0, cl->w});
-	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1,
+	draw_line(m, wall, &(t_vline){x, wall->ncyb,
 	wall->cyb, wall->lower_id}, i);
 	r->bottom_limit[x] = clampf(minf(wall->cyb,
 	wall->ncyb), 0, r->bottom_limit[x]);

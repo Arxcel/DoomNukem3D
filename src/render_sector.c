@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:40:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 13:02:53 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:23:21 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,6 @@ static void			clamp_values(t_wall *wall)
 	wall->t2.x = sign * maxf(fabs(wall->t2.x), 0.1f);
 }
 
-static void			check_wall(t_wall *wall, t_map *map,
-							int s, t_render_item const *current_sector)
-{
-	double		d;
-	t_sector	*sect;
-
-	sect = &map->sectors[current_sector->sectorno];
-	d = cast_ray_2line(
-		(t_vertex){map->player.position.x, map->player.position.y},
-		(t_vertex){map->player.anglecos, map->player.anglesin},
-		sect->vertices[s], sect->vertices[s + 1]);
-	if (d > 0 && d < 3)
-	{
-		if (s == map->player.sector_number)
-			return ;
-		wall->t1.x = maxf(fabs(wall->t1.x), 0.1f);
-	}
-}
-
 void				render_sector(t_main *m, t_renderer *r,
 										t_render_item const *current_sector)
 {
@@ -94,7 +75,6 @@ void				render_sector(t_main *m, t_renderer *r,
 			continue;
 		clamp_edges_with_player_view(&wall);
 		clamp_values(&wall);
-		check_wall(&wall, &m->map, s, current_sector);
 		do_perspective(&wall, m->sdl.img.w, m->sdl.img.h);
 		if (wall.x1 >= wall.x2 || wall.x2 < current_sector->limit_x_left ||
 									wall.x1 > current_sector->limit_x_right)

@@ -6,11 +6,26 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 13:51:15 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:48:01 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:55:05 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+static void		find_angle(t_main *m, int sign)
+{
+	while (1)
+	{
+		m->map.player.anglesin = sinf(m->map.player.angle);
+		m->map.player.anglecos = cosf(m->map.player.angle);
+		if (!(fabs(m->map.player.anglesin) >= 0.01 &&
+								fabs(m->map.player.anglesin) <= 0.25) &&
+			!(fabs(m->map.player.anglecos) >= 0.01 &&
+										fabs(m->map.player.anglecos) <= 0.25))
+			break ;
+		m->map.player.angle += 0.007 * sign;
+	}
+}
 
 void			get_player_direction(t_main *m)
 {
@@ -27,8 +42,7 @@ void			get_player_direction(t_main *m)
 		m->map.player.angle = 2 * M_PI;
 	m->map.player.pitch = clampf(m->map.player.pitch + pitch +
 									y * MOUSE_SENSIVITY_Y / 100.f, -5, 5);
-	m->map.player.anglesin = sinf(m->map.player.angle);
-	m->map.player.anglecos = cosf(m->map.player.angle);
+	find_angle(m, x > 0 ? 1 : -1);
 }
 
 static void		calc_velocity(t_vertex *res, t_main *m, int speed)
