@@ -48,7 +48,7 @@ int     serialize_map(t_editor_sector *sectors, int num_sect)
         json_object_push(sector, "textures", textures);
         json_array_push(arr_sect, sector);
     }
-    json_object_push(obj, "vertices", vert);
+    json_object_push(obj, "vertex", vert);
     json_object_push(obj, "sector", arr_sect);
     char *buf = malloc(json_measure(obj));
     json_serialize(buf, obj);

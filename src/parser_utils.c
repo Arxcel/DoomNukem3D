@@ -12,31 +12,6 @@
 
 #include "map_parser.h"
 
-int						count_vertices(t_map *map, json_value *value)
-{
-	int					i;
-	json_value			*js;
-
-	if (value->type != json_array)
-		return (1);
-	i = 0;
-	while (i < value->u.array.length)
-	{
-		js = value->u.array.values[i];
-		if (js->type != json_object ||
-			ft_strcmp(js->u.object.values[0].name, "y") ||
-			ft_strcmp(js->u.object.values[1].name, "x") ||
-			js->u.object.values[1].value->type != json_array)
-			return (1);
-		js = js->u.object.values[1].value;
-		map->number_vertices += js->u.array.length;
-		i++;
-	}
-	if (!map->number_vertices)
-		return (1);
-	return (0);
-}
-
 int						find_min_max(t_map *map, int i, json_value *js)
 {
 	t_sector			*sect;

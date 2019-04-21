@@ -2,7 +2,7 @@ NAME := doom-nukem
 
 CC := clang
 KEYS := -Wall -Wextra -Werror
-FLAGS := 
+FLAGS := -g
 
 EXT := doom_nukem.h \
 		structure.h \

@@ -15,29 +15,22 @@
 
 int						vertex_field(t_map *map, json_value *value)
 {
-	int			i;
-	int			j;
 	int			cnt;
 	json_value	*js;
 
-	if (count_vertices(map, value) || !(map->vertices =
-	(t_vertex*)malloc(sizeof(t_vertex) * map->number_vertices)))
+	if (value->type != json_array || value->u.array.length < 3 ||
+	!(map->vertices = (t_vertex*)malloc(sizeof(t_vertex) * value->u.array.length)))
 		return (1);
-	i = 0;
-	cnt = 0;
-	while (i < value->u.array.length)
+	map->number_vertices = value->u.array.length;
+	cnt = -1;
+	while (++cnt < value->u.array.length)
 	{
-		j = 0;
-		js = value->u.array.values[i];
-		while (j < js->u.object.values[1].value->u.array.length)
-		{
-			map->vertices[cnt].x =
-				(float)js->u.object.values[1].value->u.array.values[j]->u.dbl;
-			map->vertices[cnt].y = (float)js->u.object.values[0].value->u.dbl;
-			j++;
-			cnt++;
-		}
-		i++;
+		js = value->u.array.values[cnt];
+		if (js->type != json_object || ft_strcmp(js->u.object.values[0].name, "x")
+			|| ft_strcmp(js->u.object.values[1].name, "y"))
+			return (1);
+		map->vertices[cnt].x = (float)js->u.object.values[0].value->u.dbl;
+		map->vertices[cnt].y = (float)js->u.object.values[1].value->u.dbl;
 	}
 	return (0);
 }
@@ -46,7 +39,7 @@ int						analyze_value(t_map *map, json_object_entry js)
 {
 	if (!ft_strcmp(js.name, "vertex"))
 	{
-		if (map->vertices || vertex_field(map, js.value))
+		if (vertex_field(map, js.value))
 			return (1);
 	}
 	else if (!ft_strcmp(js.name, "sector"))
@@ -92,6 +85,7 @@ json_value				*init_json(char *file_name)
 	char		*file_contents;
 	json_value	*value;
 
+	value = NULL;
 	if (stat(file_name, &filestatus) != 0)
 		MSG("File %s not found\n");
 	file_size = (size_t)filestatus.st_size;
