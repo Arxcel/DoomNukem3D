@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 19:06:52 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/21 19:56:02 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,20 @@ static void		load_sprites(t_main *m)
 void			load_textures_snd(t_main *m)
 {
 	ft_bzero(&m->tex, sizeof(m->tex));
-	m->tex.t.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 14);
+	m->tex.t.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 13);
 	load_block_textures("assets/walls/w0.png", &m->tex.t);
 	load_block_textures("assets/walls/w1.png", &m->tex.t);
 	load_block_textures("assets/walls/w2.jpg", &m->tex.t);
 	load_block_textures("assets/walls/w3.png", &m->tex.t);
 	load_block_textures("assets/walls/w4.png", &m->tex.t);
 	load_block_textures("assets/walls/w5.png", &m->tex.t);
-	load_block_textures("assets/walls/w6.png", &m->tex.t);
+	load_block_textures("assets/floors/f2.jpg", &m->tex.t);
 	load_block_textures("assets/walls/w7.png", &m->tex.t);
+	load_block_textures("assets/walls/w8.png", &m->tex.t);
+	load_block_textures("assets/walls/w9.png", &m->tex.t);
+	load_block_textures("assets/walls/w10.png", &m->tex.t);
 	load_block_textures("assets/floors/f1.png", &m->tex.t);
 	load_block_textures("assets/floors/f2.jpg", &m->tex.t);
-	load_block_textures("assets/floors/f3.png", &m->tex.t);
-	load_block_textures("assets/floors/f4.png", &m->tex.t);
-	load_block_textures("assets/floors/f6.png", &m->tex.t);
-	load_block_textures("assets/skies/s2.png", &m->tex.t);
 	load_sprites(m);
 	init_sounds(m);
 }
@@ -87,8 +86,8 @@ void			setup_wall_texture(t_main *m, t_wall *w, int wall, t_pt verical)
 {
 	w->u0 = 0;
 	w->u1 = 1023;
-	w->floor_id = (8 + verical.x) % m->tex.t.num_textures;
-	w->ceil_id = (8 + verical.y) % m->tex.t.num_textures;
+	w->floor_id = (11 + verical.x) % m->tex.t.num_textures;
+	w->ceil_id = (11 + verical.y) % m->tex.t.num_textures;
 	w->upper_id = wall % m->tex.t.num_textures;
 	w->lower_id = wall % m->tex.t.num_textures;
 	w->solid_id = wall % m->tex.t.num_textures;
