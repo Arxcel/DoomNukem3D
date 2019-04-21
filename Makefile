@@ -83,7 +83,8 @@ SOURCES :=  main.c \
 			sprites_utils.c \
 			color.c \
 			sounds.c \
-			sprite_collisions.c
+			sprite_collisions.c \
+			hud.c \
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))

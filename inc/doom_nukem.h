@@ -113,4 +113,7 @@ void				draw_sprite_line(t_main *m, t_wall *w,
 void				calk_sprite_collisions(t_main *m);
 float				calc_distance(t_vector v1, t_vector v2);
 void				sort_sprites(t_main *m, int *order, float *dist);
+void				load_hud(t_main *m);
+void				draw_hud(t_main *m);
+void				draw_text(t_main *m);
 #endif
