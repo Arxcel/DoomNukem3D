@@ -12,6 +12,14 @@
 
 #include "doom_nukem.h"
 
+static void			max_key0(t_main *m, int key)
+{
+	if (m->map.sectors[m->map.player.sector_number].floor_height <
+	m->map.sectors[m->map.player.sector_number].ceil_height -
+	m->map.sectors[m->map.player.sector_number].floor_height)
+		++m->map.sectors[m->map.player.sector_number].floor_height;
+}
+
 static void			vertical_movement(t_main *m, int key)
 {
 	if (key == SDLK_r)
@@ -34,7 +42,7 @@ static void			vertical_movement(t_main *m, int key)
 		m->map.player.is_falling = true;
 	}
 	else if (key == SDLK_0)
-		++m->map.sectors[m->map.player.sector_number].floor_height;
+		max_key0(m, SDLK_0);
 	else if (key == SDLK_9)
 		--m->map.sectors[m->map.player.sector_number].floor_height;
 }
