@@ -52,7 +52,7 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
     json_object_push(pl, "x", json_double_new(m->map.player.position.x));
     json_object_push(pl, "y", json_double_new(m->map.player.position.y));
     json_object_push(pl, "angle", json_double_new(-90));
-    json_object_push(pl, "sector", json_integer_new(0));
+    json_object_push(pl, "sector", json_integer_new(m->map.player.sector_number));
     json_object_push(obj, "vertex", vert);
     json_object_push(obj, "sector", arr_sect);
     json_object_push(obj, "player", pl);

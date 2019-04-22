@@ -1,5 +1,6 @@
 #include "map_editor.h"
 #include "doom_nukem.h"
+
 t_dot	module(t_dot a, t_dot b)
 {
 	t_dot d;
@@ -28,8 +29,9 @@ void	print_vector(t_editor_wall wall, t_main *main)
 
 bool	compare(t_dot a, t_dot b)
 {
-	return ((a.x == b.x - 1 && a.y == b.y - 1) || (a.x == b.x + 1 && a.y == b.y + 1) || (a.x == b.x && a.y == b.y)
-		|| (a.x == b.x - 1 && a.y == b.y + 1) || (a.x == b.x + 1 && a.y == b.y - 1));
+	return ((a.x == b.x - 1 && a.y == b.y - 1) || (a.x == b.x + 1 && a.y == b.y + 1)
+		|| (a.x == b.x && a.y == b.y) || (a.x == b.x - 1 && a.y == b.y + 1)
+		|| (a.x == b.x + 1 && a.y == b.y - 1));
 }
 
 int		intersect(t_editor_wall wall, t_dot cur)
@@ -383,9 +385,34 @@ int				arrow_keys(SDL_Keycode sym, t_editor_sector *sectors, int n, int select_m
 	return (0);
 }
 
+int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot)
+{
+	int c;
+
+	c = 0;
+	for (int i = 0, j = num_walls - 1; i < num_walls; j = i++) 
+	{
+		if ((
+		(walls[i].begin.y < walls[j].begin.y) && (walls[i].begin.y <= dot.y)
+		&& (dot.y <= walls[j].begin.y) &&
+		((walls[j].begin.y - walls[i].begin.y) * (dot.x - walls[i].begin.x) >
+		(walls[j].begin.x -  walls[i].begin.x) * (dot.y - walls[i].begin.y))
+		) || (
+		(walls[i].begin.y > walls[j].begin.y) &&
+		(walls[j].begin.y <= dot.y) && (dot.y <= walls[i].begin.y) &&
+		((walls[j].begin.y - walls[i].begin.y) * (dot.x - walls[i].begin.x) <
+		(walls[j].begin.x - walls[i].begin.x) * (dot.y - walls[i].begin.y))
+	))
+		c = !c;
+	}
+	return c;
+}
+
 int					player_save_keys(t_main *m, int n,
 	t_editor_sector *sectors, int select_mode)
 {
+	int i;
+
 	if (m->sdl.e.key.keysym.sym != SDLK_p && m->sdl.e.key.keysym.sym != SDLK_s)
 		return (1);
 	if (m->sdl.e.key.keysym.sym == SDLK_s && select_mode == PORTAL)
@@ -398,7 +425,10 @@ int					player_save_keys(t_main *m, int n,
 	SDL_GetMouseState(&d.x, &d.y);
 	m->map.player.position.x = d.x;
 	m->map.player.position.y = d.y;
-	m->map.player.sector_number = 0;
+	i = -1;
+	while (++i <= n)
+		if (pnpoly(sectors[i].num_walls, sectors[i].wall_vertice, d))
+			m->map.player.sector_number = i;
 	return (0);
 }
 
