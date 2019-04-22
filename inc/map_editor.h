@@ -50,5 +50,5 @@ typedef struct		s_text
 
 int					init_map_editor(t_main *main);
 int					map_editor_loop(t_main *m);
-int     			serialize_map(t_editor_sector *sectors, int num_sectors);
+int     			serialize_map(t_main *m, t_editor_sector *sectors, int num_sectors);
 int					editor_clear_sdl(t_sdl *sdl);

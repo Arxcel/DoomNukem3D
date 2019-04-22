@@ -13,9 +13,9 @@ int    write_map_to_file(char *buf, const char *filename)
     return (0);
 }
 
-int     serialize_map(t_editor_sector *sectors, int num_sect)
+int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
 {
-    json_value * obj = json_object_new(3);
+    json_value *obj = json_object_new(3);
     json_value *vert = json_array_new(WALLS_CNT * SECTORS_CNT);
     json_value *arr_sect = json_array_new(num_sect + 1);
 
@@ -48,8 +48,14 @@ int     serialize_map(t_editor_sector *sectors, int num_sect)
         json_object_push(sector, "textures", textures);
         json_array_push(arr_sect, sector);
     }
+    json_value *pl = json_object_new(4);
+    json_object_push(pl, "x", json_double_new(m->map.player.position.x));
+    json_object_push(pl, "y", json_double_new(m->map.player.position.y));
+    json_object_push(pl, "angle", json_double_new(-90));
+    json_object_push(pl, "sector", json_integer_new(0));
     json_object_push(obj, "vertex", vert);
     json_object_push(obj, "sector", arr_sect);
+    json_object_push(obj, "player", pl);
     char *buf = malloc(json_measure(obj));
     json_serialize(buf, obj);
     json_value_free(obj);
