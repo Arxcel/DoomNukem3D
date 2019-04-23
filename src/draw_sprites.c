@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_sprites.c                                   :+:      :+:    :+:   */
+/*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -81,7 +81,7 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 	free(ix);
 }
 
-void				render_sprites(t_main *m)
+void				draw_sprites(t_main *m)
 {
 	t_wall		wall;
 	int			i;

@@ -31,11 +31,11 @@ void				sdl_loop(t_main *m)
 		if (m->delta_time > 0.016f)
 		{
 			draw_screen(m);
+			draw_sprites(m);
 			draw_minimap(m);
 			sdl_put_image(&m->sdl);
 			draw_hud(m);
 			draw_text(m);
-			render_sprites(m);
 			SDL_RenderPresent(m->sdl.ren);
 			move_player(m);
 			calk_sprite_collisions(m);

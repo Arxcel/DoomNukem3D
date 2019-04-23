@@ -87,7 +87,7 @@ void		draw_sprite_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 	v->y_top = clampf(v->y_top, 0, m->sdl.img.h);
 	v->y_bottom = clampf(v->y_bottom, 0, m->sdl.img.h);
 	y = v->y_top - 1;
-	while (++y <= v->y_bottom)
+	while (++y < v->y_bottom)
 	{
 		w->txty = interp_next(ty);
 		color = pix[w->txtx % current->w +

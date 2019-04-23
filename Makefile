@@ -1,7 +1,7 @@
 NAME := doom-nukem
 
 CC := clang
-KEYS := -Wall -Wextra -Werror
+KEYS := -g #-Wall -Wextra -Werror
 FLAGS := 
 
 PDIR := $(shell pwd)
@@ -68,7 +68,7 @@ SOURCES :=  main.c \
 			render_utils.c \
 			render_sector.c \
 			render_main.c \
-			render_sprites.c \
+			draw_sprites.c \
 			geom_utils.c \
 			line.c \
 			minimap.c \

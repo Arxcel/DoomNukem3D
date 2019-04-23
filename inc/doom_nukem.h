@@ -107,7 +107,7 @@ void				draw_local_wall(t_main *m, t_wall *wall,
 void				calc_sprite_edges(t_player *p, t_vector sprite_pos,
 												t_wall *wall, float dist);
 void				setup_sprite_texture(t_main *m, t_wall *w, int wall);
-void				render_sprites(t_main *m);
+void				draw_sprites(t_main *m);
 void				draw_sprite_line(t_main *m, t_wall *w,
 													t_vline *v, t_interp *ty);
 void				calk_sprite_collisions(t_main *m);
