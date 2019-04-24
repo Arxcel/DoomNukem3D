@@ -25,7 +25,7 @@ CFLAGS := -I$(IDIR) \
 		-I./libftSDL/inc/ \
 		-I./libJson/inc/ \
 		-I /usr/local/include/SDL2/ \
-		-I /usr/include/SDL2/
+		-I /usr/include/SDL2/ \
 		-I./libzip/bin/include 
 else
 CFLAGS := -I$(IDIR) \
