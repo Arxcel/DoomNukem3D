@@ -3,6 +3,7 @@
 # define SECTORS_CNT 100
 # define YELLOW 0xFFFF00
 # define BLUE 0x0000FF
+# define RED 0xFF0000
 # define TEXT_MENU 11
 # define LETTER_WIDTH 15
 # define LETTER_HEIGHT 30
@@ -13,7 +14,7 @@
 
 typedef	enum
 {
-	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, PORTAL
+	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, PORTAL, PLAYER, SPRITE
 }					e_select_mode;
 typedef struct		s_dot
 {

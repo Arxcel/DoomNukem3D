@@ -288,6 +288,23 @@ void		create_text_menu(t_main *m, t_text *text_menu)
 	create_text(m, text_menu, 10, "100");
 }
 
+int		draw_circle(int color, t_main *m)
+{
+	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
+		m->map.player.position.y, color);
+	sdl_pixel_put(&m->sdl.img, m->map.player.position.x + 1,
+		m->map.player.position.y, color);
+	sdl_pixel_put(&m->sdl.img, m->map.player.position.x - 1,
+		m->map.player.position.y, color);
+	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
+		m->map.player.position.y, color);
+	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
+		m->map.player.position.y + 1, color);
+	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
+		m->map.player.position.y - 1, color);
+	return (0);
+}
+
 int		draw(t_main *m, t_editor_sector *sectors, int n,
 			int intersected, bool mode, t_text *text_menu)
 {
@@ -429,36 +446,44 @@ int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot)
 }
 
 int					player_save_keys(t_main *m, int n,
-	t_editor_sector *sectors, int mode)
+	t_editor_sector *sectors, int *mode)
 {
 	int i;
 
-	if (m->sdl.e.key.keysym.sym != SDLK_p && m->sdl.e.key.keysym.sym != SDLK_s)
-		return (1);
-	if (m->sdl.e.key.keysym.sym == SDLK_s && mode == CLOSE)
+	if (m->sdl.e.key.keysym.sym == SDLK_s && *mode >= CEILING_HEIGHT)
 	{
-		shift_left(sectors, n + 1);
-		serialize_map(m, sectors, n);
+		if (*mode < PLAYER)
+		{
+			shift_left(sectors, n + 1);
+			*mode = PLAYER;
+		}
+		else
+			serialize_map(m, sectors, n);
 		return (0);
 	}
+	if (*mode < PLAYER)
+		return (1);
 	t_dot d;
 	SDL_GetMouseState(&d.x, &d.y);
-	m->map.player.position.x = d.x;
-	m->map.player.position.y = d.y;
 	i = -1;
 	while (++i <= n)
 		if (pnpoly(sectors[i].num_walls, sectors[i].wall_vertice, d))
+		{
 			m->map.player.sector_number = i;
-	return (0);
+			m->map.player.position.x = d.x;
+			m->map.player.position.y = d.y;
+			return (0);
+		}
+	return (1);
 }
 
 void				sdl_keydown(t_main *m, t_editor_sector *sectors,
 	int *n, int *mode, int *intersected)
 {
-	if (m->sdl.e.type == SDL_KEYDOWN)
+	if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
 	{
 		if (arrow_keys(m->sdl.e.key.keysym.sym, sectors, *n, mode)
-			&& player_save_keys(m, *n, sectors, *mode) &&
+			&& player_save_keys(m, *n, sectors, mode) &&
 			(*n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN))
 		{
 			if ((sectors[*n].num_walls > 0 && *mode == TEXTURE
@@ -500,6 +525,8 @@ int					map_editor_loop(t_main *m)
 			if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
 				update_all_menu(m, text_menu, sectors, n);
 			intersected = draw(m, sectors, n, intersected, mode, text_menu);
+			if (mode == PLAYER)
+				draw_circle(RED, m);
 		}
 	}
 	return (remove_text_menu(text_menu));
