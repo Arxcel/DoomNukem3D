@@ -75,6 +75,7 @@ int					main(int ac, char **av)
 	load_hud(&m);
 	init_sprite(&m);
 	sdl_loop(&m);
+	unload_hud(&m);
 	clear_textures(&m);
 	remove_data(&m.map);
 	Mix_CloseAudio();

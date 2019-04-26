@@ -243,6 +243,8 @@ typedef struct		s_hud
 	SDL_Rect		message_rect;
 	SDL_Surface		*surface_hud;
 	SDL_Texture		*hud;
+	SDL_RWops		*font_rwops;
+	char			*font_source;
 	SDL_Rect		hud_rect;
 
 }					t_hud;

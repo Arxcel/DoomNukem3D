@@ -85,6 +85,7 @@ SOURCES :=  main.c \
 			sounds.c \
 			sprite_collisions.c \
 			hud.c \
+			hud_loader.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
