@@ -28,7 +28,6 @@ typedef struct		s_editor_wall
 	t_dot			end;
 	int				color;
 	int				texture;
-	bool			intersected;
 	int				global_index;
 
 }					t_editor_wall;
@@ -38,7 +37,6 @@ typedef struct		s_editor_sector
 	t_editor_wall	wall_vertice[WALLS_CNT];
 	int				neighbors[WALLS_CNT];
 	int				num_walls;
-	int				color;
 	int				floor_height;
 	int				ceiling_height;
 }					t_editor_sector;
@@ -48,6 +46,15 @@ typedef struct		s_text
 	SDL_Texture 	*text_texture;
 	SDL_Rect		dstrect;
 }					t_text;
+
+typedef struct		s_map_editor
+{
+	int 			n;
+	t_editor_sector	sectors[SECTORS_CNT];
+	int				mode;
+	int				chosen;
+	t_text 			menu[TEXT_MENU];
+}					t_map_editor;
 
 int					init_map_editor(t_main *main);
 int					map_editor_loop(t_main *m);

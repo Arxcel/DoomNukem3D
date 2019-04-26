@@ -119,50 +119,28 @@ int				editor_clear_sdl(t_sdl *sdl)
 
 
 /*Returns number of walls in sector*/
-int		close_sector(t_main *m, int i, t_editor_sector *sector)
+int		close_sector(t_main *m, t_map_editor *e)
 {
-	if (sector[i].num_walls > 1 && sector[i].num_walls < WALLS_CNT)
+	if (e->sectors[e->n].num_walls > 1 && e->sectors[e->n].num_walls < WALLS_CNT)
 	{
-		sector[i].wall_vertice[sector[i].num_walls].color = YELLOW;
-		sector[i].wall_vertice[sector[i].num_walls].begin.x =
-			sector[i].wall_vertice[sector[i].num_walls - 1].end.x;
-		sector[i].wall_vertice[sector[i].num_walls].begin.y =
-			sector[i].wall_vertice[sector[i].num_walls - 1].end.y;
-		sector[i].wall_vertice[sector[i].num_walls].end.x = sector[i].wall_vertice[0].begin.x;
-		sector[i].wall_vertice[sector[i].num_walls].end.y = sector[i].wall_vertice[0].begin.y;
-
-		sector[i].num_walls++;
-		return (sector[i].num_walls);
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].color = YELLOW;
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].begin.x =
+			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end.x;
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].begin.y =
+			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end.y;
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end.x =
+			e->sectors[e->n].wall_vertice[0].begin.x;
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end.y =
+			e->sectors[e->n].wall_vertice[0].begin.y;
+		e->sectors[e->n].num_walls++;
+		return (e->sectors[e->n].num_walls);
 	}
 	return (0);
 }
 
-void	print_sectors(t_editor_sector *sectors, int n)
-{
-	int				i;
-	int				j;
-	t_editor_wall	w;
-	int				gl;
 
-	i = -1;
-	gl = -1;
-	while(++i <= n)
-	{
-		printf("Sector %i\n", i);
-		j = -1;
-		while (++j < sectors[i].num_walls)
-		{
-			sectors[i].wall_vertice[j].global_index = ++gl;
-			w = sectors[i].wall_vertice[j];
-			printf("Wall %i: begin x = %i, y = %i end x = %i, y = %i neighbor = %i global index = %i\n",
-				j, w.begin.x, w.begin.y, w.end.x, w.end.y, sectors[i].neighbors[j], w.global_index);
-		}
-	}
-	
 
-}
-
-void	shift_left(t_editor_sector *sectors, int n)
+void	shift_left(t_map_editor *e)
 {
 	t_dot	min;
 	int		i;
@@ -170,80 +148,78 @@ void	shift_left(t_editor_sector *sectors, int n)
 	int		gl;
 
 	gl = 0;
-	min = sectors[0].wall_vertice[0].begin;
+	min = e->sectors[0].wall_vertice[0].begin;
 	i = -1;
-	while (++i < n && (j = -1))
-		while (++j < sectors[i].num_walls)
+	while (++i <= e->n && (j = -1))
+		while (++j < e->sectors[i].num_walls)
 		{
-			if (sectors[i].wall_vertice[j].begin.x < min.x)
-				min.x = sectors[i].wall_vertice[j].begin.x;
-			if (sectors[i].wall_vertice[j].begin.y < min.y)
-				min.y = sectors[i].wall_vertice[j].begin.y;
+			if (e->sectors[i].wall_vertice[j].begin.x < min.x)
+				min.x = e->sectors[i].wall_vertice[j].begin.x;
+			if (e->sectors[i].wall_vertice[j].begin.y < min.y)
+				min.y = e->sectors[i].wall_vertice[j].begin.y;
 		}
 	i = -1;
-	while (++i < n && (j = -1))
-		while (++j < sectors[i].num_walls)
+	while (++i <= e->n && (j = -1))
+		while (++j < e->sectors[i].num_walls)
 		{
-			sectors[i].wall_vertice[j].begin.x -= min.x;
-			sectors[i].wall_vertice[j].begin.y -= min.y;
-			sectors[i].wall_vertice[j].end.x -= min.x;
-			sectors[i].wall_vertice[j].end.y -= min.y;
-			sectors[i].wall_vertice[j].global_index = gl++;
+			e->sectors[i].wall_vertice[j].begin.x -= min.x;
+			e->sectors[i].wall_vertice[j].begin.y -= min.y;
+			e->sectors[i].wall_vertice[j].end.x -= min.x;
+			e->sectors[i].wall_vertice[j].end.y -= min.y;
+			e->sectors[i].wall_vertice[j].global_index = gl++;
 		}
 }
 
-int		check_intersection(t_editor_sector *sectors, int n, int intersected, t_dot mouse)
+int		check_intersection(t_map_editor *e, t_dot mouse)
 {
 	int j;
 
 	j = -1;
-	while (++j < sectors[n].num_walls)
+	while (++j < e->sectors[e->n].num_walls)
 	{
-		if (intersect(sectors[n].wall_vertice[j], mouse))
+		if (intersect(e->sectors[e->n].wall_vertice[j], mouse))
 		{
-			if (intersected == j)
+			if (e->chosen == j)
 			{
-				intersected = -1;
-				sectors[n].wall_vertice[j].intersected = false;
-				sectors[n].wall_vertice[j].color = YELLOW;
+				e->chosen = -1;
+				e->sectors[e->n].wall_vertice[j].color = YELLOW;
 			}
-			else if (intersected == -1)
+			else if (e->chosen == -1)
 			{
-				intersected = j;
-				sectors[n].wall_vertice[j].intersected = true;
-				sectors[n].wall_vertice[j].color = BLUE;
+				e->chosen = j;
+				e->sectors[e->n].wall_vertice[j].color = BLUE;
 			}
 			break;
 		}
 	}
-	return (intersected);
+	return (e->chosen);
 }
 
-int		create_wall(t_editor_sector *sectors, int n, int intersected, int mode)
+int		create_wall(t_map_editor *e)
 {
 	t_dot mouse;
 
 	SDL_GetMouseState(&mouse.x, &mouse.y);
-	if (mode == TEXTURE && sectors[n].num_walls < WALLS_CNT - 1)
+	if (e->mode == TEXTURE && e->sectors[e->n].num_walls < WALLS_CNT - 1)
 	{
-		if (sectors[n].num_walls == -1)
-			sectors[n].wall_vertice[0].begin = mouse;
+		if (e->sectors[e->n].num_walls == -1)
+			e->sectors[e->n].wall_vertice[0].begin = mouse;
 		else
 		{
-			if (sectors[n].num_walls > 0)
-				sectors[n].wall_vertice[sectors[n].num_walls].begin =
-					sectors[n].wall_vertice[sectors[n].num_walls - 1].end;
-			sectors[n].wall_vertice[sectors[n].num_walls].end = mouse;
+			if (e->sectors[e->n].num_walls > 0)
+				e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].begin =
+					e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end;
+			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end = mouse;
 		}
-		sectors[n].num_walls++;
+		e->sectors[e->n].num_walls++;
 	}
-	else if (mode == PORTAL && n < SECTORS_CNT - 1)
-		intersected = check_intersection(sectors, n, intersected, mouse);
-	return (intersected);
+	else if (e->mode == PORTAL && e->n < SECTORS_CNT - 1)
+		e->chosen = check_intersection(e, mouse);
+	return (e->chosen);
 }
 
 
-int		create_text(t_main *m, t_text *text_menu, int i, const char *str)
+int		create_text(t_main *m, t_text *menu, int i, const char *str)
 {
 	SDL_Surface		*textSurface;
 	int				shift;
@@ -257,35 +233,35 @@ int		create_text(t_main *m, t_text *text_menu, int i, const char *str)
 	SDL_Color bg = {0, 0, 0};
 
 	textSurface = TTF_RenderText_Shaded(m->font, str, fg, bg);
-	text_menu[i].text_texture = SDL_CreateTextureFromSurface(m->sdl.ren, textSurface);
+	menu[i].text_texture = SDL_CreateTextureFromSurface(m->sdl.ren, textSurface);
 	SDL_FreeSurface(textSurface);
-	text_menu[i].dstrect = dstrect;
+	menu[i].dstrect = dstrect;
 	return (0);
 }
 
-void		update_text(t_main *m, t_text *text_menu, int i, int str)
+void		update_text(t_main *m, t_text *menu, int i, int str)
 {
 	char *buf;
 
-	SDL_DestroyTexture(text_menu[i].text_texture);
+	SDL_DestroyTexture(menu[i].text_texture);
 	buf = ft_itoa(str);
-	create_text(m, text_menu, i, buf);
+	create_text(m, menu, i, buf);
 	free(buf);
 }
 
-void		create_text_menu(t_main *m, t_text *text_menu)
+void		create_text_menu(t_main *m, t_text *menu)
 {
-	create_text(m, text_menu, 0, "Sectors");
-	create_text(m, text_menu, 1, "Sector:");
-	create_text(m, text_menu, 2, "Walls:");
-	create_text(m, text_menu, 3, "Texture:");
-	create_text(m, text_menu, 4, "Floor Height:");
-	create_text(m, text_menu, 5, "Ceiling Height:");
-	create_text(m, text_menu, 6, "0");
-	create_text(m, text_menu, 7, "0");
-	create_text(m, text_menu, 8, "0");
-	create_text(m, text_menu, 9, "0");
-	create_text(m, text_menu, 10, "100");
+	create_text(m, menu, 0, "Sectors");
+	create_text(m, menu, 1, "Sector:");
+	create_text(m, menu, 2, "Walls:");
+	create_text(m, menu, 3, "Texture:");
+	create_text(m, menu, 4, "Floor Height:");
+	create_text(m, menu, 5, "Ceiling Height:");
+	create_text(m, menu, 6, "0");
+	create_text(m, menu, 7, "0");
+	create_text(m, menu, 8, "0");
+	create_text(m, menu, 9, "0");
+	create_text(m, menu, 10, "100");
 }
 
 int		draw_circle(int color, t_main *m)
@@ -305,29 +281,27 @@ int		draw_circle(int color, t_main *m)
 	return (0);
 }
 
-int		draw(t_main *m, t_editor_sector *sectors, int n,
-			int intersected, bool mode, t_text *text_menu)
+int		draw(t_main *m, t_map_editor *e)
 {
 	int i;
 	int j;
 
 	i = -1;
-	while ((j = -1) && ++i < n + 1)
-		while (++j < sectors[i].num_walls)
-			line(sectors[i].wall_vertice[j], m);
+	while ((j = -1) && ++i < e->n + 1)
+		while (++j < e->sectors[i].num_walls)
+			line(e->sectors[i].wall_vertice[j], m);
 	SDL_UpdateTexture(m->sdl.texture, NULL,
 	m->sdl.img.pixels, m->sdl.img.w * sizeof(unsigned int));
 	sdl_clear_image(&m->sdl.img);
 	SDL_RenderCopy(m->sdl.ren, m->sdl.texture, NULL, NULL);
 	i = -1;
 	while (++i < TEXT_MENU)
-		SDL_RenderCopy(m->sdl.ren, text_menu[i].text_texture, NULL, &text_menu[i].dstrect);
+		SDL_RenderCopy(m->sdl.ren, e->menu[i].text_texture, NULL, &e->menu[i].dstrect);
 	SDL_RenderPresent(m->sdl.ren);
-	return (intersected);
+	return (e->chosen);
 }
 
-int					init_sectors(t_editor_sector *sectors,
-	int *mode, int *intersected, int *n)
+int					init_sectors(t_map_editor *e)
 {
 	int i;
 	int j;
@@ -336,84 +310,84 @@ int					init_sectors(t_editor_sector *sectors,
 	while (++i < SECTORS_CNT && (j = -1))
 		while (++j < WALLS_CNT)
 		{
-			sectors[i].neighbors[j] = -1;
-			sectors[i].num_walls = 1;
-			sectors[i].wall_vertice[j].texture = 0;
-			sectors[i].wall_vertice[j].color = YELLOW;
-			sectors[i].ceiling_height = 100;
-			sectors[i].floor_height = 0;
+			e->sectors[i].neighbors[j] = -1;
+			e->sectors[i].num_walls = 1;
+			e->sectors[i].wall_vertice[j].texture = 0;
+			e->sectors[i].wall_vertice[j].color = YELLOW;
+			e->sectors[i].ceiling_height = 100;
+			e->sectors[i].floor_height = 0;
 		}
-	sectors[0].num_walls = -1;
-	*n = 0;
-	*mode = TEXTURE;
-	*intersected = -1;
+	e->sectors[0].num_walls = -1;
+	e->n = 0;
+	e->mode = TEXTURE;
+	e->chosen = -1;
 	return (0);
 }
 
-int					remove_text_menu(t_text *text_menu)
+int					remove_text_menu(t_text *menu)
 {
 	int i;
 
 	i = -1;
 	while (++i < TEXT_MENU)
-		SDL_DestroyTexture(text_menu[i].text_texture);
+		SDL_DestroyTexture(menu[i].text_texture);
 	return (0);
 }
 
-void				update_all_menu(t_main *m, t_text *text_menu,t_editor_sector *sectors, int n)
+void				update_all_menu(t_main *m, t_map_editor *e)
 {
-	update_text(m, text_menu, 6, n);
-	if (sectors[n].num_walls > -1)
-		update_text(m, text_menu, 7, sectors[n].num_walls);
-	if (sectors[n].num_walls > 0)
-		update_text(m, text_menu, 8, sectors[n].wall_vertice[sectors[n].num_walls - 1].texture);
-	update_text(m, text_menu, 9, sectors[n].floor_height);
-	update_text(m, text_menu, 10, sectors[n].ceiling_height);
+	update_text(m, e->menu, 6, e->n);
+	if (e->sectors[e->n].num_walls > -1)
+		update_text(m, e->menu, 7, e->sectors[e->n].num_walls);
+	if (e->sectors[e->n].num_walls > 0)
+		update_text(m, e->menu, 8, e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture);
+	update_text(m, e->menu, 9, e->sectors[e->n].floor_height);
+	update_text(m, e->menu, 10, e->sectors[e->n].ceiling_height);
 }
 
 int				left_arrow_key(
-	SDL_Keycode sym, t_editor_sector *sectors, int n, int *mode)
+	SDL_Keycode sym, t_map_editor *e)
 {
-	if (sym != SDLK_LEFT  || (n && sectors[n].num_walls < 2))
+	if (sym != SDLK_LEFT  || (e->n && e->sectors[e->n].num_walls < 2))
 		return (1);
-	if (!n && sectors[n].num_walls < 0)
+	if (!e->n && e->sectors[e->n].num_walls < 0)
 		return (1);
-	sectors[n].wall_vertice[sectors[n].num_walls - 1].texture = 0;
-	sectors[n].num_walls--;
-	if (*mode == CLOSE)
-		(*mode)--;
+	e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture = 0;
+	e->sectors[e->n].num_walls--;
+	if (e->mode == CLOSE)
+		(e->mode)--;
 	return (0);
 }
-int				arrow_keys(SDL_Keycode sym, t_editor_sector *sectors, int n, int *mode)
+int				arrow_keys(SDL_Keycode sym, t_map_editor *e)
 {
 	if (sym != SDLK_UP && sym != SDLK_DOWN && sym != SDLK_LEFT)
 		return (1);
-	if ((*mode == TEXTURE || *mode == CLOSE) && !left_arrow_key(sym, sectors, n, mode))
+	if ((e->mode == TEXTURE || e->mode == CLOSE) && !left_arrow_key(sym, e))
 		return (1);
-	if ((*mode == TEXTURE || *mode == CLOSE) && sectors[n].num_walls > 0)
+	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0)
 	{
-		if (sym == SDLK_UP && sectors[n].wall_vertice[sectors[n].num_walls - 1].texture < TEXTURE_MAX)
-			sectors[n].wall_vertice[sectors[n].num_walls - 1].texture++;
-		else if (sym == SDLK_DOWN && sectors[n].wall_vertice[sectors[n].num_walls - 1].texture > 0)
-			sectors[n].wall_vertice[sectors[n].num_walls - 1].texture--;
+		if (sym == SDLK_UP && e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture < TEXTURE_MAX)
+			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture++;
+		else if (sym == SDLK_DOWN && e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture > 0)
+			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture--;
 		else
 			return (1);
 	}
-	else if (*mode == FLOOR_HEIGHT)
+	else if (e->mode == FLOOR_HEIGHT)
 	{
-		if (sym == SDLK_UP && sectors[n].floor_height + 10 < sectors[n].ceiling_height)
-			sectors[n].floor_height += 10;
-		else if (sym == SDLK_DOWN && sectors[n].floor_height - 10 >= MIN_FLOOR_HEIGHT)
-			sectors[n].floor_height -= 10;
+		if (sym == SDLK_UP && e->sectors[e->n].floor_height + 10 < e->sectors[e->n].ceiling_height)
+			e->sectors[e->n].floor_height += 10;
+		else if (sym == SDLK_DOWN && e->sectors[e->n].floor_height - 10 >= MIN_FLOOR_HEIGHT)
+			e->sectors[e->n].floor_height -= 10;
 		else
 			return (1);		
 	}
-	else if (*mode == CEILING_HEIGHT)
+	else if (e->mode == CEILING_HEIGHT)
 	{
-		if (sym == SDLK_UP && sectors[n].ceiling_height + 10 <= MAX_CEILING_HEIGHT)
-			sectors[n].ceiling_height += 10;
-		else if (sym == SDLK_DOWN && sectors[n].ceiling_height - 10 > sectors[n].floor_height)
-			sectors[n].ceiling_height -= 10;
+		if (sym == SDLK_UP && e->sectors[e->n].ceiling_height + 10 <= MAX_CEILING_HEIGHT)
+			e->sectors[e->n].ceiling_height += 10;
+		else if (sym == SDLK_DOWN && e->sectors[e->n].ceiling_height - 10 > e->sectors[e->n].floor_height)
+			e->sectors[e->n].ceiling_height -= 10;
 		else
 			return (1);
 	}
@@ -445,29 +419,28 @@ int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot)
 	return c;
 }
 
-int					player_save_keys(t_main *m, int n,
-	t_editor_sector *sectors, int *mode)
+int					player_save_keys(t_main *m, t_map_editor *e)
 {
 	int i;
 
-	if (m->sdl.e.key.keysym.sym == SDLK_s && *mode >= CEILING_HEIGHT)
+	if (m->sdl.e.key.keysym.sym == SDLK_s && e->mode >= CEILING_HEIGHT)
 	{
-		if (*mode < PLAYER)
+		if (e->mode < PLAYER)
 		{
-			shift_left(sectors, n + 1);
-			*mode = PLAYER;
+			shift_left(e);
+			e->mode = PLAYER;
 		}
 		else
-			serialize_map(m, sectors, n);
+			serialize_map(m, e->sectors, e->n);
 		return (0);
 	}
-	if (*mode < PLAYER)
+	if (e->mode < PLAYER)
 		return (1);
 	t_dot d;
 	SDL_GetMouseState(&d.x, &d.y);
 	i = -1;
-	while (++i <= n)
-		if (pnpoly(sectors[i].num_walls, sectors[i].wall_vertice, d))
+	while (++i <= e->n)
+		if (pnpoly(e->sectors[i].num_walls, e->sectors[i].wall_vertice, d))
 		{
 			m->map.player.sector_number = i;
 			m->map.player.position.x = d.x;
@@ -477,27 +450,26 @@ int					player_save_keys(t_main *m, int n,
 	return (1);
 }
 
-void				sdl_keydown(t_main *m, t_editor_sector *sectors,
-	int *n, int *mode, int *intersected)
+void				sdl_keydown(t_main *m, t_map_editor	*e)
 {
 	if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (arrow_keys(m->sdl.e.key.keysym.sym, sectors, *n, mode)
-			&& player_save_keys(m, *n, sectors, mode) &&
-			(*n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN))
+		if (arrow_keys(m->sdl.e.key.keysym.sym, e)
+			&& player_save_keys(m, e) &&
+			(e->n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN))
 		{
-			if ((sectors[*n].num_walls > 0 && *mode == TEXTURE
-				&& close_sector(m, *n, sectors))
-				|| (*mode > TEXTURE && *mode < PORTAL))
-				(*mode)++;
-			if (*mode == PORTAL && *intersected != -1)
+			if ((e->sectors[e->n].num_walls > 0 && e->mode == TEXTURE
+				&& close_sector(m, e))
+				|| (e->mode > TEXTURE && e->mode < PORTAL))
+				(e->mode)++;
+			if (e->mode == PORTAL && e->chosen != -1)
 			{
-				sectors[*n].neighbors[*intersected] = *n + 1;
-				(*n)++;
-				sectors[*n].wall_vertice[0] = sectors[*n - 1].wall_vertice[*intersected];
-				sectors[*n].neighbors[0] = *n - 1;
-				*intersected = -1;
-				*mode = TEXTURE;
+				e->sectors[e->n].neighbors[e->chosen] = e->n + 1;
+				(e->n)++;
+				e->sectors[e->n].wall_vertice[0] = e->sectors[e->n - 1].wall_vertice[e->chosen];
+				e->sectors[e->n].neighbors[0] = e->n - 1;
+				e->chosen = -1;
+				e->mode = TEXTURE;
 			}
 		}
 	}
@@ -505,29 +477,24 @@ void				sdl_keydown(t_main *m, t_editor_sector *sectors,
 
 int					map_editor_loop(t_main *m)
 {
-	int 			n;
-	t_editor_sector	sectors[SECTORS_CNT];
-	int				mode;
-	int				intersected;
-	t_text 			text_menu[TEXT_MENU];
-
-	init_sectors(sectors, &mode, &intersected, &n);
-	create_text_menu(m, text_menu);
+	t_map_editor	e;
+	init_sectors(&e);
+	create_text_menu(m, e.menu);
 	while(m->sdl.running)
 	{
 		while (SDL_PollEvent(&m->sdl.e))
 		{
 			if (m->sdl.e.type == SDL_QUIT ||  m->sdl.e.key.keysym.sym == SDLK_ESCAPE)
 				m->sdl.running = 0;
-			if (n < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type)
-				intersected = create_wall(sectors, n, intersected, mode);
-			sdl_keydown(m, sectors, &n, &mode, &intersected);
+			if (e.n < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type)
+				e.chosen = create_wall(&e);
+			sdl_keydown(m, &e);
 			if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
-				update_all_menu(m, text_menu, sectors, n);
-			intersected = draw(m, sectors, n, intersected, mode, text_menu);
-			if (mode == PLAYER)
+				update_all_menu(m, &e);
+			e.chosen = draw(m, &e);
+			if (e.mode == PLAYER)
 				draw_circle(RED, m);
 		}
 	}
-	return (remove_text_menu(text_menu));
+	return (remove_text_menu(e.menu));
 }
