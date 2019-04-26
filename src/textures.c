@@ -41,7 +41,7 @@ static void		load_block_textures(const char *path, t_tblocks *textures)
 	free(file_contents);
 }
 
-static void		load_sprites(t_main *m)
+void			load_sprites(t_main *m)
 {
 	m->tex.s.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 10);
 	load_block_textures("assets/sprites/ammo.png", &m->tex.s);
@@ -56,7 +56,7 @@ static void		load_sprites(t_main *m)
 	load_block_textures("assets/sprites/weapon2.png", &m->tex.s);
 }
 
-void			load_textures_snd(t_main *m)
+void			load_textures(t_main *m)
 {
 	ft_bzero(&m->tex, sizeof(m->tex));
 	m->tex.t.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 13);
@@ -73,11 +73,9 @@ void			load_textures_snd(t_main *m)
 	load_block_textures("assets/walls/w10.png", &m->tex.t);
 	load_block_textures("assets/floors/f1.png", &m->tex.t);
 	load_block_textures("assets/floors/f2.jpg", &m->tex.t);
-	load_sprites(m);
-	init_sounds(m);
 }
 
-void			clear_textures(t_main *m)
+void			unload_textures_and_sprites(t_main *m)
 {
 	while (m->tex.t.num_textures)
 		SDL_FreeSurface(m->tex.t.textures[--m->tex.t.num_textures]);

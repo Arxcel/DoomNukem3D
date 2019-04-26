@@ -25,7 +25,7 @@ static void		sprite_collision_ligic(t_player *p, t_sprite *s)
 	s->is_active = false;
 }
 
-void			calk_sprite_collisions(t_main *m)
+void			calc_sprite_collisions(t_main *m)
 {
 	int			i;
 	float		d;

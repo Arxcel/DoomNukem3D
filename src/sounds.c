@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-static void		load_sound_mav(char *path, t_music *m, int i)
+static void		load_sound_mav(char *path, t_music *m)
 {
 	char				*file_contents;
 	zip_file_t			*f;
@@ -34,32 +34,32 @@ static void		load_sound_mav(char *path, t_music *m, int i)
 	if (zip_fread(f, file_contents, st.size) < 1 || zip_fclose(f))
 		MSG(zip_strerror(z));
 	rwops = SDL_RWFromMem(file_contents, st.size);
-	if (!(m->snd[i] =
+	if (!(m->snd[m->num_sounds++] =
 			Mix_LoadWAV_RW(rwops, SDL_TRUE)))
 		MSG(SDL_GetError());
 	zip_close(z);
 	free(file_contents);
 }
 
-void			init_sounds(t_main *m)
+void			load_sounds(t_main *m)
 {
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
 													2, 1500) == -1)
 		MSG(Mix_GetError());
-	load_sounds(m);
+	load_sound_mav("assets/sounds/Knife.wav", &m->music);
+	load_sound_mav("assets/sounds/Pistol.wav", &m->music);
+	load_sound_mav("assets/sounds/Machine Gun.wav", &m->music);
+	load_sound_mav("assets/sounds/Gatling Gun.wav", &m->music);
+	load_sound_mav("assets/sounds/Pickup.wav", &m->music);
+	load_sound_mav("assets/sounds/Ammo.wav", &m->music);
+	load_sound_mav("assets/sounds/Key.wav", &m->music);
+	load_sound_mav("assets/sounds/Boss Gun.wav", &m->music);
 }
 
-void			load_sounds(t_main *m)
-{
-	int i;
 
-	i = -1;
-	load_sound_mav("assets/sounds/Knife.wav", &m->music, ++i);
-	load_sound_mav("assets/sounds/Pistol.wav", &m->music, ++i);
-	load_sound_mav("assets/sounds/Machine Gun.wav", &m->music, ++i);
-	load_sound_mav("assets/sounds/Gatling Gun.wav", &m->music, ++i);
-	load_sound_mav("assets/sounds/Pickup.wav", &m->music, ++i);
-	load_sound_mav("assets/sounds/Ammo.wav", &m->music, ++i);
-	load_sound_mav("assets/sounds/Key.wav", &m->music, ++i);
-	load_sound_mav("assets/sounds/Boss Gun.wav", &m->music, ++i);
+void			unload_sounds(t_main *m)
+{
+	while (m->music.num_sounds)
+		Mix_FreeChunk(m->music.snd[--m->music.num_sounds]);
+	Mix_CloseAudio();
 }

@@ -233,6 +233,7 @@ typedef struct		s_textures
 typedef struct		s_music
 {
 	Mix_Chunk		*snd[15];
+	size_t			num_sounds;
 }					t_music;
 
 typedef struct		s_hud

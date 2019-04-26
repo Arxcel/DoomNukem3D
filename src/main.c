@@ -38,10 +38,25 @@ void				sdl_loop(t_main *m)
 			draw_text(m);
 			SDL_RenderPresent(m->sdl.ren);
 			move_player(m);
-			calk_sprite_collisions(m);
+			calc_sprite_collisions(m);
 			m->delta_time = 0.f;
 		}
 	}
+}
+
+static void 		load_resources(t_main *m)
+{
+	load_textures(m);
+	load_sprites(m);
+	load_hud(m);
+	load_sounds(m);
+}
+
+static void 		unload_resources(t_main *m)
+{
+	unload_textures_and_sprites(m);
+	unload_hud(m);
+	unload_sounds(m);
 }
 
 static void			init_sprite(t_main *m)
@@ -67,18 +82,15 @@ int					main(int ac, char **av)
 	t_main			m;
 
 	ft_bzero(&m, sizeof(t_main));
-	load_textures_snd(&m);
+	load_resources(&m);
 	parser(&m.map, av[1]);
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	load_hud(&m);
 	init_sprite(&m);
 	sdl_loop(&m);
-	unload_hud(&m);
-	clear_textures(&m);
 	remove_data(&m.map);
-	Mix_CloseAudio();
+	unload_resources(&m);
 	SDL_Quit();
 	return (0);
 }

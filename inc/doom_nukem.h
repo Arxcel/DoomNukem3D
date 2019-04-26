@@ -91,30 +91,29 @@ double				cast_ray_2line(t_vertex ray_origin,
 					t_vertex ray_direction, t_vertex point1, t_vertex point2);
 void				plot_line(t_img *img, t_line *l);
 
-void				load_textures_snd(t_main *m);
-void				clear_textures(t_main *m);
+void				load_textures(t_main *m);
+void				load_sprites(t_main *m);
+void				unload_textures_and_sprites(t_main *m);
 void				setup_wall_texture(t_main *m, t_wall *w,
 													int wall, t_pt verical);
-
+void				setup_sprite_texture(t_main *m, t_wall *w, int wall);
 t_vertex			calculate_edges(t_player *player, t_vertex *vertex);
-
-void				init_sounds(t_main *m);
-void				load_sounds(t_main *m);
 t_vertex			calculate_edges2(t_player *player, t_vertex *vertex);
 void				clamp_edges_with_player_view(t_wall *w);
 void				draw_local_wall(t_main *m, t_wall *wall,
 													t_renderer *r, int x);
 void				calc_sprite_edges(t_player *p, t_vector sprite_pos,
 												t_wall *wall, float dist);
-void				setup_sprite_texture(t_main *m, t_wall *w, int wall);
 void				draw_sprites(t_main *m);
 void				draw_sprite_line(t_main *m, t_wall *w,
 													t_vline *v, t_interp *ty);
-void				calk_sprite_collisions(t_main *m);
+void				calc_sprite_collisions(t_main *m);
 float				calc_distance(t_vector v1, t_vector v2);
 void				sort_sprites(t_main *m, int *order, float *dist);
 void				load_hud(t_main *m);
 void				unload_hud(t_main *m);
+void				load_sounds(t_main *m);
+void				unload_sounds(t_main *m);
 void				draw_hud(t_main *m);
 void				draw_text(t_main *m);
 
