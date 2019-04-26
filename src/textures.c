@@ -43,12 +43,17 @@ static void		load_block_textures(const char *path, t_tblocks *textures)
 
 static void		load_sprites(t_main *m)
 {
-	m->tex.s.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 5);
+	m->tex.s.textures = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * 10);
 	load_block_textures("assets/sprites/ammo.png", &m->tex.s);
 	load_block_textures("assets/sprites/barrel.png", &m->tex.s);
 	load_block_textures("assets/sprites/helmet.png", &m->tex.s);
 	load_block_textures("assets/sprites/medkit.png", &m->tex.s);
 	load_block_textures("assets/sprites/rockets.png", &m->tex.s);
+	load_block_textures("assets/sprites/medkit2.png", &m->tex.s);
+	load_block_textures("assets/sprites/armor.png", &m->tex.s);
+	load_block_textures("assets/sprites/card.png", &m->tex.s);
+	load_block_textures("assets/sprites/weapon.png", &m->tex.s);
+	load_block_textures("assets/sprites/weapon2.png", &m->tex.s);
 }
 
 void			load_textures_snd(t_main *m)

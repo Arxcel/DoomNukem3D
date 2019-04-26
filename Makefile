@@ -1,7 +1,7 @@
 NAME := doom-nukem
 
 CC := clang
-KEYS := -g #-Wall -Wextra -Werror
+KEYS := -Wall -Wextra -Werror
 FLAGS := 
 
 PDIR := $(shell pwd)

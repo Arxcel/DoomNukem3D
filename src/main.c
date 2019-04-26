@@ -49,12 +49,12 @@ static void			init_sprite(t_main *m)
 	int i;
 
 	i = -1;
-	m->map.number_sprites = 5;
+	m->map.number_sprites = m->tex.s.num_textures;
 	m->map.sprites = (t_sprite*)malloc(sizeof(t_sprite) *
 													m->map.number_sprites);
 	while (++i < m->map.number_sprites)
 	{
-		m->map.sprites[i].position = (t_vector){15.0, 15.0 + 1 * i, 15.0};
+		m->map.sprites[i].position = (t_vector){15 + i, 15, 15.0};
 		m->map.sprites[i].w = 10;
 		m->map.sprites[i].h = 5;
 		m->map.sprites[i].is_active = true;

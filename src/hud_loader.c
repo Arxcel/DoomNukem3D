@@ -15,7 +15,7 @@ static void load_hud_texture(t_main *m, const char *path)
 	zip_stat(z, path, 0, &st);
 	if (st.size < 1)
 		MSG("No such texture");
-	file_contents = (char*)malloc(sizeof(char)st.size);
+	file_contents = (char*)malloc(sizeof(char)* st.size);
 	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
 	if (!f)
 		MSG(zip_strerror(z));
@@ -42,7 +42,7 @@ static void load_hud_font(t_main *m, const char *path, size_t size)
 	zip_stat(z, path, 0, &st);
 	if (st.size < 1)
 		MSG("No such texture");
-	m->hud.font_source = (char*)malloc(sizeof(char)st.size);
+	m->hud.font_source = (char*)malloc(sizeof(char) * st.size);
 	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
 	if (!f)
 		MSG(zip_strerror(z));
