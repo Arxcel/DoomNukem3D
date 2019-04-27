@@ -12,6 +12,21 @@
 
 #include "doom_nukem.h"
 
+void	shoot(t_main *m)
+{
+	if (m->hud.boom && m->hud.curr_sprite.x <= (int)(m->hud.all_sprites.w))
+	{
+		m->hud.curr_sprite.x += (m->hud.all_sprites.w) * 2 / 4;
+		m->hud.curr_sprite.y = 0;
+	}
+	else
+	{
+		m->hud.boom = 0;
+		m->hud.curr_sprite.x = 0;
+		m->hud.curr_sprite.y = 0;
+	}
+}
+
 void	draw_gun(t_main *m)
 {
 	int w;

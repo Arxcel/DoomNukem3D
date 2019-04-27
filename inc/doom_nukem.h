@@ -121,4 +121,5 @@ void				draw_gun(t_main *m);
 
 void				draw_green(t_main *m);
 void				calc_green_time(t_main *m);
+void				shoot(t_main *m);
 #endif
