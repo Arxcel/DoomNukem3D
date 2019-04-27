@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 17:34:28 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 18:47:22 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,13 +242,13 @@ typedef struct		s_music
 	size_t			num_sounds;
 }					t_music;
 
-typedef struct				s_gun
+typedef struct		s_gun
 {
-	SDL_Texture				*gun_sprite;
-	SDL_Rect				curr_sprite;
-	SDL_Rect				all_sprites;
-	short					boom;
-}							t_gun;
+	SDL_Texture		*gun_sprite;
+	SDL_Rect		curr_sprite;
+	SDL_Rect		all_sprites;
+	short			boom;
+}					t_gun;
 
 typedef struct		s_hud
 {
@@ -261,13 +261,11 @@ typedef struct		s_hud
 	SDL_RWops		*font_rwops;
 	char			*font_source;
 	SDL_Rect		hud_rect;
-	// gun
 	SDL_Surface		*gun_surface;
 	SDL_Texture		*gun_sprite;
 	SDL_Rect		curr_sprite;
 	SDL_Rect		all_sprites;
 	short			boom;
-
 }					t_hud;
 
 typedef struct		s_menu
