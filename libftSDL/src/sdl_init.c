@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:42:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 14:32:54 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 18:08:39 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void				sdl_init(t_sdl *sdl)
 		MSG(SDL_GetError());
 	if (!(sdl->win = SDL_CreateWindow("My SDL", SDL_WINDOWPOS_UNDEFINED,
 								SDL_WINDOWPOS_UNDEFINED, sdl->win_w,
-								sdl->win_h, SDL_WINDOW_SHOWN
-									| SDL_WINDOW_RESIZABLE)))
+								sdl->win_h, SDL_WINDOW_SHOWN)))
 		MSG(SDL_GetError());
 	if (!(sdl->ren = SDL_CreateRenderer(sdl->win, -1,
 					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)))

@@ -89,7 +89,8 @@ SOURCES :=  main.c \
 			timers.c \
 			draw_modes.c \
 			menu.c \
-			menu_option.c
+			menu_option.c \
+			victory.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))

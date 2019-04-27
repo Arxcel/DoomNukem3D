@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 17:44:17 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 18:02:46 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,5 @@ void				draw_menu(t_main *m);
 void				handle_menu(t_main *m, int key);
 void				do_general_opt(t_main *m);
 void				do_select_opt(t_main *m);
+void				draw_victory(t_main *m);
 #endif

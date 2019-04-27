@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 15:44:17 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 16:17:49 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 18:01:44 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void		menu_mode(t_main *m)
 
 void		victory_mode(t_main *m)
 {
-	draw_gun(m);
+	draw_victory(m);
 	m->delta_time = 0.f;
 }
