@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:04:05 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:14:43 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void			draw_sprite_impl_y(t_main *m, t_wall *wall,
 								wall->yb, (t_pt){0, current->h});
 	draw_sprite_line(m, wall, &(t_vline){x, wall->cya,
 									wall->cyb, wall->solid_id}, i);
+	free(i);
 }
 
 static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)

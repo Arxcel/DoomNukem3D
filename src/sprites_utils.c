@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 15:18:34 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 18:30:32 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:16:06 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	sort(int num_sprites, int *order, float *dist)
 		j = -1;
 		while (++j < num_sprites - i - 1)
 		{
-			if (dist[j] < dist[j + 1])
+			if (dist[j] <= dist[j + 1])
 			{
 				tempf = dist[j + 1];
 				dist[j + 1] = dist[j];

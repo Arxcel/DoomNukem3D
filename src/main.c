@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 10:57:00 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:13:02 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int					main(int ac, char **av)
 	remove_data(&m.map);
 	unload_resources(&m);
 	SDL_Quit();
+	system("leaks doom-nukem");
 	return (0);
 }
