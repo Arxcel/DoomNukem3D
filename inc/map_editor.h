@@ -54,9 +54,39 @@ typedef struct		s_map_editor
 	int				mode;
 	int				chosen;
 	t_text 			menu[TEXT_MENU];
+	int				global_index;
 }					t_map_editor;
 
 int					init_map_editor(t_main *main);
 int					map_editor_loop(t_main *m);
 int     			serialize_map(t_main *m, t_editor_sector *sectors, int num_sectors);
 int					editor_clear_sdl(t_sdl *sdl);
+int					intersect(t_editor_wall wall, t_dot cur);
+int					line(t_editor_wall wall, t_main *main);
+int					init_sectors(t_map_editor *e);
+
+void				create_text_menu(t_main *m, t_text *menu);
+void				update_text(t_main *m, t_text *menu, int i, int str);
+int					create_text(t_main *m, t_text *menu, int i, const char *str);
+void				update_all_menu(t_main *m, t_map_editor *e);
+
+void				print_vector(t_editor_wall wall, t_main *main);
+int					draw(t_main *m, t_map_editor *e);
+int					draw_circle(int color, t_main *m);
+
+int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot);
+int					check_intersection(t_map_editor *e, t_dot mouse);
+
+
+int					player_save_keys(t_main *m, t_map_editor *e);
+int					arrow_keys(SDL_Keycode sym, t_map_editor *e);
+int					left_arrow_key(SDL_Keycode sym, t_map_editor *e);
+
+void				shift_left(t_map_editor *e);
+
+int					remove_text_menu(t_text *menu);
+
+
+
+
+

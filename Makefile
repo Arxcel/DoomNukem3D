@@ -71,6 +71,12 @@ SOURCES :=  main.c \
 			perspective.c \
 			basic_edges.c \
 			map_editor.c \
+			map_editor_draw.c \
+			map_editor_helpers.c \
+			map_editor_init.c \
+			map_editor_keys.c \
+			map_editor_lines.c \
+			map_editor_text.c \
 			serialize_map.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
