@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 18:49:08 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:23:23 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,28 @@ void		create_text_menu(t_main *m, t_text *menu)
 	create_text(m, menu, 3, "Texture:");
 	create_text(m, menu, 4, "Floor Height:");
 	create_text(m, menu, 5, "Ceiling Height:");
-	create_text(m, menu, 6, "0");
-	create_text(m, menu, 7, "0");
-	create_text(m, menu, 8, "0");
+	create_text(m, menu, 6, "Is lifted");
+	create_text(m, menu, 7, "From:");
+	create_text(m, menu, 8, "To:");
 	create_text(m, menu, 9, "0");
-	create_text(m, menu, 10, "100");
+	create_text(m, menu, 10, "0");
+	create_text(m, menu, 11, "0");
+	create_text(m, menu, 12, "0");
+	create_text(m, menu, 13, "100");
+	create_text(m, menu, 14, "0");
+	create_text(m, menu, 15, "0");
+	create_text(m, menu, 16, "10");
 }
 
 void				update_all_menu(t_main *m, t_map_editor *e)
 {
-	update_text(m, e->menu, 6, e->n);
+	update_text(m, e->menu, 9, e->n);
 	if (e->sectors[e->n].num_walls > -1)
-		update_text(m, e->menu, 7, e->sectors[e->n].num_walls);
+		update_text(m, e->menu, 10, e->sectors[e->n].num_walls);
 	if (e->sectors[e->n].num_walls > 0)
-		update_text(m, e->menu, 8, e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture);
-	update_text(m, e->menu, 9, e->sectors[e->n].floor_height);
-	update_text(m, e->menu, 10, e->sectors[e->n].ceiling_height);
+		update_text(m, e->menu, 11, e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture);
+	update_text(m, e->menu, 12, e->sectors[e->n].floor_height);
+	update_text(m, e->menu, 13, e->sectors[e->n].ceiling_height);
 }
 
 int					remove_text_menu(t_text *menu)

@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 18:48:36 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:16:03 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int					init_sectors(t_map_editor *e)
             e->sectors[i].wall_vertice[j].global_index = 0;
 			e->sectors[i].ceiling_height = 100;
 			e->sectors[i].floor_height = 0;
+			e->sectors[i].is_lift = false;
+			e->sectors[i].from = 0;
+			e->sectors[i].to = 10;
 		}
 	e->sectors[0].num_walls = -1;
 	e->global_index = 0;

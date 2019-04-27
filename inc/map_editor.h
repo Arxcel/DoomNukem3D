@@ -6,20 +6,20 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 18:49:35 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:20:36 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "structure.h"
 # define WALLS_CNT 10
-# define SECTORS_CNT 100
+# define SECTORS_CNT 30
 # define YELLOW 0xFFFF00
 # define BLUE 0x0000FF
 # define RED 0xFF0000
-# define TEXT_MENU 11
-# define LETTER_WIDTH 15
+# define TEXT_MENU 17
+# define LETTER_WIDTH 14
 # define LETTER_HEIGHT 30
-# define TEXT_MENU_ROW 6
+# define TEXT_MENU_ROW 9
 # define TEXTURE_MAX 10
 # define MAX_CEILING_HEIGHT 1000
 # define MIN_FLOOR_HEIGHT -20
@@ -51,6 +51,9 @@ typedef struct		s_editor_sector
 	int				num_walls;
 	int				floor_height;
 	int				ceiling_height;
+	bool			is_lift;
+	int				from;
+	int				to;
 }					t_editor_sector;
 
 typedef struct		s_text
