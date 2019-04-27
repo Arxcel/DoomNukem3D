@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 19:56:02 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:39:39 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void			unload_textures_and_sprites(t_main *m)
 
 void			setup_wall_texture(t_main *m, t_wall *w, int wall, t_pt verical)
 {
-	w->u0 = 0;
-	w->u1 = 1023;
 	w->floor_id = (11 + verical.x) % m->tex.t.num_textures;
 	w->ceil_id = (11 + verical.y) % m->tex.t.num_textures;
 	w->upper_id = wall % m->tex.t.num_textures;
 	w->lower_id = wall % m->tex.t.num_textures;
 	w->solid_id = wall % m->tex.t.num_textures;
+	w->u0 = 0;
+	w->u1 = m->tex.t.textures[w->solid_id]->w;
 }
