@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:30:09 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 15:23:08 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,9 +276,12 @@ typedef struct		s_main
 	t_map			map;
 	t_textures		tex;
 	t_hud			hud;
+	bool			greenify;
+	bool			victory;
 	float			prev_time;
 	float			curr_time;
 	float			delta_time;
+	float			pseudo_time;
 }					t_main;
 
 #endif

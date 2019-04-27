@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sdl_pixel_put.c                                    :+:      :+:    :+:   */
+/*   timers.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 18:46:08 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 14:37:42 by vkozlov          ###   ########.fr       */
+/*   Created: 2019/04/27 15:31:11 by vkozlov           #+#    #+#             */
+/*   Updated: 2019/04/27 15:38:21 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sdl.h"
+#include "doom_nukem.h"
 
-void				sdl_pixel_put(t_img *img, int x, int y, int color)
+void	calc_green_time(t_main *m)
 {
-	if (x < 0 || (size_t)x > img->w || y < 0 || (size_t)y > img->h)
-		return ;
-	img->pixels[x + y * img->w] = color;
+	if (m->greenify)
+	{
+		m->pseudo_time += (m->curr_time - m->prev_time) /
+								(float)(SDL_GetPerformanceFrequency());
+		if (m->pseudo_time > 0.5)
+		{
+			m->pseudo_time = 0;
+			m->greenify = false;
+		}
+	}
 }

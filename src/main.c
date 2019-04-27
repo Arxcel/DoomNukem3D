@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:41:44 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 15:37:10 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void				sdl_loop(t_main *m)
 			draw_screen(m);
 			draw_sprites(m);
 			draw_minimap(m);
+			if (m->greenify)
+				draw_green(m);
 			sdl_put_image(&m->sdl);
 			draw_gun(m);
 			draw_hud(m);
@@ -41,6 +43,7 @@ void				sdl_loop(t_main *m)
 			calc_sprite_collisions(m);
 			m->delta_time = 0.f;
 		}
+		calc_green_time(m);
 	}
 }
 
@@ -59,24 +62,6 @@ static void			unload_resources(t_main *m)
 	unload_sounds(m);
 }
 
-static void			init_sprite(t_main *m)
-{
-	int i;
-
-	i = -1;
-	m->map.number_sprites = m->tex.s.num_textures;
-	m->map.sprites = (t_sprite*)malloc(sizeof(t_sprite) *
-													m->map.number_sprites);
-	while (++i < m->map.number_sprites)
-	{
-		m->map.sprites[i].position = (t_vector){15 + i, 15, 15.0};
-		m->map.sprites[i].w = 10;
-		m->map.sprites[i].h = 5;
-		m->map.sprites[i].is_active = true;
-		m->map.sprites[i].texture = i;
-	}
-}
-
 int					main(int ac, char **av)
 {
 	t_main			m;
@@ -87,7 +72,6 @@ int					main(int ac, char **av)
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	init_sprite(&m);
 	sdl_loop(&m);
 	remove_data(&m.map);
 	unload_resources(&m);

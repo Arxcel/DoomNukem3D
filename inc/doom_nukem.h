@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 18:48:41 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 15:39:51 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void				get_player_direction(t_main *m);
 void				move_player(t_main *m);
 void				draw_minimap(t_main *m);
 void				draw_screen(t_main *m);
+unsigned int		c_greenify(unsigned int color, float green);
 unsigned int		c_darken(unsigned int color, float darkness);
 unsigned int		c_rgb(unsigned int r, unsigned int g, unsigned int b);
 void				render_sector(t_main *m, t_renderer *renderer,
@@ -118,4 +119,6 @@ void				draw_hud(t_main *m);
 void				draw_text(t_main *m, char *text, int x, int y);
 void				draw_gun(t_main *m);
 
+void				draw_green(t_main *m);
+void				calc_green_time(t_main *m);
 #endif
