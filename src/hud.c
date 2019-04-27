@@ -44,12 +44,12 @@ void	draw_hud(t_main *m)
 	SDL_RenderCopy(m->sdl.ren, m->hud.hud, NULL, &m->hud.hud_rect);
 	SDL_DestroyTexture(m->hud.hud);
 	// On-screen text display
-	draw_text(m, "You should find yellow card", 328, 550);
+	draw_text(m, "Find yellow card", 440, 550);
 	// items
 	draw_text(m, ft_itoa(m->map.player.stats.ammo), 885, 658);
 	draw_text(m, ft_itoa(m->map.player.stats.armor), 220, 705);
 	draw_text(m, ft_itoa(m->map.player.stats.hp), 220, 648);
-	// cuttent active_weapon
+	// current active_weapon
 	draw_text(m, ft_itoa(m->map.player.stats.active_weapon), 890, 705);
 	// total active_weapon
 	draw_text(m, ft_itoa(m->map.player.stats.active_weapon), 940, 705);	
