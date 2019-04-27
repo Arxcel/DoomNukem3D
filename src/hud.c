@@ -23,23 +23,35 @@ void	draw_hud(t_main *m)
 	m->hud.hud_rect.h = m->hud.surface_hud->h;
 	SDL_RenderCopy(m->sdl.ren, m->hud.hud, NULL, &m->hud.hud_rect);
 	SDL_DestroyTexture(m->hud.hud);
+
+	// On-screen text display
+	draw_text(m, "lorem ipsum", 535, 615);
+	// items
+	draw_text(m, ft_itoa(m->map.player.stats.ammo), 900, 655);
+	draw_text(m, ft_itoa(m->map.player.stats.armor), 220, 705);
+	draw_text(m, ft_itoa(m->map.player.stats.hp), 220, 648);
+	// cuttent active_weapon
+	draw_text(m, ft_itoa(m->map.player.stats.active_weapon), 890, 705);
+	// total active_weapon
+	draw_text(m, ft_itoa(m->map.player.stats.active_weapon), 940, 705);	
 }
 
-void	draw_text(t_main *m)
+void	draw_text(t_main *m, char *text, int x, int y)
 {
 	SDL_Color color;
 
 	color.r = 213;
 	color.g = 255;
 	color.b = 0;
+
 	if (!(m->hud.surface_message = TTF_RenderText_Solid(m->hud.font,
-			"lorem ipsum", color)))
+			text, color)))
 		MSG(TTF_GetError());
 	if (!(m->hud.message = SDL_CreateTextureFromSurface(m->sdl.ren,
 			m->hud.surface_message)))
 		MSG(SDL_GetError());
-	m->hud.message_rect.x = 535;
-	m->hud.message_rect.y = 615;
+	m->hud.message_rect.x = x;
+	m->hud.message_rect.y = y;
 	m->hud.message_rect.w = m->hud.surface_message->w;
 	m->hud.message_rect.h = m->hud.surface_message->h;
 	SDL_RenderCopy(m->sdl.ren, m->hud.message, NULL, &m->hud.message_rect);

@@ -115,6 +115,6 @@ void				unload_hud(t_main *m);
 void				load_sounds(t_main *m);
 void				unload_sounds(t_main *m);
 void				draw_hud(t_main *m);
-void				draw_text(t_main *m);
+void				draw_text(t_main *m, char *text, int x, int y);
 
 #endif

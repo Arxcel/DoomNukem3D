@@ -35,7 +35,6 @@ void				sdl_loop(t_main *m)
 			draw_minimap(m);
 			sdl_put_image(&m->sdl);
 			draw_hud(m);
-			draw_text(m);
 			SDL_RenderPresent(m->sdl.ren);
 			move_player(m);
 			calc_sprite_collisions(m);
