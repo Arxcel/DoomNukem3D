@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 18:37:05 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:04:05 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void			draw_sprite_impl_y(t_main *m, t_wall *wall,
 										(wall->x2 - wall->x1) + wall->y1[0];
 	wall->yb = (x - wall->x1) * (wall->y2[1] - wall->y1[1]) /
 										(wall->x2 - wall->x1) + wall->y1[1];
-	wall->cya = clampf(wall->ya, 0, H - 1);
-	wall->cyb = clampf(wall->yb, 0, H - 1);
+	wall->cya = clampf(wall->ya, 0, m->sdl.img.h - 1);
+	wall->cyb = clampf(wall->yb, 0, m->sdl.img.h - 1);
 	i = init_interp((t_pt){wall->ya, wall->cya},
 								wall->yb, (t_pt){0, current->h});
 	draw_sprite_line(m, wall, &(t_vline){x, wall->cya,

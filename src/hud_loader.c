@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hud_loader.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/27 10:55:17 by vkozlov           #+#    #+#             */
+/*   Updated: 2019/04/27 10:56:14 by vkozlov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom_nukem.h"
 
-static void load_hud_texture(t_main *m, const char *path)
+static void			load_hud_texture(t_main *m, const char *path)
 {
 	char				*file_contents;
 	zip_file_t			*f;
@@ -15,7 +27,7 @@ static void load_hud_texture(t_main *m, const char *path)
 	zip_stat(z, path, 0, &st);
 	if (st.size < 1)
 		MSG("No such texture");
-	file_contents = (char*)malloc(sizeof(char)* st.size);
+	file_contents = (char*)malloc(sizeof(char) * st.size);
 	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
 	if (!f)
 		MSG(zip_strerror(z));
@@ -29,7 +41,7 @@ static void load_hud_texture(t_main *m, const char *path)
 	free(file_contents);
 }
 
-static void load_hud_font(t_main *m, const char *path, size_t size)
+static void			load_hud_font(t_main *m, const char *path, size_t size)
 {
 	zip_file_t			*f;
 	zip_t				*z;
@@ -54,7 +66,7 @@ static void load_hud_font(t_main *m, const char *path, size_t size)
 	zip_close(z);
 }
 
-void	load_hud(t_main *m)
+void				load_hud(t_main *m)
 {
 	if (TTF_Init())
 		MSG(TTF_GetError());
@@ -62,7 +74,7 @@ void	load_hud(t_main *m)
 	load_hud_font(m, "assets/fonts/auto_digital.ttf", 42);
 }
 
-void	unload_hud(t_main *m)
+void				unload_hud(t_main *m)
 {
 	SDL_RWclose(m->hud.font_rwops);
 	free(m->hud.font_source);

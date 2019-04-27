@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 19:19:33 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 10:57:00 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void				sdl_loop(t_main *m)
 	}
 }
 
-static void 		load_resources(t_main *m)
+static void			load_resources(t_main *m)
 {
 	load_textures(m);
 	load_sprites(m);
@@ -52,7 +52,7 @@ static void 		load_resources(t_main *m)
 	load_sounds(m);
 }
 
-static void 		unload_resources(t_main *m)
+static void			unload_resources(t_main *m)
 {
 	unload_textures_and_sprites(m);
 	unload_hud(m);

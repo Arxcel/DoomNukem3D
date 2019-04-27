@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sounds.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:38:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 19:06:46 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 10:57:24 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void			load_sounds(t_main *m)
 	load_sound_mav("assets/sounds/Key.wav", &m->music);
 	load_sound_mav("assets/sounds/Boss Gun.wav", &m->music);
 }
-
 
 void			unload_sounds(t_main *m)
 {
