@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 18:49:16 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/27 19:02:07 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		create_wall(t_map_editor *e)
 					e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end;
 			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end = mouse;
 		}
-		if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) || !e->n )
+		if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) || (e->n && e->sectors[e->n].num_walls > 1))
 		{
 			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index = e->global_index++;
 			printf("global index %i\n", e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index);
