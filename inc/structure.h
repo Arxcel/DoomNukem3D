@@ -242,6 +242,14 @@ typedef struct		s_music
 	size_t			num_sounds;
 }					t_music;
 
+typedef struct				s_gun
+{
+	SDL_Texture				*gun_sprite;
+	SDL_Rect				curr_sprite;
+	SDL_Rect				all_sprites;
+	short					boom;
+}							t_gun;
+
 typedef struct		s_hud
 {
 	TTF_Font		*font;
@@ -253,6 +261,11 @@ typedef struct		s_hud
 	SDL_RWops		*font_rwops;
 	char			*font_source;
 	SDL_Rect		hud_rect;
+	// gun
+	SDL_Texture		*gun_sprite;
+	SDL_Rect		curr_sprite;
+	SDL_Rect		all_sprites;
+	short			boom;
 
 }					t_hud;
 

@@ -12,6 +12,26 @@
 
 #include "doom_nukem.h"
 
+void	draw_gun(t_main *m)
+{
+	int w;
+	int h;
+
+	m->hud.gun_sprite = IMG_LoadTexture(m->sdl.ren, "pistol.png");
+	SDL_QueryTexture(m->hud.gun_sprite, NULL, NULL, &w, &h);
+	m->hud.curr_sprite.x = 0;
+	m->hud.curr_sprite.y = 0;
+	m->hud.curr_sprite.w = (int)(w / 4);
+	m->hud.curr_sprite.h = (int)(h * 2);
+	m->hud.all_sprites.x = (int)(W / 2.2);
+	m->hud.all_sprites.y = (int)(H - 0 - h * 2 + 15);
+	m->hud.all_sprites.w = (int)(w * 2 / 4);
+	m->hud.all_sprites.h = (int)(h * 2);
+	m->hud.boom = 0;
+	SDL_RenderCopy(m->sdl.ren, m->hud.gun_sprite,
+					&m->hud.curr_sprite, &m->hud.all_sprites);
+}
+
 void	draw_hud(t_main *m)
 {
 	if (!(m->hud.hud = SDL_CreateTextureFromSurface(m->sdl.ren,
@@ -23,11 +43,10 @@ void	draw_hud(t_main *m)
 	m->hud.hud_rect.h = m->hud.surface_hud->h;
 	SDL_RenderCopy(m->sdl.ren, m->hud.hud, NULL, &m->hud.hud_rect);
 	SDL_DestroyTexture(m->hud.hud);
-
 	// On-screen text display
-	draw_text(m, "lorem ipsum", 535, 615);
+	draw_text(m, "You should find yellow card", 328, 550);
 	// items
-	draw_text(m, ft_itoa(m->map.player.stats.ammo), 900, 655);
+	draw_text(m, ft_itoa(m->map.player.stats.ammo), 885, 658);
 	draw_text(m, ft_itoa(m->map.player.stats.armor), 220, 705);
 	draw_text(m, ft_itoa(m->map.player.stats.hp), 220, 648);
 	// cuttent active_weapon

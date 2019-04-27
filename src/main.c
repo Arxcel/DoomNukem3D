@@ -34,6 +34,7 @@ void				sdl_loop(t_main *m)
 			draw_sprites(m);
 			draw_minimap(m);
 			sdl_put_image(&m->sdl);
+			draw_gun(m);
 			draw_hud(m);
 			SDL_RenderPresent(m->sdl.ren);
 			move_player(m);

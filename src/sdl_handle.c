@@ -49,6 +49,7 @@ static void			vertical_movement(t_main *m, int key)
 
 static void			handle_key(t_main *m, int key)
 {
+	// printf("%d\n", key);
 	if (key == SDLK_q || key == SDLK_ESCAPE)
 		m->sdl.running = 0;
 	else if (key == SDLK_w)
@@ -61,6 +62,8 @@ static void			handle_key(t_main *m, int key)
 		m->map.player.dir.right = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == SDLK_LSHIFT)
 		m->map.player.is_running = m->sdl.e.type == SDL_KEYDOWN;
+	else if (key == 13) // ENTER
+		m->hud.boom = 1;
 	vertical_movement(m, key);
 }
 
