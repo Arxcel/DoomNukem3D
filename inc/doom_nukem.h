@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 15:39:51 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 17:21:58 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "ft_libftu.h"
 # include "structure.h"
 # include "utils.h"
+# include "map_parser.h"
 
 # define W 			1200
 # define H 			800
@@ -121,4 +122,11 @@ void				draw_gun(t_main *m);
 
 void				draw_green(t_main *m);
 void				calc_green_time(t_main *m);
+void				standard_mode(t_main *m);
+void				menu_mode(t_main *m);
+void				victory_mode(t_main *m);
+void				draw_menu(t_main *m);
+void				handle_menu(t_main *m, int key);
+void				do_general_opt(t_main *m);
+void				do_select_opt(t_main *m);
 #endif

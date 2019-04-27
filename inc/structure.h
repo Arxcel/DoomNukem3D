@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 15:23:08 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 17:34:28 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,12 +262,22 @@ typedef struct		s_hud
 	char			*font_source;
 	SDL_Rect		hud_rect;
 	// gun
+	SDL_Surface		*gun_surface;
 	SDL_Texture		*gun_sprite;
 	SDL_Rect		curr_sprite;
 	SDL_Rect		all_sprites;
 	short			boom;
 
 }					t_hud;
+
+typedef struct		s_menu
+{
+	bool			is_active;
+	SDL_Texture		*tex_menu;
+	SDL_Rect		menu_rect;
+	int				active_option;
+	bool			is_level_select;
+}					t_menu;
 
 typedef struct		s_main
 {
@@ -276,6 +286,7 @@ typedef struct		s_main
 	t_map			map;
 	t_textures		tex;
 	t_hud			hud;
+	t_menu			menu;
 	bool			greenify;
 	bool			victory;
 	float			prev_time;

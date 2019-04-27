@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:06:44 by olbondar          #+#    #+#             */
-/*   Updated: 2019/04/27 10:55:03 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:04:33 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	draw_gun(t_main *m)
 	int w;
 	int h;
 
-	m->hud.gun_sprite = IMG_LoadTexture(m->sdl.ren, "pistol.png");
+	if (!(m->hud.gun_sprite = SDL_CreateTextureFromSurface(m->sdl.ren,
+			m->hud.gun_surface)))
+		MSG(SDL_GetError());
 	SDL_QueryTexture(m->hud.gun_sprite, NULL, NULL, &w, &h);
 	m->hud.curr_sprite.x = 0;
 	m->hud.curr_sprite.y = 0;
@@ -30,6 +32,7 @@ void	draw_gun(t_main *m)
 	m->hud.boom = 0;
 	SDL_RenderCopy(m->sdl.ren, m->hud.gun_sprite,
 					&m->hud.curr_sprite, &m->hud.all_sprites);
+	SDL_DestroyTexture(m->hud.gun_sprite);
 }
 
 void	draw_hud(t_main *m)
