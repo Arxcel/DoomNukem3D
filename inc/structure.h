@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 14:26:56 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:30:09 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ typedef struct		s_point
 	int				x;
 	int				y;
 }					t_pt;
+
+typedef struct		s_segment
+{
+	int				a;
+	int				b;
+}					t_seg;
 
 typedef struct		s_line
 {
@@ -169,9 +175,9 @@ typedef struct		s_wall
 	t_vertex		t2;
 
 	int				x1;
-	int				y1[2];
+	t_seg			y1;
 	int				x2;
-	int				y2[2];
+	t_seg			y2;
 	t_vertex		scale1;
 	t_vertex		scale2;
 
@@ -179,10 +185,10 @@ typedef struct		s_wall
 	float			floor;
 
 	int				neighbor;
-	float			neighbor_ceil;
-	float			neighbor_floor;
-	int				neighbor_y1[2];
-	int				neighbor_y2[2];
+	float			n_ceil;
+	float			n_floor;
+	t_seg			n_y1;
+	t_seg			n_y2;
 
 	int				ya;
 	int				yb;
@@ -232,7 +238,7 @@ typedef struct		s_textures
 
 typedef struct		s_music
 {
-	Mix_Chunk		*snd[15];
+	Mix_Chunk		**snd;
 	size_t			num_sounds;
 }					t_music;
 
@@ -252,14 +258,14 @@ typedef struct		s_hud
 
 typedef struct		s_main
 {
-	t_sdl		sdl;
-	t_music		music;
-	t_map		map;
-	t_textures	tex;
-	t_hud		hud;
-	float		prev_time;
-	float		curr_time;
-	float		delta_time;
+	t_sdl			sdl;
+	t_music			music;
+	t_map			map;
+	t_textures		tex;
+	t_hud			hud;
+	float			prev_time;
+	float			curr_time;
+	float			delta_time;
 }					t_main;
 
 #endif

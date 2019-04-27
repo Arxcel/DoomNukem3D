@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:40:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 18:23:21 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:27:44 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,26 @@ static void			get_wall_height(t_map *map, t_wall *wall,
 	wall->floor = sect->floor_height - map->player.position.z;
 	if (wall->neighbor >= 0)
 	{
-		wall->neighbor_ceil = map->sectors[wall->neighbor].ceil_height -
+		wall->n_ceil = map->sectors[wall->neighbor].ceil_height -
 													map->player.position.z;
-		wall->neighbor_floor = map->sectors[wall->neighbor].floor_height -
+		wall->n_floor = map->sectors[wall->neighbor].floor_height -
 													map->player.position.z;
 	}
-	wall->y1[0] = r->h / 2 - (int)((wall->ceil +
+	wall->y1.a = r->h / 2 - (int)((wall->ceil +
 							wall->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->y1[1] = r->h / 2 - (int)((wall->floor +
+	wall->y1.b = r->h / 2 - (int)((wall->floor +
 							wall->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->y2[0] = r->h / 2 - (int)((wall->ceil +
+	wall->y2.a = r->h / 2 - (int)((wall->ceil +
 							wall->t2.y * map->player.pitch) * wall->scale2.y);
-	wall->y2[1] = r->h / 2 - (int)((wall->floor +
+	wall->y2.b = r->h / 2 - (int)((wall->floor +
 							wall->t2.y * map->player.pitch) * wall->scale2.y);
-	wall->neighbor_y1[0] = r->h / 2 - (int)((wall->neighbor_ceil +
+	wall->n_y1.a = r->h / 2 - (int)((wall->n_ceil +
 							wall->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->neighbor_y1[1] = r->h / 2 - (int)((wall->neighbor_floor +
+	wall->n_y1.b = r->h / 2 - (int)((wall->n_floor +
 							wall->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->neighbor_y2[0] = r->h / 2 - (int)((wall->neighbor_ceil +
+	wall->n_y2.a = r->h / 2 - (int)((wall->n_ceil +
 							wall->t2.y * map->player.pitch) * wall->scale2.y);
-	wall->neighbor_y2[1] = r->h / 2 - (int)((wall->neighbor_floor +
+	wall->n_y2.b = r->h / 2 - (int)((wall->n_floor +
 							wall->t2.y * map->player.pitch) * wall->scale2.y);
 }
 

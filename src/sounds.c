@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:38:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 10:57:24 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:34:10 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void			load_sounds(t_main *m)
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
 													2, 1500) == -1)
 		MSG(Mix_GetError());
+	m->music.snd = (Mix_Chunk**)malloc(sizeof(Mix_Chunk*) * 8);
 	load_sound_mav("assets/sounds/Knife.wav", &m->music);
 	load_sound_mav("assets/sounds/Pistol.wav", &m->music);
 	load_sound_mav("assets/sounds/Machine Gun.wav", &m->music);
@@ -61,4 +62,5 @@ void			unload_sounds(t_main *m)
 	while (m->music.num_sounds)
 		Mix_FreeChunk(m->music.snd[--m->music.num_sounds]);
 	Mix_CloseAudio();
+	free(m->music.snd);
 }

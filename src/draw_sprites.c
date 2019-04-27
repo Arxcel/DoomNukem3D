@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:14:43 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:22:06 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static void			calc_sprite_h(t_sprite *s, t_wall *wall,
 {
 	wall->ceil = s->position.z + s->h - p->position.z;
 	wall->floor = s->position.z - p->position.z;
-	wall->y1[0] = h / 2 - (int)((wall->ceil +
+	wall->y1.a = h / 2 - (int)((wall->ceil +
 							wall->t1.y * p->pitch) * wall->scale1.y);
-	wall->y1[1] = h / 2 - (int)((wall->floor +
+	wall->y1.b = h / 2 - (int)((wall->floor +
 							wall->t1.y * p->pitch) * wall->scale1.y);
-	wall->y2[0] = h / 2 - (int)((wall->ceil +
+	wall->y2.a = h / 2 - (int)((wall->ceil +
 							wall->t2.y * p->pitch) * wall->scale2.y);
-	wall->y2[1] = h / 2 - (int)((wall->floor +
+	wall->y2.b = h / 2 - (int)((wall->floor +
 							wall->t2.y * p->pitch) * wall->scale2.y);
 }
 
@@ -44,10 +44,10 @@ static void			draw_sprite_impl_y(t_main *m, t_wall *wall,
 	t_interp		*i;
 
 	current = m->tex.s.textures[wall->solid_id];
-	wall->ya = (x - wall->x1) * (wall->y2[0] - wall->y1[0]) /
-										(wall->x2 - wall->x1) + wall->y1[0];
-	wall->yb = (x - wall->x1) * (wall->y2[1] - wall->y1[1]) /
-										(wall->x2 - wall->x1) + wall->y1[1];
+	wall->ya = (x - wall->x1) * (wall->y2.a - wall->y1.a) /
+										(wall->x2 - wall->x1) + wall->y1.a;
+	wall->yb = (x - wall->x1) * (wall->y2.b - wall->y1.b) /
+										(wall->x2 - wall->x1) + wall->y1.b;
 	wall->cya = clampf(wall->ya, 0, m->sdl.img.h - 1);
 	wall->cyb = clampf(wall->yb, 0, m->sdl.img.h - 1);
 	i = init_interp((t_pt){wall->ya, wall->cya},
