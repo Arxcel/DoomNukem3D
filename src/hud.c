@@ -16,6 +16,7 @@ void	shoot(t_main *m)
 {
 	if (m->hud.boom && m->hud.curr_sprite.x <= (int)(m->hud.all_sprites.w))
 	{
+		puts("piu");
 		m->hud.curr_sprite.x += (m->hud.all_sprites.w) * 2 / 4;
 		m->hud.curr_sprite.y = 0;
 	}
@@ -34,7 +35,10 @@ void	draw_gun(t_main *m)
 
 	m->hud.gun_sprite = IMG_LoadTexture(m->sdl.ren, "pistol.png");
 	SDL_QueryTexture(m->hud.gun_sprite, NULL, NULL, &w, &h);
-	m->hud.curr_sprite.x = 0;
+	if (m->hud.boom && m->map.player.stats.ammo > 0 && m->hud.curr_sprite.x <= (int)(m->hud.all_sprites.w))
+		m->hud.curr_sprite.x += (m->hud.all_sprites.w) * 2 / 4;
+	else
+		m->hud.curr_sprite.x = 0;
 	m->hud.curr_sprite.y = 0;
 	m->hud.curr_sprite.w = (int)(w / 4);
 	m->hud.curr_sprite.h = (int)(h * 2);
@@ -43,8 +47,8 @@ void	draw_gun(t_main *m)
 	m->hud.all_sprites.w = (int)(w * 2 / 4);
 	m->hud.all_sprites.h = (int)(h * 2);
 	m->hud.boom = 0;
-	SDL_RenderCopy(m->sdl.ren, m->hud.gun_sprite,
-					&m->hud.curr_sprite, &m->hud.all_sprites);
+	SDL_RenderCopy(m->sdl.ren, m->hud.gun_sprite, &m->hud.curr_sprite, &m->hud.all_sprites);
+	SDL_DestroyTexture(m->hud.gun_sprite);
 }
 
 void	draw_hud(t_main *m)
