@@ -6,13 +6,13 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 10:55:17 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 10:56:14 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 17:32:08 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static void			load_hud_texture(t_main *m, const char *path)
+static void			load_hud_texture(SDL_Surface **target, const char *path)
 {
 	char				*file_contents;
 	zip_file_t			*f;
@@ -34,7 +34,7 @@ static void			load_hud_texture(t_main *m, const char *path)
 	if (zip_fread(f, file_contents, st.size) < 1 || zip_fclose(f))
 		MSG(zip_strerror(z));
 	rwops = SDL_RWFromMem(file_contents, st.size);
-	if (!(m->hud.surface_hud =
+	if (!(*target =
 			sdl_load_surface_from_res(rwops, IS_FORMAT_SURF, PIXEL_FORMAT)))
 		MSG(SDL_GetError());
 	zip_close(z);
@@ -70,7 +70,8 @@ void				load_hud(t_main *m)
 {
 	if (TTF_Init())
 		MSG(TTF_GetError());
-	load_hud_texture(m, "assets/hud/hud.png");
+	load_hud_texture(&m->hud.surface_hud, "assets/hud/hud.png");
+	load_hud_texture(&m->hud.gun_surface, "assets/hud/pistol.png");
 	load_hud_font(m, "assets/fonts/auto_digital.ttf", 42);
 }
 
@@ -80,5 +81,6 @@ void				unload_hud(t_main *m)
 	free(m->hud.font_source);
 	TTF_CloseFont(m->hud.font);
 	SDL_FreeSurface(m->hud.surface_hud);
+	SDL_FreeSurface(m->hud.gun_surface);
 	TTF_Quit();
 }

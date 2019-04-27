@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/21 18:53:22 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 17:44:45 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static void			handle_key(t_main *m, int key)
 {
 	if (key == SDLK_q || key == SDLK_ESCAPE)
 		m->sdl.running = 0;
+	if (m->menu.is_active)
+		handle_menu(m, key);
 	else if (key == SDLK_w)
 		m->map.player.dir.forward = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == SDLK_s)
@@ -61,7 +63,7 @@ static void			handle_key(t_main *m, int key)
 		m->map.player.dir.right = m->sdl.e.type == SDL_KEYDOWN;
 	else if (key == SDLK_LSHIFT)
 		m->map.player.is_running = m->sdl.e.type == SDL_KEYDOWN;
-	else if (key == 13) // ENTER
+	else if (key == 13)
 	{
 		if (m->map.player.stats.ammo > 0)
 			m->map.player.stats.ammo--;
