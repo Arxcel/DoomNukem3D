@@ -113,7 +113,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 2,
@@ -135,7 +138,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 4,
@@ -157,7 +163,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 6,
@@ -179,7 +188,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 8,
@@ -201,7 +213,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -223,7 +238,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 12,
@@ -263,7 +281,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 14,
@@ -306,7 +327,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 16,
@@ -328,13 +352,25 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		}
+	],
+	"sprite": [
+		{"x" : 15.0, "y": 15.0, "z": 15.0, "texture": 1},
+		{"x" : 15.0, "y": 16.0, "z": 15.0, "texture": 2},
+		{"x" : 15.0, "y": 17.0, "z": 15.0, "texture": 3},
+		{"x" : 15.0, "y": 18.0, "z": 15.0, "texture": 4},
+		{"x" : 15.0, "y": 19.0, "z": 15.0, "texture": 5}
 	],
 	"player": {
 		"x": 2.0,
 		"y": 6.0,
 		"angle": -90.0,
-		"sector": 0
+		"sector": 0,
+		"darkness" : 2,
+		"gravity" : 1.0
 	}
 }

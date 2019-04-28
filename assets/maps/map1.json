@@ -92,7 +92,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 2,
@@ -114,7 +117,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 4,
@@ -136,7 +142,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 6,
@@ -158,7 +167,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 8,
@@ -186,7 +198,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 0,
@@ -208,7 +223,10 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 0,
@@ -230,13 +248,21 @@
 				0,
 				0,
 				0
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		}
+	],
+	"sprite": [
+		{"x" : 63.0, "y": 37.0, "z": 0.0, "texture": 1}
 	],
 	"player": {
 		"x": 2.0,
 		"y": 6.0,
 		"angle": -90.0,
-		"sector": 0
+		"sector": 0,
+		"darkness" : 2,
+		"gravity" : 1.0
 	}
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
 /*   Updated: 2019/04/28 18:23:42 by sahafono         ###   ########.fr       */
@@ -114,8 +114,6 @@ typedef struct		s_sprite
 	bool			is_active;
 	unsigned		w;
 	unsigned		h;
-	int				sprite_ceil;
-	int				sprite_floor;
 }					t_sprite;
 
 typedef struct		s_stats
