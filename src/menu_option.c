@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 17:20:32 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:16:35 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:26:57 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,7 @@ void		do_general_opt(t_main *m)
 	}
 	else if (m->menu.active_option == 1)
 	{
-		if (init_map_editor(m))
-		{
-			printf("failed init\n");
-			unload_resources(m);
-			editor_clear_sdl(&m->sdl);
-			exit(0);
-		}
+		init_map_editor(m);
 		printf("loop start\n");
 		map_editor_loop(m);
 		printf("loop finish\n");

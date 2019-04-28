@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 11:34:03 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:26:23 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int					init_sectors(t_map_editor *e)
 int		init_map_editor(t_main *main)
 {
 	if (!main)
-		return (1);
+		MSG("Error");
 	SDL_ShowCursor(SDL_ENABLE);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_SetRenderDrawColor(main->sdl.ren, 0, 0, 0, 0);
@@ -55,7 +55,6 @@ int		init_map_editor(t_main *main)
 
 int				editor_clear_sdl(t_sdl *sdl)
 {
-	puts("free");
 	SDL_DestroyTexture(sdl->texture);
 	SDL_DestroyRenderer(sdl->ren);
 	SDL_DestroyWindow(sdl->win);
