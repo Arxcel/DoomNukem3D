@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:40:54 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 11:39:27 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include "zip.h"
 # include "ft_sdl.h"
 # include "ft_libftu.h"
 # include "structure.h"
 # include "utils.h"
+# include "json.h"
 
-# define W 1280
-# define H 720
+# define W 			1200
+# define H 			800
 
 # define GRAVITY				1.0f
 # define SPEED					5
 # define RUN_SPEED					10
-# define MOUSE_SENSIVITY_X		3
-# define MOUSE_SENSIVITY_Y		5
+# define MOUSE_SENSIVITY_X		1
+# define MOUSE_SENSIVITY_Y		2
 
 # define STANDHEIGHT			6
 # define CROUCHINGHEIGHT		2.5
@@ -36,11 +38,18 @@
 # define KNEEHEIGHT				2
 # define HFOV					0.73f
 # define VFOV					.2f
+# define DARKNESS				2
+
+# define RESOURCES				"./assets.res"
+# define RESOURCES_PASS			"lol"
 
 # define NEAR_Z		1e-4f
 # define FAR_Z		5
 # define NEAR_SIDE	1e-5f
 # define FAR_SIDE	20.f
+
+# define SPRITE_SCALE_X		100
+# define SPRITE_SCALE_Y		100
 
 # ifdef __APPLE__
 #  define WPNS_TEX_BG	0xff00ffff
@@ -59,8 +68,8 @@
 void				sdl_hook(t_main *m);
 void				sdl_loop(t_main *m);
 
-void				do_perspective(t_renderer *renderer, t_wall *w,
-													int width, int height);
+void				do_perspective(t_wall *w, int width, int height);
+
 t_vertex			reverse_perspective(t_main *m, int x, int y, float height);
 
 t_vertex			get_player_velocity(t_main *m);
@@ -68,7 +77,9 @@ void				get_player_direction(t_main *m);
 void				move_player(t_main *m);
 void				draw_minimap(t_main *m);
 void				draw_screen(t_main *m);
-
+unsigned int		c_greenify(unsigned int color, float green);
+unsigned int		c_darken(unsigned int color, float darkness);
+unsigned int		c_rgb(unsigned int r, unsigned int g, unsigned int b);
 void				render_sector(t_main *m, t_renderer *renderer,
 								t_render_item const *current_sector);
 void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
@@ -83,11 +94,80 @@ double				cast_ray_2line(t_vertex ray_origin,
 void				plot_line(t_img *img, t_line *l);
 
 void				load_textures(t_main *m);
-void				clear_textures(t_main *m);
+void				load_sprites(t_main *m);
+void				unload_textures_and_sprites(t_main *m);
 void				setup_wall_texture(t_main *m, t_wall *w,
 													int wall, t_pt verical);
-
+void				setup_sprite_texture(t_main *m, t_wall *w, int wall);
 t_vertex			calculate_edges(t_player *player, t_vertex *vertex);
-void				clamp_edges_with_player_view(t_renderer *r, t_wall *w);
+t_vertex			calculate_edges2(t_player *player, t_vertex *vertex);
+void				clamp_edges_with_player_view(t_wall *w);
+void				draw_local_wall(t_main *m, t_wall *wall,
+													t_renderer *r, int x);
+void				calc_sprite_edges(t_player *p, t_vector sprite_pos,
+												t_wall *wall, float dist);
+void				draw_sprites(t_main *m);
+void				draw_sprite_line(t_main *m, t_wall *w,
+													t_vline *v, t_interp *ty);
+void				calc_sprite_collisions(t_main *m);
+float				calc_distance(t_vector v1, t_vector v2);
+void				sort_sprites(t_main *m, int *order, float *dist);
+void				load_hud(t_main *m);
+void				unload_hud(t_main *m);
+void				load_sounds(t_main *m);
+void				unload_sounds(t_main *m);
+void				draw_hud(t_main *m);
+void				draw_text(t_main *m, char *text, int x, int y);
+void				draw_gun(t_main *m);
 
+void				draw_green(t_main *m);
+void				calc_green_time(t_main *m);
+void				shoot(t_main *m);
+void				standard_mode(t_main *m);
+void				menu_mode(t_main *m);
+void				victory_mode(t_main *m);
+void				draw_menu(t_main *m);
+void				handle_menu(t_main *m, int key);
+void				do_general_opt(t_main *m);
+void				do_select_opt(t_main *m);
+void				draw_victory(t_main *m);
+
+int					parser(t_map *map, char *file_name);
+int					remove_data(t_map *map);
+int					remove_values(t_map *map, json_value *value);
+int					player_field(t_map *map, json_value *value);
+int					sector_field(t_map *map, json_value *value);
+int					count_vertices(t_map *map, json_value *value);
+void				unload_resources(t_main *m);
+void				load_resources(t_main *m);
+
+
+int					init_map_editor(t_main *main);
+int					map_editor_loop(t_main *m);
+int					serialize_map(t_main *m, t_editor_sector *sectors, int num_sectors);
+int					editor_clear_sdl(t_sdl *sdl);
+int					intersect(t_editor_wall wall, t_dot cur);
+int					line(t_editor_wall wall, t_main *main);
+int					init_sectors(t_map_editor *e);
+
+void				create_text_menu(t_main *m, t_text *menu);
+void				update_text(t_main *m, t_text *menu, int i, int str);
+int					create_text(t_main *m, t_text *menu, int i, const char *str);
+void				update_all_menu(t_main *m, t_map_editor *e);
+
+void				print_vector(t_editor_wall wall, t_main *main);
+int					draw(t_main *m, t_map_editor *e);
+int					draw_circle(int color, t_main *m);
+
+int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot);
+int					check_intersection(t_map_editor *e, t_dot mouse);
+
+
+int					player_save_keys(t_main *m, t_map_editor *e);
+int					arrow_keys(SDL_Keycode sym, t_map_editor *e);
+int					left_arrow_key(SDL_Keycode sym, t_map_editor *e);
+
+void				shift_left(t_map_editor *e);
+
+int					remove_text_menu(t_text *menu);
 #endif

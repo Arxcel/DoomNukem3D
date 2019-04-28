@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   remove_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:44:28 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/13 12:44:34 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:22:56 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_parser.h"
+#include "doom_nukem.h"
 
 int		remove_values(t_map *map, json_value *value)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 23:16:03 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:34:03 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_editor.h"
+#include "doom_nukem.h"
 
 int					init_sectors(t_map_editor *e)
 {
@@ -42,8 +42,7 @@ int					init_sectors(t_map_editor *e)
 
 int		init_map_editor(t_main *main)
 {
-	TTF_Init();
-	if (!main || !(main->font = TTF_OpenFont("./assets/fonts/ARIAL.TTF",24)))
+	if (!main)
 		return (1);
 	SDL_ShowCursor(SDL_ENABLE);
 	SDL_SetRelativeMouseMode(SDL_FALSE);

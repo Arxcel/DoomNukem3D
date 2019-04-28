@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   render_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 15:23:39 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:23:50 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static void		draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
+void			draw_local_wall(t_main *m, t_wall *wall, t_renderer *r, int x)
 {
 	SDL_Surface		*current;
 	t_interp		*i;
 
 	current = m->tex.t.textures[wall->solid_id];
-	wall->ya = (x - wall->x1) * (wall->y2[0] - wall->y1[0]) /
-										(wall->x2 - wall->x1) + wall->y1[0];
-	wall->yb = (x - wall->x1) * (wall->y2[1] - wall->y1[1]) /
-										(wall->x2 - wall->x1) + wall->y1[1];
+	wall->ya = (x - wall->x1) * (wall->y2.a - wall->y1.a) /
+										(wall->x2 - wall->x1) + wall->y1.a;
+	wall->yb = (x - wall->x1) * (wall->y2.b - wall->y1.b) /
+										(wall->x2 - wall->x1) + wall->y1.b;
 	wall->cya = clampf(wall->ya, r->top_limit[x], r->bottom_limit[x]);
 	wall->cyb = clampf(wall->yb, r->top_limit[x], r->bottom_limit[x]);
 	i = init_interp((t_pt){wall->ya, wall->cya},
-									wall->yb, (t_pt){0, current->w});
+									wall->yb, (t_pt){0, current->h});
 	if (wall->neighbor < 0)
 		draw_line(m, wall, &(t_vline){x, wall->cya,
 										wall->cyb, wall->solid_id}, i);
@@ -41,21 +41,21 @@ static void		draw_neighbor_wall(t_main *m, t_wall *wall,
 
 	cu = m->tex.t.textures[wall->upper_id];
 	cl = m->tex.t.textures[wall->lower_id];
-	wall->nya = (x - wall->x1) * (wall->neighbor_y2[0] - wall->neighbor_y1[0])
-	/ (wall->x2 - wall->x1) + wall->neighbor_y1[0];
-	wall->nyb = (x - wall->x1) * (wall->neighbor_y2[1] - wall->neighbor_y1[1])
-	/ (wall->x2 - wall->x1) + wall->neighbor_y1[1];
+	wall->nya = (x - wall->x1) * (wall->n_y2.a - wall->n_y1.a)
+	/ (wall->x2 - wall->x1) + wall->n_y1.a;
+	wall->nyb = (x - wall->x1) * (wall->n_y2.b - wall->n_y1.b)
+	/ (wall->x2 - wall->x1) + wall->n_y1.b;
 	wall->ncya = clampf(wall->nya, r->top_limit[x], r->bottom_limit[x]);
 	wall->ncyb = clampf(wall->nyb, r->top_limit[x], r->bottom_limit[x]);
 	i = init_interp((t_pt){wall->ya, wall->cya}, wall->yb, (t_pt){0, cu->w});
 	draw_line(m, wall, &(t_vline){x, wall->cya,
 										wall->ncya - 1, wall->upper_id}, i);
 	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya),
-										r->top_limit[x], m->sdl.img.h - 1);
+										r->top_limit[x], m->sdl.img.h);
 	free(i);
-	i = init_interp((t_pt){wall->ya, wall->ncyb + 1},
+	i = init_interp((t_pt){wall->ya, wall->ncyb},
 	wall->yb, (t_pt){0, cl->w});
-	draw_line(m, wall, &(t_vline){x, wall->ncyb + 1,
+	draw_line(m, wall, &(t_vline){x, wall->ncyb,
 	wall->cyb, wall->lower_id}, i);
 	r->bottom_limit[x] = clampf(minf(wall->cyb,
 	wall->ncyb), 0, r->bottom_limit[x]);
@@ -84,8 +84,8 @@ static void		draw_ceil_floor(t_main *m, t_renderer *r, t_wall *w, int x)
 		current = y < w->cya ? m->tex.t.textures[w->floor_id] :
 												m->tex.t.textures[w->ceil_id];
 		pix = current->pixels;
-		sdl_pixel_put(&m->sdl.img, x, y, pix[tex[0] % current->w +
-										(tex[1] % current->h) * current->w]);
+		sdl_pixel_put(&m->sdl.img, x, y, c_darken(pix[tex[0] % current->w +
+					(tex[1] % current->h) * current->w], m->map.ligntness));
 	}
 }
 
@@ -101,9 +101,11 @@ void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 	x = beginx - 1;
 	while (++x <= endx)
 	{
-		wall->txtx = (wall->u0 * ((wall->x2 - x) * renderer->t2.y) + wall->u1 *
-		((x - wall->x1) * renderer->t1.y)) / ((wall->x2 - x) * renderer->t2.y +
-		(x - wall->x1) * renderer->t1.y);
+		wall->txtx = (wall->u0 * ((wall->x2 - x) * wall->t2.y) + wall->u1 *
+		((x - wall->x1) * wall->t1.y)) / ((wall->x2 - x) * wall->t2.y +
+		(x - wall->x1) * wall->t1.y);
+		wall->lz = ((x - wall->x1) * (wall->t2.y - wall->t1.y) /
+							(wall->x2 - wall->x1) + wall->t1.y) * DARKNESS;
 		draw_ceil_floor(m, renderer, wall, x);
 		draw_local_wall(m, wall, renderer, x);
 		if (wall->neighbor >= 0)
@@ -137,7 +139,7 @@ void			draw_screen(t_main *m)
 		if (r.rendered_sectors[current_sector.sectorno] == MaxQueue)
 			continue;
 		render_sector(m, &r, &current_sector);
-		r.rendered_sectors[current_sector.sectorno]++;
+		++r.rendered_sectors[current_sector.sectorno];
 	}
 	free_renderer(&r);
 }

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:31:29 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 15:15:40 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 11:59:06 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void		free_renderer(t_renderer *renderer)
 
 void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 {
-	int			y;
-	int			*pix;
-	SDL_Surface	*current;
+	int				y;
+	int				*pix;
+	SDL_Surface		*current;
 
 	current = m->tex.t.textures[v->texture_id];
 	pix = current->pixels;
@@ -53,8 +53,9 @@ void		draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty)
 	while (++y <= v->y_bottom)
 	{
 		w->txty = interp_next(ty);
-		sdl_pixel_put(&m->sdl.img, v->x, y, pix[w->txtx % current->w +
-									(w->txty % current->h) * current->w]);
+		sdl_pixel_put(&m->sdl.img, v->x, y,
+			c_darken(pix[w->txtx % current->w +
+							(w->txty % current->h) * current->w], w->lz));
 	}
 }
 

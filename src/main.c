@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 13:39:00 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 11:39:38 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-#include "map_parser.h"
-#include "map_editor.h"
 
 static void			calc_delta_time(t_main *m)
 {
@@ -24,43 +22,49 @@ static void			calc_delta_time(t_main *m)
 
 void				sdl_loop(t_main *m)
 {
+	m->map.player.is_moving = true;
 	while (m->sdl.running)
 	{
 		calc_delta_time(m);
 		sdl_hook(m);
-		if (m->delta_time > 0.016f)
-		{
-			draw_screen(m);
-			draw_minimap(m);
-			sdl_put_image(&m->sdl);
-			move_player(m);
-			m->delta_time = 0.f;
-		}
+		if (m->delta_time > 0.016f && !m->victory && !m->menu.is_active)
+			standard_mode(m);
+		else if (m->delta_time > 0.016f && m->victory && !m->menu.is_active)
+			victory_mode(m);
+		else if (m->delta_time > 0.016f && !m->victory && m->menu.is_active)
+			menu_mode(m);
 	}
+}
+
+void			load_resources(t_main *m)
+{
+	load_textures(m);
+	load_sprites(m);
+	load_hud(m);
+	load_sounds(m);
+}
+
+void			unload_resources(t_main *m)
+{
+	remove_data(&m->map);
+	unload_textures_and_sprites(m);
+	unload_hud(m);
+	unload_sounds(m);
 }
 
 int					main(int ac, char **av)
 {
 	t_main			m;
 
-	(void)av;
 	ft_bzero(&m, sizeof(t_main));
+	load_resources(&m);
+	m.menu.is_active = true;
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	if (ac > 1 && !ft_strcmp("-edit_map", av[1]))
-	{
-		if (init_map_editor(&m))
-			return(editor_clear_sdl(&m.sdl));
-		map_editor_loop(&m);
-		TTF_CloseFont(m.font);
-		return (editor_clear_sdl(&m.sdl));
-	}
 	load_textures(&m);
-	parser(&m.map, av[1]);		
 	sdl_loop(&m);
-	clear_textures(&m);
-	remove_data(&m.map);
-	SDL_Quit();
+	unload_resources(&m);
+	editor_clear_sdl(&m.sdl);
 	return (0);
 }

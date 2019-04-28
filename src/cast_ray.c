@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 14:02:30 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/31 14:29:00 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/20 20:20:01 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ static double		ray_segment_intersaction(t_vertex v1,
 	if (t1 >= 0.0 && (t2 >= 0.0 && t2 <= 1.0))
 		return (t1);
 	return (-1.0);
+}
+
+float				calc_distance(t_vector v1, t_vector v2)
+{
+	float	abx;
+	float	aby;
+	float	dist;
+
+	abx = (v1.x - v2.x);
+	aby = (v1.y - v2.y);
+	dist = (float)sqrt(abx * abx + aby * aby);
+	return (dist);
 }
 
 double				cast_ray_2line(t_vertex ray_origin,

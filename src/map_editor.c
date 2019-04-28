@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 19:02:07 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 12:38:55 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_editor.h"
 #include "doom_nukem.h"
 
 int		close_sector(t_main *m, t_map_editor *e)
@@ -110,7 +109,10 @@ int					map_editor_loop(t_main *m)
 		while (SDL_PollEvent(&m->sdl.e))
 		{
 			if (m->sdl.e.type == SDL_QUIT ||  m->sdl.e.key.keysym.sym == SDLK_ESCAPE)
-				m->sdl.running = 0;
+			{
+				printf("loop legal finish\n");
+				m->sdl.running = false;
+			}
 			if (e.n < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type)
 				e.chosen = create_wall(&e);
 			sdl_keydown(m, &e);
@@ -121,5 +123,6 @@ int					map_editor_loop(t_main *m)
 				draw_circle(RED, m);
 		}
 	}
+
 	return (remove_text_menu(e.menu));
 }

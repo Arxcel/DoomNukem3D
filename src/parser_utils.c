@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:46:44 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/13 12:46:47 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:22:56 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_parser.h"
+#include "doom_nukem.h"
 
 int						find_min_max(t_map *map, int i, json_value *js)
 {

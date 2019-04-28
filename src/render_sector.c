@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:40:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 15:33:20 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/27 11:27:44 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,56 +19,41 @@ static void			get_wall_height(t_map *map, t_wall *wall,
 	wall->floor = sect->floor_height - map->player.position.z;
 	if (wall->neighbor >= 0)
 	{
-		wall->neighbor_ceil = map->sectors[wall->neighbor].ceil_height -
+		wall->n_ceil = map->sectors[wall->neighbor].ceil_height -
 													map->player.position.z;
-		wall->neighbor_floor = map->sectors[wall->neighbor].floor_height -
+		wall->n_floor = map->sectors[wall->neighbor].floor_height -
 													map->player.position.z;
 	}
-	wall->y1[0] = r->h / 2 - (int)((wall->ceil +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->y1[1] = r->h / 2 - (int)((wall->floor +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->y2[0] = r->h / 2 - (int)((wall->ceil +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
-	wall->y2[1] = r->h / 2 - (int)((wall->floor +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
-	wall->neighbor_y1[0] = r->h / 2 - (int)((wall->neighbor_ceil +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->neighbor_y1[1] = r->h / 2 - (int)((wall->neighbor_floor +
-							r->t1.y * map->player.pitch) * wall->scale1.y);
-	wall->neighbor_y2[0] = r->h / 2 - (int)((wall->neighbor_ceil +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
-	wall->neighbor_y2[1] = r->h / 2 - (int)((wall->neighbor_floor +
-							r->t2.y * map->player.pitch) * wall->scale2.y);
+	wall->y1.a = r->h / 2 - (int)((wall->ceil +
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
+	wall->y1.b = r->h / 2 - (int)((wall->floor +
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
+	wall->y2.a = r->h / 2 - (int)((wall->ceil +
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
+	wall->y2.b = r->h / 2 - (int)((wall->floor +
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
+	wall->n_y1.a = r->h / 2 - (int)((wall->n_ceil +
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
+	wall->n_y1.b = r->h / 2 - (int)((wall->n_floor +
+							wall->t1.y * map->player.pitch) * wall->scale1.y);
+	wall->n_y2.a = r->h / 2 - (int)((wall->n_ceil +
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
+	wall->n_y2.b = r->h / 2 - (int)((wall->n_floor +
+							wall->t2.y * map->player.pitch) * wall->scale2.y);
 }
 
-static void			clamp_values(t_renderer *r)
+static void			clamp_values(t_wall *wall)
 {
 	int		sign;
 
-	sign = r->t1.y < 0 ? -1 : 1;
-	r->t1.y = sign * maxf(fabs(r->t1.y), 0.1f);
-	sign = r->t1.x < 0 ? -1 : 1;
-	r->t1.x = sign * maxf(fabs(r->t1.x), 0.1f);
-	sign = r->t2.y < 0 ? -1 : 1;
-	r->t2.y = sign * maxf(fabs(r->t2.y), 0.1f);
-	sign = r->t2.x < 0 ? -1 : 1;
-	r->t2.x = sign * maxf(fabs(r->t2.x), 0.1f);
-}
-
-static void			check_wall(t_renderer *r, t_map *map,
-							int s, t_render_item const *current_sector)
-{
-	double		d;
-	t_sector	*sect;
-
-	sect = &map->sectors[current_sector->sectorno];
-	d = cast_ray_2line(
-		(t_vertex){map->player.position.x, map->player.position.y},
-		(t_vertex){map->player.anglecos, map->player.anglesin},
-		sect->vertices[s], sect->vertices[s + 1]);
-	if (d > 0 && d < 3)
-		r->t1.x = maxf(fabs(r->t1.x), 0.1f);
+	sign = wall->t1.y < 0 ? -1 : 1;
+	wall->t1.y = sign * maxf(fabs(wall->t1.y), 0.1f);
+	sign = wall->t1.x < 0 ? -1 : 1;
+	wall->t1.x = sign * maxf(fabs(wall->t1.x), 0.1f);
+	sign = wall->t2.y < 0 ? -1 : 1;
+	wall->t2.y = sign * maxf(fabs(wall->t2.y), 0.1f);
+	sign = wall->t2.x < 0 ? -1 : 1;
+	wall->t2.x = sign * maxf(fabs(wall->t2.x), 0.1f);
 }
 
 void				render_sector(t_main *m, t_renderer *r,
@@ -84,14 +69,13 @@ void				render_sector(t_main *m, t_renderer *r,
 	while (++s < sect->number_vertices)
 	{
 		setup_wall_texture(m, &wall, sect->textures[s], (t_pt){0, 1});
-		r->t1 = calculate_edges(&m->map.player, &sect->vertices[s]);
-		r->t2 = calculate_edges(&m->map.player, &sect->vertices[s + 1]);
-		if (r->t1.y < 0 && r->t2.y < 0)
+		wall.t1 = calculate_edges(&m->map.player, &sect->vertices[s]);
+		wall.t2 = calculate_edges(&m->map.player, &sect->vertices[s + 1]);
+		if (wall.t1.y < 0 && wall.t2.y < 0)
 			continue;
-		clamp_edges_with_player_view(r, &wall);
-		clamp_values(r);
-		check_wall(r, &m->map, s, current_sector);
-		do_perspective(r, &wall, m->sdl.img.w, m->sdl.img.h);
+		clamp_edges_with_player_view(&wall);
+		clamp_values(&wall);
+		do_perspective(&wall, m->sdl.img.w, m->sdl.img.h);
 		if (wall.x1 >= wall.x2 || wall.x2 < current_sector->limit_x_left ||
 									wall.x1 > current_sector->limit_x_right)
 			continue;

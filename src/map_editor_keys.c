@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_keys.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 18:48:47 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:23:08 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_editor.h"
+#include "doom_nukem.h"
 
 int				left_arrow_key(SDL_Keycode sym, t_map_editor *e)
 {

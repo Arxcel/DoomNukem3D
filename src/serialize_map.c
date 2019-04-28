@@ -3,26 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   serialize_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 18:52:29 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 12:42:14 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "json-builder.h"
-#include "map_editor.h"
+#include "doom_nukem.h"
 #include <unistd.h>
 
 int    write_map_to_file(char *buf, const char *filename)
 {
-    FILE *fp;
+	zip_t				*z;
+	zip_source_t		*s;
 
-    if (!buf || !filename || !(fp = fopen(filename, "w")))
-        return (1);
-    fprintf(fp, "%s", buf);
-    fclose(fp);
-    return (0);
+	z = zip_open(RESOURCES, ZIP_CREATE, 0);
+	if (!z)
+		MSG(zip_strerror(z));
+
+	if ((s = zip_source_buffer(z, buf, sizeof(buf), 0)) == NULL ||
+		zip_file_add(z, filename, s, ZIP_FL_OVERWRITE) < 0)
+	{
+		zip_source_free(s);
+		printf("error adding file: %s\n", zip_strerror(z));
+	}
+	zip_close(z);
+	printf("File saved\n");
+	return 0;
 }
 
 int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
@@ -76,9 +85,7 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
     char *buf = malloc(json_measure(obj));
     json_serialize(buf, obj);
     json_value_free(obj);
-    printf("%s\n", buf);
-    
-    write_map_to_file(buf, "maps/test.json");
+    write_map_to_file(buf, "assets/maps/map5.json");
     free(buf);
     return (0);
 }

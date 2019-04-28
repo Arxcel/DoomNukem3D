@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_text.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 23:23:23 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:38:37 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_editor.h"
 #include "doom_nukem.h"
 
 int		create_text(t_main *m, t_text *menu, int i, const char *str)
@@ -26,7 +25,7 @@ int		create_text(t_main *m, t_text *menu, int i, const char *str)
 	SDL_Color fg = {255, 255, 255};
 	SDL_Color bg = {0, 0, 0};
 
-	textSurface = TTF_RenderText_Shaded(m->font, str, fg, bg);
+	textSurface = TTF_RenderText_Shaded(m->hud.font, str, fg, bg);
 	menu[i].text_texture = SDL_CreateTextureFromSurface(m->sdl.ren, textSurface);
 	SDL_FreeSurface(textSurface);
 	menu[i].dstrect = dstrect;

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:25 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/27 18:48:27 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:23:08 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_editor.h"
+#include "doom_nukem.h"
 
 int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot)
 {

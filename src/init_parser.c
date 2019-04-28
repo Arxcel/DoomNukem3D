@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:36:42 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/13 13:34:35 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 11:22:56 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_parser.h"
+#include "doom_nukem.h"
 #include <sys/stat.h>
 
 int						vertex_field(t_map *map, json_value *value)
@@ -79,41 +79,48 @@ int						parser_loop(t_map *map, json_value *value)
 
 json_value				*init_json(char *file_name)
 {
-	FILE		*fp;
-	struct stat	filestatus;
-	size_t		file_size;
-	char		*file_contents;
-	json_value	*value;
+	char				*file_contents;
+	json_value			*value;
+	zip_file_t			*f;
+	zip_t				*z;
+	struct zip_stat		st;
 
-	value = NULL;
-	if (stat(file_name, &filestatus) != 0)
-		MSG("File %s not found\n");
-	file_size = (size_t)filestatus.st_size;
-	if (!(fp = fopen(file_name, "rt")))
-		MSG("Unable to open file\n");
-	if (!(file_contents = (char*)malloc(file_size)))
-		MSG("Memory error: unable to allocate memory\n");
-	if (fread(file_contents, file_size, 1, fp) != 1 || fclose(fp))
-	{
-		free(file_contents);
-		MSG("Unable to read file\n");
-	}
-	if (!(value = json_parse(file_contents, file_size)))
-		ft_putendl("Unable to parse data");
+	z = zip_open(RESOURCES, ZIP_CREATE, 0);
+	if (!z)
+		MSG(zip_strerror(z));
+	zip_stat_init(&st);
+	zip_stat(z, file_name, 0, &st);
+	if (st.size < 1)
+		MSG("No such map");
+	file_contents = malloc(st.size);
+	f = zip_fopen_encrypted(z, file_name, 0, RESOURCES_PASS);
+	if (!f)
+		MSG(zip_strerror(z));
+	if (zip_fread(f, file_contents, st.size) < 1 || zip_fclose(f))
+		MSG(zip_strerror(z));
+	if (!(value = json_parse(file_contents, st.size)))
+		MSG("Unable to parse data");
+	zip_close(z);
 	free(file_contents);
 	return (value);
 }
 
-int						parser(t_map *map, char *file_name)
+int						parser(t_map *map, char *map_name)
 {
-	json_value	*value;
+	char			*name;
+	char			*full_name;
+	json_value		*value;
 
 	map->number_vertices = 0;
 	map->number_sectors = 0;
-	map->number_sptites = 0;
+	map->number_sprites = 0;
 	map->number_enemies = 0;
-	if (!(value = init_json(file_name)) || parser_loop(map, value))
+	name = ft_strjoin("assets/maps/", map_name);
+	full_name = ft_strjoin(name, ".json");
+	if (!(value = init_json(full_name)) || parser_loop(map, value))
 		MSG("Wrong data format");
 	json_value_free(value);
+	free(name);
+	free(full_name);
 	return (0);
 }

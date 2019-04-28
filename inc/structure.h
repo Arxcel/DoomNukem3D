@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:24:35 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 11:38:13 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,27 @@ enum
 
 enum	e_bool {false, true} __attribute__((packed));
 
+
+# define WALLS_CNT 10
+# define SECTORS_CNT 30
+# define YELLOW 0xFFFF00
+# define BLUE 0x0000FF
+# define RED 0xFF0000
+# define TEXT_MENU 17
+# define LETTER_WIDTH 14
+# define LETTER_HEIGHT 30
+# define TEXT_MENU_ROW 9
+# define TEXTURE_MAX 10
+# define MAX_CEILING_HEIGHT 1000
+# define MIN_FLOOR_HEIGHT -20
 # define _BOOL  typedef enum e_bool	bool
 
 _BOOL;
+
+typedef	enum
+{
+	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, PORTAL, PLAYER, SPRITE
+}					e_select_mode;
 
 typedef struct		s_vector
 {
@@ -44,6 +62,12 @@ typedef struct		s_point
 	int				x;
 	int				y;
 }					t_pt;
+
+typedef struct		s_segment
+{
+	int				a;
+	int				b;
+}					t_seg;
 
 typedef struct		s_line
 {
@@ -82,12 +106,22 @@ typedef struct		s_sector
 typedef struct		s_sprite
 {
 	t_vector		position;
-	float			angle;
-	float			pitch;
-	float			anglesin;
-	float			anglecos;
-	size_t			sector_number;
+	unsigned		texture;
+	bool			is_active;
+	unsigned		w;
+	unsigned		h;
+	int				sprite_ceil;
+	int				sprite_floor;
 }					t_sprite;
+
+typedef struct		s_stats
+{
+	int				ammo;
+	int				rockets;
+	int				hp;
+	int				armor;
+	int				active_weapon;
+}					t_stats;
 
 typedef struct		s_player
 {
@@ -106,6 +140,8 @@ typedef struct		s_player
 	bool			is_running;
 
 	t_dir			dir;
+
+	t_stats			stats;
 }					t_player;
 
 typedef struct		s_map
@@ -117,8 +153,53 @@ typedef struct		s_map
 	size_t			number_vertices;
 	size_t			number_sectors;
 	size_t			number_enemies;
-	size_t			number_sptites;
+	size_t			number_sprites;
+	float			ligntness;
 }					t_map;
+
+typedef struct		s_dot
+{
+	int				x;
+	int				y;
+}					t_dot;
+
+typedef struct		s_editor_wall
+{
+	t_dot			begin;
+	t_dot			end;
+	int				color;
+	int				texture;
+	int				global_index;
+
+}					t_editor_wall;
+
+typedef struct		s_editor_sector
+{
+	t_editor_wall	wall_vertice[WALLS_CNT];
+	int				neighbors[WALLS_CNT];
+	int				num_walls;
+	int				floor_height;
+	int				ceiling_height;
+	bool			is_lift;
+	int				from;
+	int				to;
+}					t_editor_sector;
+
+typedef struct		s_text
+{
+	SDL_Texture 	*text_texture;
+	SDL_Rect		dstrect;
+}					t_text;
+
+typedef struct		s_map_editor
+{
+	int 			n;
+	t_editor_sector	sectors[SECTORS_CNT];
+	int				mode;
+	int				chosen;
+	t_text 			menu[TEXT_MENU];
+	int				global_index;
+}					t_map_editor;
 
 /*
 **	start or rendering help structures
@@ -138,8 +219,6 @@ typedef struct		s_renderer
 	int				*rendered_sectors;
 	int				*top_limit;
 	int				*bottom_limit;
-	t_vertex		t1;
-	t_vertex		t2;
 	int				w;
 	int				h;
 }					t_renderer;
@@ -154,10 +233,13 @@ typedef struct		s_vline
 
 typedef struct		s_wall
 {
+	t_vertex		t1;
+	t_vertex		t2;
+
 	int				x1;
-	int				y1[2];
+	t_seg			y1;
 	int				x2;
-	int				y2[2];
+	t_seg			y2;
 	t_vertex		scale1;
 	t_vertex		scale2;
 
@@ -165,10 +247,10 @@ typedef struct		s_wall
 	float			floor;
 
 	int				neighbor;
-	float			neighbor_ceil;
-	float			neighbor_floor;
-	int				neighbor_y1[2];
-	int				neighbor_y2[2];
+	float			n_ceil;
+	float			n_floor;
+	t_seg			n_y1;
+	t_seg			n_y2;
 
 	int				ya;
 	int				yb;
@@ -192,6 +274,7 @@ typedef struct		s_wall
 	int				floor_id;
 	int				ceil_id;
 
+	float			lz;
 }					t_wall;
 
 typedef struct		s_interpolator
@@ -212,17 +295,64 @@ typedef struct		s_texture_blocks
 typedef struct		s_textures
 {
 	t_tblocks		t;
+	t_tblocks		s;
 }					t_textures;
+
+typedef struct		s_music
+{
+	Mix_Chunk		**snd;
+	size_t			num_sounds;
+}					t_music;
+
+typedef struct		s_gun
+{
+	SDL_Texture		*gun_sprite;
+	SDL_Rect		curr_sprite;
+	SDL_Rect		all_sprites;
+	short			boom;
+}					t_gun;
+
+typedef struct		s_hud
+{
+	TTF_Font		*font;
+	SDL_Surface		*surface_message;
+	SDL_Texture		*message;
+	SDL_Rect		message_rect;
+	SDL_Surface		*surface_hud;
+	SDL_Texture		*hud;
+	SDL_RWops		*font_rwops;
+	char			*font_source;
+	SDL_Rect		hud_rect;
+	SDL_Surface		*gun_surface;
+	SDL_Texture		*gun_sprite;
+	SDL_Rect		curr_sprite;
+	SDL_Rect		all_sprites;
+	short			boom;
+}					t_hud;
+
+typedef struct		s_menu
+{
+	bool			is_active;
+	SDL_Texture		*tex_menu;
+	SDL_Rect		menu_rect;
+	int				active_option;
+	bool			is_level_select;
+}					t_menu;
 
 typedef struct		s_main
 {
-	t_sdl		sdl;
-	t_map		map;
-	t_textures	tex;
-	float		prev_time;
-	float		curr_time;
-	float		delta_time;
-	TTF_Font	*font;
+	t_sdl			sdl;
+	t_music			music;
+	t_map			map;
+	t_textures		tex;
+	t_hud			hud;
+	t_menu			menu;
+	bool			greenify;
+	bool			victory;
+	float			prev_time;
+	float			curr_time;
+	float			delta_time;
+	float			pseudo_time;
 }					t_main;
 
 #endif

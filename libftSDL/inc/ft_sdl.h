@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sdl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:38:51 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/03/26 22:02:15 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/04/27 14:37:52 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_ttf.h"
+# include "SDL_mixer.h"
+
 # define MSG(x)	ft_killer(x)
 
 typedef struct		s_img
@@ -42,12 +44,12 @@ t_img				sdl_create_image(size_t w, size_t h);
 void				sdl_clear_image(t_img *img);
 void				sdl_put_image(t_sdl *sdl);
 void				sdl_pixel_put(t_img *img, int x, int y, int color);
-void				sdl_pixel_append(t_img *img, int x, int y, int color);
 void				ft_putendl_fd(char const *s, int fd);
 int					ft_killer(const char *reason);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memalloc(size_t size);
 SDL_Surface			*sdl_load_surface(const char *path,
 								int is_format, size_t format);
-
+SDL_Surface			*sdl_load_surface_from_res(SDL_RWops *src,
+								int is_format, size_t format);
 #endif
