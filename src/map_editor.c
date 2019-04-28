@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 15:24:12 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:09:59 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 				&& close_sector(m, e))
 				|| (e->mode > TEXTURE && e->mode < PORTAL))
 					(e->mode)++;
-			if (e->mode > CLOSE && e->selected_row < TEXT_MENU_ROW)
+			if (e->mode > CLOSE && e->selected_row < TEXT_MENU_ROW - 1)
 				(e->selected_row)++;
 			if (e->mode == PORTAL && e->chosen != -1)
 			{
@@ -124,7 +124,6 @@ int					map_editor_loop(t_main *m)
 				update_all_menu(m, &e);
 				printf("selected row %i\n", e.selected_row);				
 			}
-
 			e.chosen = draw(m, &e);
 			if (e.mode == PLAYER)
 				draw_circle(RED, m);
