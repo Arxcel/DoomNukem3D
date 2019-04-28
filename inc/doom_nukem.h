@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:13:57 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:28:28 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,6 @@ int					sector_field(t_map *map, json_value *value);
 int					count_vertices(t_map *map, json_value *value);
 void				unload_resources(t_main *m);
 void				load_resources(t_main *m);
-
-
 int					init_map_editor(t_main *main);
 int					map_editor_loop(t_main *m);
 int					serialize_map(t_main *m, t_editor_sector *sectors, int num_sectors);
@@ -152,7 +150,8 @@ int					init_sectors(t_map_editor *e);
 
 void				create_text_menu(t_main *m, t_text *menu);
 void				update_text(t_main *m, t_text *menu, int i, int str);
-int					create_text(t_main *m, t_text *menu, int i, const char *str);
+void				update_text_color(t_main *m, t_text *menu, int i, SDL_Color color);
+int					create_text(t_main *m, t_text *menu, int i, SDL_Color fg);
 void				update_all_menu(t_main *m, t_map_editor *e);
 
 void				print_vector(t_editor_wall wall, t_main *main);

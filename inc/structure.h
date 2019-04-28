@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:14:25 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:28:05 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,10 @@ typedef struct		s_map
 	size_t			number_sprites;
 	float			ligntness;
 }					t_map;
-
 typedef struct		s_dot
 {
-	int				x;
-	int				y;
+   int x;
+   int y;
 }					t_dot;
 
 typedef struct		s_editor_wall
@@ -190,6 +189,8 @@ typedef struct		s_text
 {
 	SDL_Texture 	*text_texture;
 	SDL_Rect		dstrect;
+	bool			selected;
+	char			*text;
 }					t_text;
 
 typedef struct		s_map_editor
@@ -200,6 +201,7 @@ typedef struct		s_map_editor
 	int				chosen;
 	t_text 			menu[TEXT_MENU];
 	int				global_index;
+	int				selected_row;
 }					t_map_editor;
 
 /*

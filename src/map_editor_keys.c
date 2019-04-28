@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 11:23:08 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:22:01 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int				left_arrow_key(SDL_Keycode sym, t_map_editor *e)
 		return (1);
 	e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture = 0;
 	e->sectors[e->n].num_walls--;
-    e->global_index--;
+	if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) || (e->n && e->sectors[e->n].num_walls > 1))
+    	e->global_index--;
 	if (e->mode == CLOSE)
 		(e->mode)--;
 	return (0);
@@ -61,6 +62,7 @@ int				arrow_keys(SDL_Keycode sym, t_map_editor *e)
 	}
 	else
 		return (1);
+	e->menu[e->selected_row].selected = true;
 	return (0);
 }
 
