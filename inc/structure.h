@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 18:23:42 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 19:35:13 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ enum	e_bool {false, true} __attribute__((packed));
 # define YELLOW 0xFFFF00
 # define BLUE 0x0000FF
 # define RED 0xFF0000
-# define TEXT_MENU 17
+# define TEXT_MENU 16
 # define LETTER_WIDTH 14
 # define LETTER_HEIGHT 30
-# define TEXT_MENU_ROW 9
 # define TEXTURE_MAX 10
 # define SPRITE_CNT 100
 # define MAX_CEILING_HEIGHT 1000
 # define MIN_FLOOR_HEIGHT -20
+# define SPRITE_MENU 8
 # define _BOOL  typedef enum e_bool	bool
 
 _BOOL;
@@ -197,6 +197,7 @@ typedef struct		s_text
 	SDL_Rect		dstrect;
 	bool			selected;
 	char			*text;
+	int				rows;
 }					t_text;
 
 typedef struct		s_map_editor
@@ -208,6 +209,7 @@ typedef struct		s_map_editor
 	int				chosen;
 	int				sprite_cnt;
 	t_text 			menu[TEXT_MENU];
+	t_text			sprite_menu[SPRITE_MENU];
 	int				global_index;
 	int				selected_row;
 }					t_map_editor;

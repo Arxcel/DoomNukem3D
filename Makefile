@@ -100,7 +100,8 @@ SOURCES :=  main.c \
 			draw_modes.c \
 			menu.c \
 			menu_option.c \
-			victory.c
+			victory.c \
+			map_editor_sprites.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))

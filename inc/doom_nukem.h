@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 17:42:43 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 19:25:45 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ void				update_text(t_main *m, t_text *menu, int i, int str);
 void				update_text_color(t_main *m, t_text *menu, int i);
 int					create_text(t_main *m, t_text *menu, int i, SDL_Color fg);
 void				update_all_menu(t_main *m, t_map_editor *e);
+void				create_sprite_menu(t_main *m, t_text *sprite_menu);
+void				update_sprite_menu(t_main *m, t_map_editor *e);
 
 void				print_vector(t_editor_wall wall, t_main *main);
 int					draw(t_main *m, t_map_editor *e);
@@ -169,6 +171,6 @@ int					left_arrow_key(SDL_Keycode sym, t_map_editor *e);
 
 void				shift_left(t_map_editor *e);
 
-int					remove_text_menu(t_text *menu);
+int					remove_text_menu(t_map_editor *e);
 int					init_gun_surface(t_main *m);
 #endif
