@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:46:44 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 18:04:30 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:33:44 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int					sprite_field(t_map *map, json_value *value)
 		map->sprites[i].position.z = (float)obj[2].value->u.dbl;
 		map->sprites[i].texture = obj[2].value->u.integer;
 		map->sprites[i].is_active = true;
+		map->sprites[i].h = 5;
+		map->sprites[i].w = 10;
 	}
 	return (0);
 }

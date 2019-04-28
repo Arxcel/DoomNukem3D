@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 17:20:32 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 17:06:55 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:22:30 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,9 @@ void		do_general_opt(t_main *m)
 		m->sdl.running = false;
 }
 
-static void	init_sprite(t_main *m)
-{
-	int i;
-
-	i = -1;
-	m->map.number_sprites = m->tex.s.num_textures;
-	m->map.sprites = (t_sprite*)malloc(sizeof(t_sprite) *
-													m->map.number_sprites);
-	while (++i < m->map.number_sprites)
-	{
-		m->map.sprites[i].position = (t_vector){15 + i, 15, 15.0};
-		m->map.sprites[i].w = 10;
-		m->map.sprites[i].h = 5;
-		m->map.sprites[i].is_active = true;
-		m->map.sprites[i].texture = i;
-	}
-}
-
 static void	select_level(t_main *m, char *name)
 {
 	parser(&m->map, name);
-	init_sprite(m);
 	m->menu.is_level_select = false;
 	m->menu.is_active = false;
 	Mix_PlayChannel(-1, m->music.snd[9], 0);

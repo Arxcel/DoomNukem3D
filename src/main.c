@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:11:09 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:33:04 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int					main(int ac, char **av)
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
 	sdl_init(&m.sdl);
-	load_textures(&m);
 	sdl_loop(&m);
 	unload_resources(&m);
 	editor_clear_sdl(&m.sdl);
