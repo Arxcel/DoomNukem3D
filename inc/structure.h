@@ -103,6 +103,7 @@ typedef struct		s_stats
 	int				hp;
 	int				armor;
 	int				active_weapon;
+	int				total_active_weapon;
 }					t_stats;
 
 typedef struct		s_player
@@ -268,7 +269,6 @@ typedef struct		s_hud
 	SDL_Rect		curr_sprite;
 	SDL_Rect		all_sprites;
 	short			boom;
-	int				type_of_weapon;
 }					t_hud;
 
 typedef struct		s_menu

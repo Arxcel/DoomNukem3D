@@ -16,7 +16,6 @@ void	shoot(t_main *m)
 {
 	if (m->hud.boom && m->hud.curr_sprite.x <= (int)(m->hud.all_sprites.w))
 	{
-		puts("piu");
 		m->hud.curr_sprite.x += (m->hud.all_sprites.w) * 2 / 4;
 		m->hud.curr_sprite.y = 0;
 	}
@@ -30,34 +29,25 @@ void	shoot(t_main *m)
 
 int		init_gun_surface(t_main *m)
 {
-	if (m->hud.type_of_weapon == 1)
+	if (m->map.player.stats.active_weapon == 1)
 	{
 		if (!(m->hud.gun_sprite = SDL_CreateTextureFromSurface(m->sdl.ren,
 			m->hud.gun_surface1)))
-		{
 			MSG(SDL_GetError());
-			return (1);
-		}
 	}
-	if (m->hud.type_of_weapon == 2)
+	if (m->map.player.stats.active_weapon == 2)
 	{
 		if (!(m->hud.gun_sprite = SDL_CreateTextureFromSurface(m->sdl.ren,
 			m->hud.gun_surface2)))
-		{
 			MSG(SDL_GetError());
-			return (1);
-		}
 	}
-	if (m->hud.type_of_weapon == 3)
+	if (m->map.player.stats.active_weapon == 3)
 	{
 		if (!(m->hud.gun_sprite = SDL_CreateTextureFromSurface(m->sdl.ren,
 			m->hud.gun_surface3)))
-		{
 			MSG(SDL_GetError());
-			return (1);
-		}
 	}
-	return (0);
+	return (1);
 }
 
 void	draw_gun(t_main *m)
@@ -65,7 +55,7 @@ void	draw_gun(t_main *m)
 	int w;
 	int h;
 
-	if (init_gun_surface(m) == 1)
+	if (init_gun_surface(m) != 1)
 		MSG("Unable to load gun surface");
 	SDL_QueryTexture(m->hud.gun_sprite, NULL, NULL, &w, &h);
 	if (m->hud.boom && m->map.player.stats.ammo > 0 && m->hud.curr_sprite.x <= (int)(m->hud.all_sprites.w))
@@ -106,7 +96,7 @@ void	draw_hud(t_main *m)
 	// current active_weapon
 	draw_text(m, ft_itoa(m->map.player.stats.active_weapon), 890, 705);
 	// total active_weapon
-	draw_text(m, ft_itoa(m->map.player.stats.active_weapon), 940, 705);	
+	draw_text(m, ft_itoa(m->map.player.stats.total_active_weapon), 940, 705);	
 }
 
 void	draw_text(t_main *m, char *text, int x, int y)
