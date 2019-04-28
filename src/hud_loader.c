@@ -75,7 +75,7 @@ void				load_hud(t_main *m)
 	load_hud_texture(&m->hud.surface_hud, "assets/hud/hud.png");
 	load_hud_texture(&m->hud.gun_surface1, "assets/hud/pistol.png");
 	load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_2.png");
-	load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_3.png");
+	load_hud_texture(&m->hud.gun_surface3, "assets/hud/pistol_3.png");
 	load_hud_font(m, "assets/fonts/auto_digital.ttf", 42);
 }
 
