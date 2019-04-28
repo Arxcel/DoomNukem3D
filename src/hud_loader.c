@@ -74,6 +74,7 @@ void				load_hud(t_main *m)
 		MSG(TTF_GetError());
 	load_hud_texture(&m->hud.surface_hud, "assets/hud/hud.png");
 	load_hud_texture(&m->hud.gun_surface1, "assets/hud/pistol.png");
+	// uncomment when pistol_2.png && pistol_2.png will be archived
 	// load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_2.png");
 	// load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_3.png");
 	load_hud_font(m, "assets/fonts/auto_digital.ttf", 42);
@@ -86,6 +87,7 @@ void				unload_hud(t_main *m)
 	TTF_CloseFont(m->hud.font);
 	SDL_FreeSurface(m->hud.surface_hud);
 	SDL_FreeSurface(m->hud.gun_surface1);
+	// uncomment when pistol_2.png && pistol_2.png will be archived
 	// SDL_FreeSurface(m->hud.gun_surface2);
 	// SDL_FreeSurface(m->hud.gun_surface3);	
 	TTF_Quit();
