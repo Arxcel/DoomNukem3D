@@ -69,8 +69,13 @@ static void			handle_key(t_main *m, int key)
 			m->map.player.stats.ammo--;
 		m->hud.boom = 1;
 	}
-	else if (key == 9) // TAB
-		m->map.player.stats.active_weapon = rand() % 3 + 1;
+	else if (key == 9 && m->map.player.stats.total_active_weapon > 1) // TAB
+	{
+		if (m->map.player.stats.total_active_weapon == 2)
+			m->map.player.stats.active_weapon = rand() % 2 + 1;
+		if (m->map.player.stats.total_active_weapon == 3)
+			m->map.player.stats.active_weapon = rand() % 3 + 1;
+	}
 	vertical_movement(m, key);
 }
 
