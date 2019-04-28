@@ -12,6 +12,12 @@
 
 #include "doom_nukem.h"
 
+static void		check_total_active_weapon(t_player *p)
+{
+	if (p->stats.total_active_weapon <= 3)
+			p->stats.total_active_weapon++;
+}
+
 static void		sprite_collision_ligic(t_main *m, t_player *p, t_sprite *s)
 {
 	if (s->texture == 0)
@@ -26,6 +32,16 @@ static void		sprite_collision_ligic(t_main *m, t_player *p, t_sprite *s)
 		p->stats.armor += 50;
 	else if (s->texture == 7)
 		m->victory = true;
+	else if (s->texture == 8 || s->texture == 9)
+	{
+		p->stats.active_weapon = 2;
+		check_total_active_weapon(p);
+	}
+	else if (s->texture == 9)
+	{
+		p->stats.active_weapon = 3;
+		check_total_active_weapon(p);
+	}
 	s->is_active = false;
 	m->greenify = true;
 }
@@ -47,7 +63,7 @@ void			calc_sprite_collisions(t_main *m)
 			continue ;
 		if (s->texture == 0 || s->texture == 2 || s->texture == 3 ||
 			s->texture == 4 || s->texture == 5 || s->texture == 6 ||
-			s->texture == 7)
+			s->texture == 7 || s->texture == 8 || s->texture == 9)
 			sprite_collision_ligic(m, &m->map.player, s);
 	}
 }

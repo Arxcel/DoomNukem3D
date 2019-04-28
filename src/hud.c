@@ -73,7 +73,6 @@ void	draw_gun(t_main *m)
 	SDL_RenderCopy(m->sdl.ren, m->hud.gun_sprite,
 				&m->hud.curr_sprite, &m->hud.all_sprites);
 	SDL_DestroyTexture(m->hud.gun_sprite);
-	
 }
 
 void	draw_hud(t_main *m)
