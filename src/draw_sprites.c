@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 18:42:02 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:38:59 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 	while (++x < end_x)
 	{
 		wall->txtx = interp_next(ix);
-		wall->lz = dist * DARKNESS * 4;
+		wall->lz = dist * m->map.player.darkness * 4;
 		if (x < m->sdl.img.w && x > 0)
 			if (x > begin_x - 1)
 				draw_sprite_impl_y(m, wall, x, dist);

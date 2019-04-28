@@ -6,22 +6,16 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 17:01:58 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:42:36 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static void			max_key0(t_main *m, int key)
-{
-	if (m->map.sectors[m->map.player.sector_number].floor_height <
-	m->map.sectors[m->map.player.sector_number].ceil_height -
-	m->map.sectors[m->map.player.sector_number].floor_height)
-		++m->map.sectors[m->map.player.sector_number].floor_height;
-}
-
 static void			vertical_movement(t_main *m, int key)
 {
+	t_sector *s;
+
 	if (key == SDLK_r)
 	{
 		Mix_PlayChannel(-1, m->music.snd[1], 0);
@@ -42,10 +36,15 @@ static void			vertical_movement(t_main *m, int key)
 		m->map.player.is_crouching = m->sdl.e.type == SDL_KEYDOWN;
 		m->map.player.is_falling = true;
 	}
-	else if (key == SDLK_0)
-		max_key0(m, SDLK_0);
-	else if (key == SDLK_9)
-		--m->map.sectors[m->map.player.sector_number].floor_height;
+	else if (key == SDLK_e)
+	{
+		s = &m->map.sectors[m->map.player.sector_number];
+		if (m->map.player.is_standing && s->is_lift && !s->is_activated)
+		{
+			Mix_PlayChannel(-1, m->music.snd[4], 0);
+			s->is_activated = true;
+		}
+	}
 }
 
 static void			handle_key(t_main *m, int key)

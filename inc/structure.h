@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 18:23:42 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 19:31:26 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct		s_sector
 	bool			is_lift;
 	int				from;
 	int				to;
+	bool			is_activated;
 }					t_sector;
 
 typedef struct		s_sprite

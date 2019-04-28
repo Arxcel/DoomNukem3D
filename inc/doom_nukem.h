@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 18:21:47 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:39:46 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@
 # define W 			1200
 # define H 			800
 
-# define GRAVITY				1.0f
 # define SPEED					5
-# define RUN_SPEED					10
+# define RUN_SPEED				10
 # define MOUSE_SENSIVITY_X		1
 # define MOUSE_SENSIVITY_Y		2
+# define LIFT_SPEED				1
+
 
 # define STANDHEIGHT			6
 # define CROUCHINGHEIGHT		2.5
@@ -38,7 +39,6 @@
 # define KNEEHEIGHT				2
 # define HFOV					0.73f
 # define VFOV					.2f
-# define DARKNESS				2
 
 # define RESOURCES				"./assets.kek"
 # define RESOURCES_PASS			"lol"
@@ -171,4 +171,5 @@ void				shift_left(t_map_editor *e);
 
 int					remove_text_menu(t_text *menu);
 int					init_gun_surface(t_main *m);
+void				calc_lifts(t_main *m);
 #endif

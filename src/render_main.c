@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:23:50 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:38:10 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ void			render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 		wall->txtx = (wall->u0 * ((wall->x2 - x) * wall->t2.y) + wall->u1 *
 		((x - wall->x1) * wall->t1.y)) / ((wall->x2 - x) * wall->t2.y +
 		(x - wall->x1) * wall->t1.y);
-		wall->lz = ((x - wall->x1) * (wall->t2.y - wall->t1.y) /
-							(wall->x2 - wall->x1) + wall->t1.y) * DARKNESS;
+		wall->lz = ((x - wall->x1) * (wall->t2.y - wall->t1.y) / (wall->x2 -
+							wall->x1) + wall->t1.y) * m->map.player.darkness;
 		draw_ceil_floor(m, renderer, wall, x);
 		draw_local_wall(m, wall, renderer, x);
 		if (wall->neighbor >= 0)

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 15:44:17 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 18:22:20 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:20:29 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		standard_mode(t_main *m)
 	SDL_RenderPresent(m->sdl.ren);
 	move_player(m);
 	calc_sprite_collisions(m);
+	calc_lifts(m);
 	m->delta_time = 0.f;
 	calc_green_time(m);
 }

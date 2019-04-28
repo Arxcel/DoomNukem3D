@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:46:44 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 18:39:59 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:44:18 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int						check_obj(json_object_entry *obj, t_sector *sect)
 	sect->is_lift = obj[5].value->u.boolean;
 	sect->from = obj[6].value->u.integer;
 	sect->to = obj[7].value->u.integer;
+	sect->is_activated = false;
 	if (!(sect->neighbors = malloc(sect->number_vertices * sizeof(short))) ||
 		!(sect->vertices = malloc((sect->number_vertices + 1) *
 		sizeof(t_vertex))) ||
