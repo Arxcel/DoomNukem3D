@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 17:20:32 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:16:35 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:06:55 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,7 @@ void		do_general_opt(t_main *m)
 	}
 	else if (m->menu.active_option == 1)
 	{
-		if (init_map_editor(m))
-		{
-			printf("failed init\n");
-			unload_resources(m);
-			editor_clear_sdl(&m->sdl);
-			exit(0);
-		}
+		init_map_editor(m);
 		printf("loop start\n");
 		map_editor_loop(m);
 		printf("loop finish\n");
@@ -63,6 +57,7 @@ static void	select_level(t_main *m, char *name)
 	init_sprite(m);
 	m->menu.is_level_select = false;
 	m->menu.is_active = false;
+	Mix_PlayChannel(-1, m->music.snd[9], 0);
 }
 
 void		do_select_opt(t_main *m)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 17:15:29 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 17:53:54 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,13 @@ int					map_editor_loop(t_main *m)
 	init_sectors(&e);
 	create_text_menu(m, e.menu);
 	m->sdl.running = true;
+	ft_bzero(&m->sdl.e, sizeof(m->sdl.e));
 	while(m->sdl.running)
 	{
 		while (SDL_PollEvent(&m->sdl.e))
 		{
 			if (m->sdl.e.type == SDL_QUIT ||  m->sdl.e.key.keysym.sym == SDLK_ESCAPE)
 			{
-				printf("loop legal finish\n");
 				m->sdl.running = false;
 			}
 			if (e.n < SECTORS_CNT && SDL_MOUSEBUTTONDOWN == m->sdl.e.type)
@@ -128,6 +128,5 @@ int					map_editor_loop(t_main *m)
 				draw_circle(RED, m);
 		}
 	}
-
 	return (remove_text_menu(e.menu));
 }

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 15:55:51 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 17:37:04 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:06:30 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,15 @@ static void			menu_level_select(t_main *m)
 void				handle_menu(t_main *m, int key)
 {
 	if (m->sdl.e.type == SDL_KEYUP && key == SDLK_UP)
+	{
 		m->menu.active_option--;
+		Mix_PlayChannel(-1, m->music.snd[6], 0);
+	}
 	else if (m->sdl.e.type == SDL_KEYUP && key == SDLK_DOWN)
+	{
+		Mix_PlayChannel(-1, m->music.snd[6], 0);
 		m->menu.active_option++;
+	}
 	if (m->menu.is_level_select)
 	{
 		if (m->menu.active_option > 4)
@@ -91,6 +97,7 @@ void				handle_menu(t_main *m, int key)
 	}
 	if (m->sdl.e.type == SDL_KEYUP && key == SDLK_RETURN)
 	{
+		Mix_PlayChannel(-1, m->music.snd[5], 0);
 		if (m->menu.is_level_select)
 			do_select_opt(m);
 		else
