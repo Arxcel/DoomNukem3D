@@ -262,10 +262,15 @@ typedef struct		s_hud
 	char			*font_source;
 	SDL_Rect		hud_rect;
 	SDL_Surface		*gun_surface;
+	SDL_Surface		*gun_surface2;
 	SDL_Texture		*gun_sprite;
+	SDL_Texture		*gun_sprite2;
 	SDL_Rect		curr_sprite;
+	SDL_Rect		curr_sprite2;
 	SDL_Rect		all_sprites;
+	SDL_Rect		all_sprites2;
 	short			boom;
+	int				type_of_weapon;
 }					t_hud;
 
 typedef struct		s_menu

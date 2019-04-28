@@ -68,10 +68,12 @@ static void			load_hud_font(t_main *m, const char *path, size_t size)
 
 void				load_hud(t_main *m)
 {
+	m->hud.type_of_weapon = 1;
 	if (TTF_Init())
 		MSG(TTF_GetError());
 	load_hud_texture(&m->hud.surface_hud, "assets/hud/hud.png");
 	load_hud_texture(&m->hud.gun_surface, "assets/hud/pistol.png");
+	load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_2.png");
 	load_hud_font(m, "assets/fonts/auto_digital.ttf", 42);
 }
 
