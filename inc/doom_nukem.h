@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:28:28 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:48:43 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int					init_sectors(t_map_editor *e);
 
 void				create_text_menu(t_main *m, t_text *menu);
 void				update_text(t_main *m, t_text *menu, int i, int str);
-void				update_text_color(t_main *m, t_text *menu, int i, SDL_Color color);
+void				update_text_color(t_main *m, t_text *menu, int i);
 int					create_text(t_main *m, t_text *menu, int i, SDL_Color fg);
 void				update_all_menu(t_main *m, t_map_editor *e);
 

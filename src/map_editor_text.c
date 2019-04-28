@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 16:14:18 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:50:05 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		update_text(t_main *m, t_text *menu, int i, int str)
 	create_text(m, menu, i, bg);
 }
 
-void		update_text_color(t_main *m, t_text *menu, int i, SDL_Color color)
+void		update_text_color(t_main *m, t_text *menu, int i)
 {
 	SDL_Color selected = {0, 0, 255};
 	SDL_Color bg = {255, 255, 255};
@@ -75,7 +75,7 @@ void		create_text_menu(t_main *m, t_text *menu)
 	menu[13].text = ft_strdup("100");
 	menu[14].text = ft_strdup("0");
 	menu[15].text = ft_strdup("0");
-	menu[16].text = ft_strdup("10");
+	menu[16].text = ft_strdup("0");
 	i = -1;
 	while( ++i < TEXT_MENU)
 	{
@@ -87,19 +87,16 @@ void		create_text_menu(t_main *m, t_text *menu)
 void				update_all_menu(t_main *m, t_map_editor *e)
 {
 	int i;
-	SDL_Color bg = {0, 0, 255};
 
 	i = -1;
 	while( ++i < TEXT_MENU)
-	{
 		if (i != e->selected_row)
 		{
 			e->menu[i].selected = false;
-			update_text_color(m, e->menu, i, bg);			
+			update_text_color(m, e->menu, i);
 		}
-	}
 	e->menu[e->selected_row].selected = true;
-	update_text_color(m, e->menu, e->selected_row, bg);
+	update_text_color(m, e->menu, e->selected_row);
 	update_text(m, e->menu, 9, e->n);
 	if (e->sectors[e->n].num_walls > -1)
 		update_text(m, e->menu, 10, e->sectors[e->n].num_walls);
@@ -107,6 +104,9 @@ void				update_all_menu(t_main *m, t_map_editor *e)
 		update_text(m, e->menu, 11, e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture);
 	update_text(m, e->menu, 12, e->sectors[e->n].floor_height);
 	update_text(m, e->menu, 13, e->sectors[e->n].ceiling_height);
+	update_text(m, e->menu, 14, e->sectors[e->n].is_lift);
+	update_text(m, e->menu, 15, e->sectors[e->n].from);
+	update_text(m, e->menu, 16, e->sectors[e->n].to);
 }
 
 int					remove_text_menu(t_text *menu)

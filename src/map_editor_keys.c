@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_keys.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 15:22:01 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:10:50 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,42 +27,56 @@ int				left_arrow_key(SDL_Keycode sym, t_map_editor *e)
 	return (0);
 }
 
+int				up_arrow_key(SDL_Keycode sym, t_map_editor *e)
+{
+	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0
+		&& e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture < TEXTURE_MAX)
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture++;
+	else if (e->mode == FLOOR_HEIGHT &&
+		e->sectors[e->n].floor_height + 10 < e->sectors[e->n].ceiling_height)
+		e->sectors[e->n].floor_height += 10;
+	else if (e->mode == CEILING_HEIGHT && e->sectors[e->n].ceiling_height + 10 <= MAX_CEILING_HEIGHT)
+		e->sectors[e->n].ceiling_height += 10;
+	else if (e->mode == TO && e->sectors[e->n].is_lift &&
+		e->sectors[e->n].to + 30 <=e->sectors[e->n].ceiling_height)
+		e->sectors[e->n].to += 10;
+	else
+		return (1);
+	return (0);
+}
+
+int				down_arrow_key(SDL_Keycode sym, t_map_editor *e)
+{
+	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0 &&
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture > 0)
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture--;
+	else if (e->mode == FLOOR_HEIGHT && e->sectors[e->n].floor_height - 10 >= MIN_FLOOR_HEIGHT)
+		e->sectors[e->n].floor_height -= 10;
+	else if (e->mode == CEILING_HEIGHT && e->sectors[e->n].ceiling_height - 10 > e->sectors[e->n].floor_height)
+		e->sectors[e->n].ceiling_height -= 10;
+	else if (e->mode == TO && e->sectors[e->n].is_lift)
+		e->sectors[e->n].to -= 10;
+	else
+		return (1);
+	return (0);
+}
+
 int				arrow_keys(SDL_Keycode sym, t_map_editor *e)
 {
 	if (sym != SDLK_UP && sym != SDLK_DOWN && sym != SDLK_LEFT)
 		return (1);
 	if ((e->mode == TEXTURE || e->mode == CLOSE) && !left_arrow_key(sym, e))
 		return (1);
-	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0)
+	if ((sym == SDLK_UP && !up_arrow_key(sym, e)) ||
+		(sym == SDLK_DOWN && !down_arrow_key(sym, e)))
+		return (0);
+	else if (e->mode == IS_LIFTED)
 	{
-		if (sym == SDLK_UP && e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture < TEXTURE_MAX)
-			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture++;
-		else if (sym == SDLK_DOWN && e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture > 0)
-			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture--;
-		else
-			return (1);
-	}
-	else if (e->mode == FLOOR_HEIGHT)
-	{
-		if (sym == SDLK_UP && e->sectors[e->n].floor_height + 10 < e->sectors[e->n].ceiling_height)
-			e->sectors[e->n].floor_height += 10;
-		else if (sym == SDLK_DOWN && e->sectors[e->n].floor_height - 10 >= MIN_FLOOR_HEIGHT)
-			e->sectors[e->n].floor_height -= 10;
-		else
-			return (1);		
-	}
-	else if (e->mode == CEILING_HEIGHT)
-	{
-		if (sym == SDLK_UP && e->sectors[e->n].ceiling_height + 10 <= MAX_CEILING_HEIGHT)
-			e->sectors[e->n].ceiling_height += 10;
-		else if (sym == SDLK_DOWN && e->sectors[e->n].ceiling_height - 10 > e->sectors[e->n].floor_height)
-			e->sectors[e->n].ceiling_height -= 10;
-		else
-			return (1);
+		e->sectors[e->n].is_lift = e->sectors[e->n].is_lift ? false : true;
+		e->sectors[e->n].from = e->sectors[e->n].is_lift ? e->sectors[e->n].floor_height : 0;
 	}
 	else
 		return (1);
-	e->menu[e->selected_row].selected = true;
 	return (0);
 }
 

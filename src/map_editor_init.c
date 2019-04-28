@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 15:22:07 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:47:10 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					init_sectors(t_map_editor *e)
 			e->sectors[i].floor_height = 0;
 			e->sectors[i].is_lift = false;
 			e->sectors[i].from = 0;
-			e->sectors[i].to = 10;
+			e->sectors[i].to = 0;
 		}
 	e->sectors[0].num_walls = -1;
 	e->global_index = 0;

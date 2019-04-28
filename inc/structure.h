@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:28:05 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:25:24 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ _BOOL;
 
 typedef	enum
 {
-	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, PORTAL, PLAYER, SPRITE
+	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, IS_LIFTED, FROM, TO, PORTAL, PLAYER, SPRITE
 }					e_select_mode;
 
 typedef struct		s_vector

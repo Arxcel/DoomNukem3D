@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 16:09:59 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 17:15:29 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int		create_wall(t_map_editor *e)
 		if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) || (e->n && e->sectors[e->n].num_walls > 1))
 		{
 			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index = e->global_index++;
-			printf("global index %i\n", e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index);
 		}
 		e->sectors[e->n].num_walls++;
 	}
@@ -70,7 +69,7 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 		{
 			if ((e->sectors[e->n].num_walls > 0 && e->mode == TEXTURE
 				&& close_sector(m, e))
-				|| (e->mode > TEXTURE && e->mode < PORTAL))
+				|| (e->mode > TEXTURE && e->mode < PORTAL) || e->mode >= PLAYER)
 					(e->mode)++;
 			if (e->mode > CLOSE && e->selected_row < TEXT_MENU_ROW - 1)
 				(e->selected_row)++;
