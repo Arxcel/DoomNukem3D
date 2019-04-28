@@ -33,6 +33,7 @@ void	draw_gun(t_main *m)
 	int w;
 	int h;
 
+	
 	if (!(m->hud.gun_sprite = SDL_CreateTextureFromSurface(m->sdl.ren,
 			m->hud.gun_surface)))
 		MSG(SDL_GetError());
