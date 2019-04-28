@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 17:53:36 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:24:02 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int					init_sectors(t_map_editor *e)
 	e->mode = TEXTURE;
 	e->chosen = -1;
 	e->selected_row = 3;
+	e->sprite_cnt = 0;
 	return (0);
 }
 

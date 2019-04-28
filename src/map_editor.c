@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 18:22:57 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:29:52 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int		close_sector(t_main *m, t_map_editor *e)
 			e->sectors[e->n].wall_vertice[0].begin.x;
 		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end.y =
 			e->sectors[e->n].wall_vertice[0].begin.y;
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index = e->global_index++;
+		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index =
+			e->global_index++;
 		e->sectors[e->n].num_walls++;
 		return (e->sectors[e->n].num_walls);
 	}
@@ -48,15 +49,42 @@ int		create_wall(t_map_editor *e)
 					e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end;
 			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end = mouse;
 		}
-		if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) || (e->n && e->sectors[e->n].num_walls > 1))
-		{
-			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index = e->global_index++;
-		}
+		if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) ||
+			(e->n && e->sectors[e->n].num_walls > 1))
+			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index =
+				e->global_index++;
 		e->sectors[e->n].num_walls++;
 	}
 	else if (e->mode == PORTAL && e->n < SECTORS_CNT - 1)
 		e->chosen = check_intersection(e, mouse);
 	return (e->chosen);
+}
+
+void				create_sector(t_map_editor	*e)
+{
+	if (e->mode == PORTAL && e->chosen != -1)
+	{
+		if (e->chosen != e->sectors[e->n].num_walls - 1)
+			e->sectors[e->n].neighbors[e->chosen + 1] = e->n + 1;
+		else
+			e->sectors[e->n].neighbors[0] = e->n + 1;
+		(e->n)++;
+		e->sectors[e->n].wall_vertice[0] = e->sectors[e->n - 1].wall_vertice[e->chosen];
+		e->sectors[e->n].wall_vertice[0].begin = e->sectors[e->n - 1].wall_vertice[e->chosen].end;
+		e->sectors[e->n].wall_vertice[0].end = e->sectors[e->n - 1].wall_vertice[e->chosen].begin;
+		e->sectors[e->n].wall_vertice[1].global_index =
+			e->sectors[e->n - 1].wall_vertice[e->chosen].global_index;
+		if (e->sectors[e->n - 1].wall_vertice[e->chosen].global_index != e->sectors[e->n - 1].num_walls - 1)
+			e->sectors[e->n].wall_vertice[0].global_index =
+				e->sectors[e->n - 1].wall_vertice[e->chosen].global_index + 1;
+		else
+			e->sectors[e->n].wall_vertice[0].global_index = 0;
+		e->sectors[e->n].neighbors[1] = e->n - 1;
+		e->chosen = -1;
+		e->mode = TEXTURE;
+		e->sectors[e->n].num_walls = 1;
+		e->selected_row = 3;
+	}
 }
 
 void				sdl_keydown(t_main *m, t_map_editor	*e)
@@ -73,29 +101,7 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 					(e->mode)++;
 			if (e->mode > CLOSE && e->selected_row < TEXT_MENU_ROW - 1)
 				(e->selected_row)++;
-			if (e->mode == PORTAL && e->chosen != -1)
-			{
-				if (e->chosen != e->sectors[e->n].num_walls - 1)
-					e->sectors[e->n].neighbors[e->chosen + 1] = e->n + 1;
-				else
-					e->sectors[e->n].neighbors[0] = e->n + 1;
-				(e->n)++;
-				e->sectors[e->n].wall_vertice[0] = e->sectors[e->n - 1].wall_vertice[e->chosen];
-				e->sectors[e->n].wall_vertice[0].begin = e->sectors[e->n - 1].wall_vertice[e->chosen].end;
-				e->sectors[e->n].wall_vertice[0].end = e->sectors[e->n - 1].wall_vertice[e->chosen].begin;
-				e->sectors[e->n].wall_vertice[1].global_index =
-					e->sectors[e->n - 1].wall_vertice[e->chosen].global_index;
-				if (e->sectors[e->n - 1].wall_vertice[e->chosen].global_index != e->sectors[e->n - 1].num_walls - 1)
-					e->sectors[e->n].wall_vertice[0].global_index =
-						e->sectors[e->n - 1].wall_vertice[e->chosen].global_index + 1;
-				else
-					e->sectors[e->n].wall_vertice[0].global_index = 0;
-				e->sectors[e->n].neighbors[1] = e->n - 1;
-				e->chosen = -1;
-				e->mode = TEXTURE;
-				e->sectors[e->n].num_walls = 1;
-				e->selected_row = 3;
-			}
+			create_sector(e);
 		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serialize_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 15:04:02 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:16:18 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
     while (++i <= num_sect)
     {
         
-        json_value *sector = json_object_new(5);
+        json_value *sector = json_object_new(8);
 
         json_value *vertices = json_array_new(sectors[i].num_walls);
         json_value *neighbors = json_array_new(sectors[i].num_walls);
@@ -81,13 +81,23 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
         json_object_push(sector, "vertices", vertices);
         json_object_push(sector, "neighbors", neighbors);
         json_object_push(sector, "textures", textures);
+        json_object_push(sector, "is_lift", json_boolean_new(sectors[i].is_lift));
+        json_object_push(sector, "from", json_integer_new(sectors[i].from));
+        json_object_push(sector, "to", json_integer_new(sectors[i].to));
         json_array_push(arr_sect, sector);
     }
-    json_value *pl = json_object_new(4);
+
+
+    json_value *pl = json_object_new(6);
     json_object_push(pl, "x", json_double_new(m->map.player.position.x / 10.0));
     json_object_push(pl, "y", json_double_new(m->map.player.position.y / 10.0));
     json_object_push(pl, "angle", json_double_new(-90));
     json_object_push(pl, "sector", json_integer_new(m->map.player.sector_number));
+    json_object_push(pl, "darkness", json_integer_new(m->map.player.darkness));
+    json_object_push(pl, "gravity", json_double_new(m->map.player.gravity));
+
+
+
     json_object_push(obj, "vertex", vert);
     json_object_push(obj, "sector", arr_sect);
     json_object_push(obj, "player", pl);
@@ -95,6 +105,7 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
     json_serialize(buf, obj);
     json_value_free(obj);
     write_map_to_file(buf, "assets/maps/map4.json");
+    puts(buf);
     free(buf);
 	MSG("Map saved!");
     return (0);

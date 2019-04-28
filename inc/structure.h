@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 18:17:18 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:23:42 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ enum	e_bool {false, true} __attribute__((packed));
 # define LETTER_HEIGHT 30
 # define TEXT_MENU_ROW 9
 # define TEXTURE_MAX 10
+# define SPRITE_CNT 100
 # define MAX_CEILING_HEIGHT 1000
 # define MIN_FLOOR_HEIGHT -20
 # define _BOOL  typedef enum e_bool	bool
@@ -200,8 +201,10 @@ typedef struct		s_map_editor
 {
 	int 			n;
 	t_editor_sector	sectors[SECTORS_CNT];
+	t_sprite		sprites[SPRITE_CNT];
 	int				mode;
 	int				chosen;
+	int				sprite_cnt;
 	t_text 			menu[TEXT_MENU];
 	int				global_index;
 	int				selected_row;
