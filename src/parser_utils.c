@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:46:44 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 11:22:56 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:51:44 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ int						check_obj(json_object_entry *obj, t_sector *sect)
 	sect->floor_height = obj[0].value->u.integer;
 	sect->ceil_height = obj[1].value->u.integer;
 	sect->number_vertices = obj[2].value->u.array.length;
+	sect->is_lift = obj[5].value->u.boolean;
+	sect->from = obj[6].value->u.integer;
+	sect->to = obj[7].value->u.integer;
 	if (!(sect->neighbors = malloc(sect->number_vertices * sizeof(short))) ||
 		!(sect->vertices = malloc((sect->number_vertices + 1) *
 		sizeof(t_vertex))) ||
@@ -93,16 +96,34 @@ int						sector_field(t_map *map, json_value *value)
 	return (0);
 }
 
+int					sprite_field(t_map *map, json_value *value)
+{
+	int					i;
+	json_object_entry	*obj;
+
+	map->number_sprites = value->u.array.length;
+	if (!(map->sprites =
+		(t_sprite*)malloc(sizeof(t_sprite) * map->number_sprites)))
+		return (1);
+	i = -1;
+	while (++i < map->number_sprites)
+	{
+		obj = value->u.array.values[i]->u.object.values;
+		map->sprites[i].position.x = (float)obj[0].value->u.dbl;
+		map->sprites[i].position.y = (float)obj[1].value->u.dbl;
+		map->sprites[i].position.z = (float)obj[2].value->u.dbl;
+		map->sprites[i].texture = obj[2].value->u.integer;
+	}
+	return (0);
+}
+
 int						player_field(t_map *map, json_value *value)
 {
 	json_object_entry	*js;
 
-	if (!value || value->type != json_object || value->u.object.length < 4)
+	if (!value || value->type != json_object || value->u.object.length < 6)
 		return (1);
 	js = value->u.object.values;
-	if (ft_strcmp(js[0].name, "x") || ft_strcmp(js[1].name, "y") ||
-		ft_strcmp(js[2].name, "angle") || ft_strcmp(js[3].name, "sector"))
-		return (1);
 	map->player.angle = (float)js[2].value->u.dbl;
 	map->player.sector_number = js[3].value->u.integer;
 	map->player.velocity.x = 0;
@@ -115,5 +136,7 @@ int						player_field(t_map *map, json_value *value)
 	map->player.position.y = (float)js[1].value->u.dbl;
 	map->player.position.z =
 		map->sectors[map->player.sector_number].floor_height + STANDHEIGHT;
+	map->player.darkness = js[4].value->u.integer;
+	map->player.gravity = js[5].value->u.dbl;
 	return (0);
 }

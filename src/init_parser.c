@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:36:42 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 15:14:36 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:41:55 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ int						analyze_value(t_map *map, json_object_entry js)
 		if (map->sectors || !map->vertices ||
 			!map->number_vertices || !js.value ||
 			js.value->type != json_array || sector_field(map, js.value))
+			return (1);
+	}
+	else if (!ft_strcmp(js.name, "sprite"))
+	{
+		if (sprite_field(map, js.value))
 			return (1);
 	}
 	else if (!ft_strcmp(js.name, "player"))

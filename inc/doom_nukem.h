@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 16:48:43 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 17:42:43 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int					remove_data(t_map *map);
 int					remove_values(t_map *map, json_value *value);
 int					player_field(t_map *map, json_value *value);
 int					sector_field(t_map *map, json_value *value);
+int					sprite_field(t_map *map, json_value *value);
 int					count_vertices(t_map *map, json_value *value);
 void				unload_resources(t_main *m);
 void				load_resources(t_main *m);

@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 16:25:24 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 17:37:55 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,9 @@ typedef struct		s_sector
 	size_t			number_vertices;
 	t_vertex		min;
 	t_vertex		max;
+	bool			is_lift;
+	int				from;
+	int				to;
 }					t_sector;
 
 typedef struct		s_sprite
@@ -132,6 +135,8 @@ typedef struct		s_player
 	float			pitch;
 	float			anglesin;
 	float			anglecos;
+	int				darkness;
+	float			gravity;
 	size_t			sector_number;
 
 	bool			is_moving;

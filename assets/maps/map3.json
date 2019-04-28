@@ -304,7 +304,10 @@
 				5,
 				5,
 				5
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 2,
@@ -326,7 +329,10 @@
 				5,
 				6,
 				5
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 4,
@@ -348,7 +354,10 @@
 				5,
 				6,
 				5
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 6,
@@ -370,7 +379,10 @@
 				5,
 				6,
 				5
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 8,
@@ -401,7 +413,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 0,
@@ -423,7 +438,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -451,7 +469,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -473,7 +494,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -501,7 +525,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 0,
@@ -529,7 +556,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -551,7 +581,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -579,7 +612,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -601,7 +637,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 8,
@@ -623,7 +662,10 @@
 				9,
 				9,
 				9
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 6,
@@ -645,7 +687,10 @@
 				9,
 				9,
 				9
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 4,
@@ -667,7 +712,10 @@
 				9,
 				9,
 				9
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 4,
@@ -692,7 +740,10 @@
 				9,
 				9,
 				9
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 0,
@@ -714,7 +765,10 @@
 				5,
 				5,
 				5
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 10,
@@ -736,7 +790,10 @@
 				7,
 				7,
 				7
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 4,
@@ -758,7 +815,10 @@
 				9,
 				9,
 				9
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 11,
@@ -783,7 +843,10 @@
 				8,
 				0,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 0,
@@ -811,7 +874,10 @@
 				10,
 				10,
 				10
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 11,
@@ -833,7 +899,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 15,
@@ -861,7 +930,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 11,
@@ -883,7 +955,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 15,
@@ -905,7 +980,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 11,
@@ -927,7 +1005,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 11,
@@ -949,7 +1030,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 15,
@@ -971,7 +1055,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 11,
@@ -993,7 +1080,10 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		},
 		{
 			"floor_height": 0,
@@ -1021,13 +1111,21 @@
 				8,
 				8,
 				8
-			]
+			],
+			"is_lift" : false,
+			"from" : 10,
+			"to" : 20
 		}
+	],
+	"sprite": [
+		{"x" : 0.0, "y": 0.0, "z": 0.0, "texture": 0}
 	],
 	"player": {
 		"x": 61.0,
 		"y": 34.0,
 		"angle": -90.0,
-		"sector": 30
+		"sector": 30,
+		"darkness" : 2,
+		"gravity" : 1.0
 	}
 }
