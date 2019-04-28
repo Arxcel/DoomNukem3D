@@ -131,4 +131,5 @@ void				handle_menu(t_main *m, int key);
 void				do_general_opt(t_main *m);
 void				do_select_opt(t_main *m);
 void				draw_victory(t_main *m);
+int					init_gun_surface(t_main *m);
 #endif

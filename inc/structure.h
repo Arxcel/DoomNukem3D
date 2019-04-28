@@ -261,14 +261,12 @@ typedef struct		s_hud
 	SDL_RWops		*font_rwops;
 	char			*font_source;
 	SDL_Rect		hud_rect;
-	SDL_Surface		*gun_surface;
+	SDL_Surface		*gun_surface1;
 	SDL_Surface		*gun_surface2;
+	SDL_Surface		*gun_surface3;
 	SDL_Texture		*gun_sprite;
-	SDL_Texture		*gun_sprite2;
 	SDL_Rect		curr_sprite;
-	SDL_Rect		curr_sprite2;
 	SDL_Rect		all_sprites;
-	SDL_Rect		all_sprites2;
 	short			boom;
 	int				type_of_weapon;
 }					t_hud;
