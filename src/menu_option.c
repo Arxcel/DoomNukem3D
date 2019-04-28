@@ -6,7 +6,11 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 17:20:32 by vkozlov           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/04/28 13:20:05 by vkozlov          ###   ########.fr       */
+=======
+/*   Updated: 2019/04/27 17:37:14 by vkozlov          ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +24,7 @@ void		do_general_opt(t_main *m)
 		m->menu.active_option = 0;
 	}
 	else if (m->menu.active_option == 1)
+<<<<<<< HEAD
 	{
 		if (init_map_editor(m))
 		{
@@ -35,6 +40,9 @@ void		do_general_opt(t_main *m)
 		editor_clear_sdl(&m->sdl);
 		exit(0);
 	}
+=======
+		;
+>>>>>>> master
 	else if (m->menu.active_option == 2)
 		m->sdl.running = false;
 }
@@ -70,11 +78,19 @@ void		do_select_opt(t_main *m)
 	if (m->menu.active_option == 0)
 		select_level(m, "map1");
 	else if (m->menu.active_option == 1)
+<<<<<<< HEAD
 		select_level(m, "map2");
 	else if (m->menu.active_option == 2)
 		select_level(m, "map3");
 	else if (m->menu.active_option == 3)
 		select_level(m, "map4");
+=======
+		select_level(m, "map");
+	else if (m->menu.active_option == 2)
+		select_level(m, "main");
+	else if (m->menu.active_option == 3)
+		select_level(m, "map1");
+>>>>>>> master
 	else if (m->menu.active_option == 4)
 	{
 		m->menu.is_level_select = false;

@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 11:38:13 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:14:25 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct		s_stats
 	int				hp;
 	int				armor;
 	int				active_weapon;
+	int				total_active_weapon;
 }					t_stats;
 
 typedef struct		s_player
@@ -323,7 +324,9 @@ typedef struct		s_hud
 	SDL_RWops		*font_rwops;
 	char			*font_source;
 	SDL_Rect		hud_rect;
-	SDL_Surface		*gun_surface;
+	SDL_Surface		*gun_surface1;
+	SDL_Surface		*gun_surface2;
+	SDL_Surface		*gun_surface3;
 	SDL_Texture		*gun_sprite;
 	SDL_Rect		curr_sprite;
 	SDL_Rect		all_sprites;

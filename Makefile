@@ -6,6 +6,8 @@ FLAGS :=
 
 PDIR := $(shell pwd)
 
+PDIR := $(shell pwd)
+
 EXT := doom_nukem.h \
 		structure.h \
 		utils.h
