@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 11:39:27 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 14:34:39 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@
 # define KNEEHEIGHT				2
 # define HFOV					0.73f
 # define VFOV					.2f
-# define DARKNESS				2
+# define DARKNESS				0
 
-# define RESOURCES				"./assets.res"
+# define RESOURCES				"./assets.kek"
 # define RESOURCES_PASS			"lol"
 
 # define NEAR_Z		1e-4f

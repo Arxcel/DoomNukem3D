@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:39:39 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:49:10 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ static void		load_block_textures(const char *path, t_tblocks *textures)
 	z = zip_open(RESOURCES, ZIP_CREATE, 0);
 	if (!z)
 		MSG(zip_strerror(z));
+	zip_set_default_password(z, RESOURCES_PASS);
 	zip_stat_init(&st);
 	zip_stat(z, path, 0, &st);
 	if (st.size < 1)
 		MSG("No such texture");
 	file_contents = malloc(st.size);
-	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
+	f = zip_fopen(z, path, 0);
 	if (!f)
 		MSG(zip_strerror(z));
 	if (zip_fread(f, file_contents, st.size) < 1 || zip_fclose(f))

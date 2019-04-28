@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 12:42:14 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:04:02 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,28 @@ int    write_map_to_file(char *buf, const char *filename)
 {
 	zip_t				*z;
 	zip_source_t		*s;
+	zip_int64_t			index;
+	int					res;
+	zip_error_t			e;
 
 	z = zip_open(RESOURCES, ZIP_CREATE, 0);
 	if (!z)
 		MSG(zip_strerror(z));
-
-	if ((s = zip_source_buffer(z, buf, sizeof(buf), 0)) == NULL ||
-		zip_file_add(z, filename, s, ZIP_FL_OVERWRITE) < 0)
+	zip_set_default_password(z, RESOURCES_PASS);
+	s = zip_source_buffer_create(buf, ft_strlen(buf), 0, &e);
+	if (!s)
+		MSG(e.str);
+	index = zip_name_locate(z, filename, 0);
+	if (index < 0)
+		MSG(zip_strerror(z));
+	zip_delete(z, index);
+	res = zip_file_add(z, filename, s, ZIP_FL_ENC_UTF_8);
+	if (res < 0)
 	{
 		zip_source_free(s);
-		printf("error adding file: %s\n", zip_strerror(z));
+		MSG(zip_strerror(z));
 	}
 	zip_close(z);
-	printf("File saved\n");
 	return 0;
 }
 
@@ -55,8 +64,8 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
         while (++j < sectors[i].num_walls)
         {
             json_value *_obj = json_object_new(2);
-            json_object_push(_obj, "x", json_double_new(sectors[i].wall_vertice[j].begin.x));
-            json_object_push(_obj, "y", json_double_new(sectors[i].wall_vertice[j].begin.y));
+            json_object_push(_obj, "x", json_double_new(sectors[i].wall_vertice[j].begin.x / 10.0));
+            json_object_push(_obj, "y", json_double_new(sectors[i].wall_vertice[j].begin.y / 10.0));
             json_array_push(vert, _obj);
         }
         int j = -1;
@@ -75,8 +84,8 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
         json_array_push(arr_sect, sector);
     }
     json_value *pl = json_object_new(4);
-    json_object_push(pl, "x", json_double_new(m->map.player.position.x));
-    json_object_push(pl, "y", json_double_new(m->map.player.position.y));
+    json_object_push(pl, "x", json_double_new(m->map.player.position.x / 10.0));
+    json_object_push(pl, "y", json_double_new(m->map.player.position.y / 10.0));
     json_object_push(pl, "angle", json_double_new(-90));
     json_object_push(pl, "sector", json_integer_new(m->map.player.sector_number));
     json_object_push(obj, "vertex", vert);
@@ -85,7 +94,8 @@ int     serialize_map(t_main *m, t_editor_sector *sectors, int num_sect)
     char *buf = malloc(json_measure(obj));
     json_serialize(buf, obj);
     json_value_free(obj);
-    write_map_to_file(buf, "assets/maps/map5.json");
+    write_map_to_file(buf, "assets/maps/map4.json");
     free(buf);
+	MSG("Map saved!");
     return (0);
 }
