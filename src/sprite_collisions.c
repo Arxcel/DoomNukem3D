@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 18:33:51 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:10:34 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:55:57 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,16 @@ static void		sprite_collision_ligic(t_main *m, t_player *p, t_sprite *s)
 		p->stats.armor += 50;
 	else if (s->texture == 7)
 		m->victory = true;
-	// uncomment when pistol_2.png && pistol_2.png will be archived
-	// else if (s->texture == 8 || s->texture == 9)
-	// {
-	// 	p->stats.active_weapon = 2;
-	// 	check_total_active_weapon(p);
-	// }
-	// else if (s->texture == 9)
-	// {
-	// 	p->stats.active_weapon = 3;
-	// 	check_total_active_weapon(p);
-	// }
+	else if (s->texture == 8 || s->texture == 9)
+	{
+		p->stats.active_weapon = 2;
+		check_total_active_weapon(p);
+	}
+	else if (s->texture == 9)
+	{
+		p->stats.active_weapon = 3;
+		check_total_active_weapon(p);
+	}
 	s->is_active = false;
 	m->greenify = true;
 }

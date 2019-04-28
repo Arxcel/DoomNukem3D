@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:10:45 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:55:46 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ static void			handle_key(t_main *m, int key)
 			m->map.player.stats.ammo--;
 		m->hud.boom = 1;
 	}
-	// uncomment when pistol_2.png && pistol_2.png will be archived
-	// else if (key == 9) // TAB
-	// 	m->map.player.stats.active_weapon = rand() % 3 + 1;
+	else if (key == 9) // TAB
+		m->map.player.stats.active_weapon = rand() % 3 + 1;
 	vertical_movement(m, key);
 }
 
