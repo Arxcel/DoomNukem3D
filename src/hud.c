@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:06:44 by olbondar          #+#    #+#             */
-/*   Updated: 2019/04/28 15:16:09 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:56:15 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	draw_hud(t_main *m)
 	SDL_RenderCopy(m->sdl.ren, m->hud.hud, NULL, &m->hud.hud_rect);
 	SDL_DestroyTexture(m->hud.hud);
 	// On-screen text display
-	draw_text(m, "Find yellow card", 440, 550);
+	draw_text(m, ft_strdup("Find yellow card"), 440, 550);
 	// items
 	draw_text(m, ft_itoa(m->map.player.stats.ammo), 885, 658);
 	draw_text(m, ft_itoa(m->map.player.stats.armor), 220, 705);
@@ -95,7 +95,13 @@ void	draw_hud(t_main *m)
 	// current active_weapon
 	draw_text(m, ft_itoa(m->map.player.stats.active_weapon), 890, 705);
 	// total active_weapon
-	draw_text(m, ft_itoa(m->map.player.stats.total_active_weapon), 940, 705);	
+	draw_text(m, ft_itoa(m->map.player.stats.total_active_weapon), 940, 705);
+	if (m->map.player.is_standing &&
+				m->map.sectors[m->map.player.sector_number].is_lift &&
+				!m->map.sectors[m->map.player.sector_number].is_activated)
+		draw_text(m, ft_strdup("Press E to activate the lift"),
+							m->sdl.img.w / 2 - 250, m->sdl.img.h / 2 - 30);
+	SDL_DestroyTexture(m->hud.hud);
 }
 
 void	draw_text(t_main *m, char *text, int x, int y)
@@ -119,4 +125,5 @@ void	draw_text(t_main *m, char *text, int x, int y)
 	SDL_RenderCopy(m->sdl.ren, m->hud.message, NULL, &m->hud.message_rect);
 	SDL_DestroyTexture(m->hud.message);
 	SDL_FreeSurface(m->hud.surface_message);
+	free(text);
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
 /*   Updated: 2019/04/28 19:35:13 by sahafono         ###   ########.fr       */
@@ -105,6 +105,7 @@ typedef struct		s_sector
 	bool			is_lift;
 	int				from;
 	int				to;
+	bool			is_activated;
 }					t_sector;
 
 typedef struct		s_sprite
@@ -114,8 +115,6 @@ typedef struct		s_sprite
 	bool			is_active;
 	unsigned		w;
 	unsigned		h;
-	int				sprite_ceil;
-	int				sprite_floor;
 }					t_sprite;
 
 typedef struct		s_stats
