@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 16:32:15 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:34:43 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,5 @@ int					map_editor_loop(t_main *m)
 				draw_circle(RED, m);
 		}
 	}
-
 	return (remove_text_menu(e.menu));
 }
