@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_keys.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:12:15 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:22:23 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 int				left_arrow_key(t_main *m, t_map_editor *e)
 {
-	if (m->sdl.e.key.keysym.sym != SDLK_LEFT  || (e->n && e->sectors[e->n].num_walls < 2))
+	if (m->sdl.e.key.keysym.sym != SDLK_LEFT ||
+								(e->n && e->sectors[e->n].num_walls < 2))
 		return (1);
 	if (!e->n && e->sectors[e->n].num_walls < 0)
 		return (1);
 	e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture = 0;
 	e->sectors[e->n].num_walls--;
-	if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) || (e->n && e->sectors[e->n].num_walls > 1))
-    	e->global_index--;
+	if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) ||
+									(e->n && e->sectors[e->n].num_walls > 1))
+		e->global_index--;
 	if (e->mode == CLOSE)
 		(e->mode)--;
 	return (0);
