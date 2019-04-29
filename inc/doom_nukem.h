@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 17:43:13 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 19:33:47 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int					create_text(t_main *m, t_text *menu, int i, SDL_Color fg);
 void				update_all_menu(t_main *m, t_map_editor *e);
 void				create_sprite_menu(t_main *m, t_text *sprite_menu);
 void				update_sprite_menu(t_main *m, t_map_editor *e);
-
+void				draw_sprites_dot(t_map_editor *e, t_main *m);
 void				print_vector(t_editor_wall wall, t_main *main);
 int					draw(t_main *m, t_map_editor *e);
 int					draw_circle(int color, t_main *m, t_vector position);
