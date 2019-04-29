@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 19:33:47 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:48:00 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,4 +178,6 @@ void				handle_menu(t_main *m, int key);
 void				check_menu_active_option(t_main *m, int check);
 json_value			*serialize_sectors(t_map_editor *e, json_value **vert);
 int					write_map_to_file(char *buf, const char *filename);
+int					up_arrow_key(t_main *m, t_map_editor *e);
+int					down_arrow_key(t_main *m, t_map_editor *e);
 #endif
