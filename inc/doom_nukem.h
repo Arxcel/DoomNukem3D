@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 19:39:46 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:46:48 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,12 @@ void				unload_resources(t_main *m);
 void				load_resources(t_main *m);
 int					init_map_editor(t_main *main);
 int					map_editor_loop(t_main *m);
-int					serialize_map(t_main *m, t_editor_sector *sectors,
-													int num_sectors);
+int					serialize_map(t_main *m, t_map_editor *e);
 int					editor_clear_sdl(t_sdl *sdl);
 int					intersect(t_editor_wall wall, t_dot cur);
 int					line(t_editor_wall wall, t_main *main);
-int					init_sectors(t_map_editor *e);
-
+void				init_sectors(t_map_editor *e);
+void				init_sprites(t_map_editor *e);
 void				create_text_menu(t_main *m, t_text *menu);
 void				update_text(t_main *m, t_text *menu, int i, int str);
 void				update_text_color(t_main *m, t_text *menu, int i);
@@ -159,7 +158,7 @@ void				update_sprite_menu(t_main *m, t_map_editor *e);
 
 void				print_vector(t_editor_wall wall, t_main *main);
 int					draw(t_main *m, t_map_editor *e);
-int					draw_circle(int color, t_main *m);
+int					draw_circle(int color, t_main *m, t_vector position);
 
 int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot);
 int					check_intersection(t_map_editor *e, t_dot mouse);

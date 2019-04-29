@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 19:35:13 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:07:38 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ enum	e_bool {false, true} __attribute__((packed));
 
 _BOOL;
 
-typedef	enum
+typedef	enum		e_select_mode
 {
-	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT,
-	IS_LIFTED, FROM, TO, PORTAL, PLAYER, SPRITE
-}	e_select_mode;
+	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, IS_LIFTED,
+	FROM, TO, PORTAL, CREATED, PLAYER, SPRITE_Z, SPRITE_TEXTURE,
+	DARKNESS, GRAVITY, SAVE
+}					t_select_mode;
 
 typedef struct		s_vector
 {
