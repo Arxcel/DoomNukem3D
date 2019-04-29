@@ -112,7 +112,7 @@ OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 all: obj $(NAME)
 
 $(NAME): libs $(OBJS) $(EXTENSIONS)
-		$(CC) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) \
+		$(CC) $(KEYS) -o $(NAME) $(OBJS) $(FLAGS) $(CFLAGS) \
 		-L $(LIBFTSDL) -lftSDL -L $(LIBJSON) -lJSON \
 		$(SDL2_P) $(SDL2_F) -L $(LIBFT) -lft -L libzip/bin/lib -lzip
 
@@ -126,7 +126,7 @@ obj:
 	mkdir -p $(DIR_O)
 
 $(DIR_O)/%.o: $(DIR_S)/%.c $(DEPS) $(EXTENSIONS)
-		$(CC) -c -o $@ $< $(FLAGS) $(CFLAGS)
+		$(CC) $(KEYS) -c -o $@ $< $(FLAGS) $(CFLAGS)
 
 lz:
 	if ! [ -d "$(LZIP_SRC)/build" ]; then \

@@ -52,7 +52,8 @@ void		unload_resources(t_main *m)
 	unload_sounds(m);
 }
 
-int			main(int ac, char **av)
+// int			main(int ac, char **av)
+int			main()
 {
 	t_main	m;
 

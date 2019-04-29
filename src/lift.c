@@ -32,7 +32,7 @@ static void	process_lift(t_main *m, t_sector *lift)
 
 void		calc_lifts(t_main *m)
 {
-	int i;
+	size_t i;
 
 	i = -1;
 	while (++i < m->map.number_sectors)

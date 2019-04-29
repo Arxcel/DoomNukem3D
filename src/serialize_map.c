@@ -6,13 +6,13 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 17:19:32 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 17:30:02 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static json_value	*process_player(t_main *m, t_map_editor *e)
+static json_value	*process_player(t_main *m)
 {
 	json_value	*pl;
 
@@ -29,7 +29,7 @@ static json_value	*process_player(t_main *m, t_map_editor *e)
 	return (pl);
 }
 
-static json_value	*process_sprites(t_main *m, t_map_editor *e)
+static json_value	*process_sprites(t_map_editor *e)
 {
 	json_value	*arr_sprites;
 	int			i;
@@ -64,8 +64,8 @@ static json_value	*prepare_map(t_main *m, t_map_editor *e)
 	obj = json_object_new(4);
 	vert = json_array_new(WALLS_CNT * SECTORS_CNT);
 	arr_sect = serialize_sectors(e, &vert);
-	arr_sprites = process_sprites(m, e);
-	pl = process_player(m, e);
+	arr_sprites = process_sprites(e);
+	pl = process_player(m);
 	json_object_push(obj, "vertex", vert);
 	json_object_push(obj, "sector", arr_sect);
 	json_object_push(obj, "sprite", arr_sprites);

@@ -16,7 +16,7 @@ static void			transform_player(t_map *map)
 {
 	t_sector	*sect;
 	t_vertex	*vert;
-	int			s;
+	size_t		s;
 
 	sect = &map->sectors[map->player.sector_number];
 	vert = sect->vertices;
@@ -74,7 +74,7 @@ static void			update_velocity(t_player *p, t_vertex p1, t_vertex p2)
 static void			player_horizontal_movement(t_main *m)
 {
 	t_sector	*sect;
-	int			s;
+	size_t		s;
 	t_vertex	hole;
 
 	sect = &m->map.sectors[m->map.player.sector_number];

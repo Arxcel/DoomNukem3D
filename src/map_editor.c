@@ -6,13 +6,13 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 15:33:17 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 17:28:54 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-int		close_sector(t_main *m, t_map_editor *e)
+int		close_sector(t_map_editor *e)
 {
 	if (e->sectors[e->n].num_walls > 1 && e->sectors[e->n].num_walls < WALLS_CNT)
 	{
@@ -96,14 +96,14 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 			(e->n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN))
 		{
 			if ((e->sectors[e->n].num_walls > 0 && e->mode == TEXTURE
-				&& close_sector(m, e))
+				&& close_sector(e))
 				|| (e->mode > TEXTURE && e->mode < PORTAL)
 				|| (e->mode >= PLAYER && e->mode < SAVE))
 					(e->mode)++;
-			if (e->mode > CLOSE && e->selected_row < TEXT_MENU / 2)
+			if ((e->mode > CLOSE && e->mode < SPRITE_Z && e->selected_row < TEXT_MENU / 2)
+				|| (e->mode >= SPRITE_Z && e->selected_row < SPRITE_MENU / 2))
 				(e->selected_row)++;
 			create_sector(e);
-			printf("mode %i\n", e->mode);
 		}
 	}
 }
@@ -135,7 +135,6 @@ int					map_editor_loop(t_main *m)
 					update_sprite_menu(m, &e);
 				if (m->sdl.e.key.keysym.sym == SDLK_1)
 					e.mode = SPRITE_Z;
-				//printf("selected row %i\n", e.selected_row);				
 			}
 			e.chosen = draw(m, &e);
 			if (e.mode >= PLAYER)

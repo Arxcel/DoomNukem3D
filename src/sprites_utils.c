@@ -45,7 +45,7 @@ void		setup_sprite_texture(t_main *m, t_wall *w, int wall)
 
 void		sort_sprites(t_main *m, int *order, float *dist)
 {
-	int i;
+	size_t i;
 
 	i = -1;
 	while (++i < m->map.number_sprites)

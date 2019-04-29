@@ -37,8 +37,8 @@ unsigned int	c_greenify(unsigned int color, float green)
 
 void			draw_green(t_main *m)
 {
-	int x;
-	int y;
+	size_t x;
+	size_t y;
 	int color;
 
 	y = -1;

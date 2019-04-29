@@ -73,7 +73,7 @@ static void		sprite_collision_ligic(t_main *m, t_player *p, t_sprite *s)
 
 void			calc_sprite_collisions(t_main *m)
 {
-	int			i;
+	size_t		i;
 	float		d;
 	t_sprite	*s;
 
