@@ -15,7 +15,7 @@
 
 void		init_renderer(t_renderer *r, t_img *img, int n_sectors)
 {
-	int x;
+	size_t	x;
 
 	ft_bzero(r, sizeof(t_renderer));
 	r->w = img->w;

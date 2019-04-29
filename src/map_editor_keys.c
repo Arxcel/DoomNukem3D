@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 16:45:54 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:34:03 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int				left_arrow_key(t_main *m, t_map_editor *e)
 {
-	if (sym != SDLK_LEFT  || (e->n && e->sectors[e->n].num_walls < 2))
+	if (m->sdl.e.key.keysym.sym != SDLK_LEFT  || (e->n && e->sectors[e->n].num_walls < 2))
 		return (1);
 	if (!e->n && e->sectors[e->n].num_walls < 0)
 		return (1);
@@ -51,7 +51,7 @@ int				up_arrow_key(t_main *m, t_map_editor *e)
 	return (0);
 }
 
-int				down_arrow_key(t_main *m, t_map_editor *e)
+int				down_arrow_key(t_map_editor *e)
 {
 	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0 &&
 		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture > 0)

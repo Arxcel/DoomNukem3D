@@ -42,9 +42,9 @@ static t_vertex		get_scaled_edge(t_main *m, t_vertex ver, int s_x, int s_y)
 	return (e);
 }
 
-static void			draw_sector(t_main *m, int w, int h, int s_i)
+static void			draw_sector(t_main *m, size_t w, size_t h, size_t s_i)
 {
-	int		a;
+	size_t	a;
 	t_line	l;
 
 	l.color = 0xFFFF00;
@@ -65,9 +65,9 @@ static void			draw_sector(t_main *m, int w, int h, int s_i)
 
 void				draw_minimap(t_main *m)
 {
-	int w;
-	int h;
-	int s;
+	size_t w;
+	size_t h;
+	size_t s;
 
 	w = m->sdl.img.w / 2;
 	h = m->sdl.img.h / 2;

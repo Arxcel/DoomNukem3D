@@ -34,6 +34,7 @@ static void			vertical_movement(t_main *m, int key)
 {
 	t_sector *s;
 
+	s = NULL;
 	if (key == SDLK_r)
 	{
 		Mix_PlayChannel(-1, m->music.snd[1], 0);

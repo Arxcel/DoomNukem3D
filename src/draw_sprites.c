@@ -34,11 +34,8 @@ static void			calc_sprite_h(t_sprite *s, t_wall *wall,
 }
 
 static void			draw_sprite_impl_y(t_main *m, t_wall *wall,
-													int x, float dist)
+													int x)
 {
-	int				y1;
-	int				y2;
-	int				y;
 	SDL_Surface		*current;
 	t_interp		*i;
 
@@ -58,9 +55,9 @@ static void			draw_sprite_impl_y(t_main *m, t_wall *wall,
 
 static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 {
-	int				begin_x;
+	size_t			begin_x;
 	int				end_x;
-	int				x;
+	size_t			x;
 	t_interp		*ix;
 
 	begin_x = wall->x1;
@@ -70,13 +67,13 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 	x = begin_x - 1;
 	ix = init_interp((t_pt){begin_x, begin_x},
 					end_x, (t_pt){0, m->tex.s.textures[wall->solid_id]->w});
-	while (++x < end_x)
+	while (++x < (size_t)end_x)
 	{
 		wall->txtx = interp_next(ix);
 		wall->lz = dist * m->map.player.darkness * 4;
 		if (x < m->sdl.img.w && x > 0)
 			if (x > begin_x - 1)
-				draw_sprite_impl_y(m, wall, x, dist);
+				draw_sprite_impl_y(m, wall, x);
 	}
 	free(ix);
 }
@@ -87,7 +84,7 @@ void				draw_sprites(t_main *m)
 	int			i;
 	int			*s_order;
 	float		*s_dist;
-	int			j;
+	size_t		j;
 
 	s_order = (int*)malloc(sizeof(int) * m->map.number_sprites);
 	s_dist = (float*)malloc(sizeof(float) * m->map.number_sprites);
