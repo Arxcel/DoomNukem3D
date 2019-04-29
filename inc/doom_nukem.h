@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 17:19:30 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 17:43:13 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,8 @@ int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot);
 int					check_intersection(t_map_editor *e, t_dot mouse);
 
 int					player_save_keys(t_main *m, t_map_editor *e);
-int					arrow_keys(SDL_Keycode sym, t_map_editor *e);
-int					left_arrow_key(SDL_Keycode sym, t_map_editor *e);
+int					arrow_keys(t_main *m, t_map_editor *e);
+int					left_arrow_key(t_main *m, t_map_editor *e);
 
 void				shift_left(t_map_editor *e);
 
