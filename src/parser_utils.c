@@ -40,32 +40,31 @@ int						find_min_max(t_map *map, int i, json_value *js)
 	return (0);
 }
 
-int						check_obj(json_object_entry *obj, t_sector *sect)
+int						check_obj(json_object_entry *obj, t_sector *s)
 {
 	int					j;
 
 	if (obj[2].value->type != json_array || obj[3].value->type != json_array ||
-		obj[4].value->type != json_array || obj[2].value->u.array.length !=
-		obj[3].value->u.array.length
+		obj[4].value->type != json_array ||
+		obj[2].value->u.array.length != obj[3].value->u.array.length
 		|| obj[2].value->u.array.length != obj[4].value->u.array.length)
 		return (1);
-	sect->floor_height = obj[0].value->u.integer;
-	sect->ceil_height = obj[1].value->u.integer;
-	sect->number_vertices = obj[2].value->u.array.length;
-	sect->is_lift = obj[5].value->u.boolean;
-	sect->from = obj[6].value->u.integer;
-	sect->to = obj[7].value->u.integer;
-	sect->is_activated = false;
-	if (!(sect->neighbors = malloc(sect->number_vertices * sizeof(short))) ||
-		!(sect->vertices = malloc((sect->number_vertices + 1) *
-		sizeof(t_vertex))) ||
-		!(sect->textures = (int*)malloc(sect->number_vertices * sizeof(int))))
+	s->floor_height = obj[0].value->u.integer;
+	s->ceil_height = obj[1].value->u.integer;
+	s->number_vertices = obj[2].value->u.array.length;
+	s->is_lift = obj[5].value->u.boolean;
+	s->from = obj[6].value->u.integer;
+	s->to = obj[7].value->u.integer;
+	s->is_activated = false;
+	if (!(s->neighbors = malloc(s->number_vertices * sizeof(short))) ||
+		!(s->vertices = malloc((s->number_vertices + 1) * sizeof(t_vertex)))
+		|| !(s->textures = (int*)malloc(s->number_vertices * sizeof(int))))
 		return (1);
 	j = -1;
-	while (++j < sect->number_vertices)
+	while (++j < s->number_vertices)
 	{
-		sect->neighbors[j] = (short)obj[3].value->u.array.values[j]->u.integer;
-		sect->textures[j] = obj[4].value->u.array.values[j]->u.integer;
+		s->neighbors[j] = (short)obj[3].value->u.array.values[j]->u.integer;
+		s->textures[j] = obj[4].value->u.array.values[j]->u.integer;
 	}
 	return (0);
 }
