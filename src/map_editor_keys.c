@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 17:53:10 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 18:55:58 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 			e->mode = CREATED;
 			shift_left(e);
 		}
+		else if (e->mode == SPRITE_TEXTURE)
+			e->mode = DARKNESS;
 		else if (e->mode == SAVE)
 			serialize_map(m, e);
 		return (0);
@@ -126,13 +128,14 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 			e->mode = PLAYER;
 			return (0);
 		}
-	if (e->mode == SPRITE_Z && e->sprite_cnt < SPRITE_CNT)
+	if ((e->mode == SPRITE_Z || e->mode == SPRITE_TEXTURE) && e->sprite_cnt < SPRITE_CNT)
 	{
 		puts("here");
 		e->selected_row = 0;
 		e->sprites[e->sprite_cnt].position.x = d.x;
 		e->sprites[e->sprite_cnt].position.y = d.y;
 		e->sprite_cnt++;
+		e->mode = SPRITE_Z;
 		return (0);
 	}
 	return (1);

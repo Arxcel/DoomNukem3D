@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 18:43:02 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:02:04 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ static json_value	*process_sprites(t_map_editor *e)
 	arr_sprites = json_array_new(e->sprite_cnt + 1);
 	while (e->sprite_cnt && ++i < e->sprite_cnt)
 	{
+		puts("fds");
 		sprite = json_object_new(4);
 		json_object_push(sprite, "x",
-				json_double_new(e->sprites[i].position.x));
+				json_double_new(e->sprites[i].position.x / 10.0));
 		json_object_push(sprite, "y",
-				json_double_new(e->sprites[i].position.y));
+				json_double_new(e->sprites[i].position.y / 10.0));
 		json_object_push(sprite, "z",
 				json_double_new(e->sprites[i].position.z));
 		json_object_push(sprite, "texture",

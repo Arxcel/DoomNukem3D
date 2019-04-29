@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 18:40:51 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 18:52:44 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,18 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 			if ((e->sectors[e->n].num_walls > 0 && e->mode == TEXTURE
 				&& close_sector(e))
 				|| (e->mode > TEXTURE && e->mode < PORTAL)
-				|| (e->mode >= PLAYER && e->mode < SAVE))
+				|| e->mode == PLAYER || e->mode == SPRITE_Z
+				|| (e->mode > SPRITE_TEXTURE && e->mode < SAVE))
 					(e->mode)++;
 			if ((e->mode > CLOSE && e->mode < SPRITE_Z && e->selected_row < TEXT_MENU / 2)
-				|| (e->mode == SPRITE_Z))
+				|| (e->mode == SPRITE_Z && !e->selected_row)
+				|| (e->mode > SPRITE_TEXTURE && e->mode < SAVE))
 				(e->selected_row)++;
 			if (e->mode == SPRITE_TEXTURE)
 				(e->selected_row)--;
+			if (e->mode == SPRITE_Z)
+				e->selected_row = 0;
+				
 			create_sector(e);
 		}
 	}
