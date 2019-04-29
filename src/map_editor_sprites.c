@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 19:06:28 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 19:45:43 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:34:53 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void    create_sprite_menu(t_main *m, t_text *sprite_menu)
 	sprite_menu[3].text = ft_strdup("Gravity:");
     sprite_menu[4].text = ft_strdup("0");
 	sprite_menu[5].text = ft_strdup("0");
-	sprite_menu[6].text =  ft_strdup("0");
-	sprite_menu[7].text = ft_strdup("0");
+	sprite_menu[6].text =  ft_strdup("2");
+	sprite_menu[7].text = ft_strdup("1");
     i = -1;
 	while( ++i < SPRITE_MENU)
 	{

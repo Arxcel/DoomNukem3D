@@ -6,13 +6,13 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 19:37:41 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:43:25 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-int					init_sectors(t_map_editor *e)
+void					init_sectors(t_map_editor *e)
 {
 	int i;
 	int j;
@@ -39,7 +39,19 @@ int					init_sectors(t_map_editor *e)
 	e->chosen = -1;
 	e->selected_row = 2;
 	e->sprite_cnt = 0;
-	return (0);
+	init_sprites(e);
+}
+
+void			init_sprites(t_map_editor *e)
+{
+	int i;
+
+	i = -1;
+	while(++i < SPRITE_CNT)
+	{
+		e->sprites[i].position.z = 0.0f;
+		e->sprites[i].texture = 0;
+	}
 }
 
 int		init_map_editor(t_main *main)
@@ -51,6 +63,8 @@ int		init_map_editor(t_main *main)
 	SDL_SetRenderDrawColor(main->sdl.ren, 0, 0, 0, 0);
 	SDL_RenderClear(main->sdl.ren);
 	SDL_RenderPresent(main->sdl.ren);
+	main->map.player.darkness = 2;
+	main->map.player.gravity = 1.0f;
 	return (0);
 }
 
