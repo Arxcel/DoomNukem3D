@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 19:06:28 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 15:31:47 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 16:08:43 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void				update_sprite_menu(t_main *m, t_map_editor *e)
 			e->sprite_menu[i].selected = false;
 			update_text_color(m, e->sprite_menu, i);
 		}
+	e->sprite_menu[e->selected_row].selected = true;
+	update_text_color(m, e->sprite_menu, e->selected_row);
     update_text(m, e->sprite_menu, 4, (int)e->sprites[e->sprite_cnt].position.z);
     update_text(m, e->sprite_menu, 5, e->sprites[e->sprite_cnt].texture);
     update_text(m, e->sprite_menu, 6, m->map.player.darkness);
