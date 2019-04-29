@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 14:39:18 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:46:57 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 			shift_left(e);
 		}
 		else if (e->mode == SAVE)
-			serialize_map(m, e->sectors, e->n);
+			serialize_map(m, e);
 		return (0);
 	}
 	SDL_GetMouseState(&d.x, &d.y);
