@@ -104,7 +104,8 @@ SOURCES :=  main.c \
 			map_editor_sprites.c \
 			lift.c \
 			write_map.c \
-			serialize_sector.c
+			serialize_sector.c \
+			map_editor_text_utils.c
 
 SRCS := $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
