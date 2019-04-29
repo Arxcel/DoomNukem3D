@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 14:46:48 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:19:30 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include "structure.h"
 # include "utils.h"
 # include "json.h"
+# include "json-builder.h"
+# include <unistd.h>
 
 # define W 			1200
 # define H 			800
@@ -103,7 +105,7 @@ t_vertex			calculate_edges2(t_player *player, t_vertex *vertex);
 void				clamp_edges_with_player_view(t_wall *w);
 void				draw_local_wall(t_main *m, t_wall *wall,
 													t_renderer *r, int x);
-void				calc_sprite_edges(t_player *p, t_vector sprite_pos,
+void				calc_sprites(t_player *p, t_vector sprite_pos,
 												t_wall *wall, float dist);
 void				draw_sprites(t_main *m);
 void				draw_sprite_line(t_main *m, t_wall *w,
@@ -174,4 +176,6 @@ int					init_gun_surface(t_main *m);
 void				calc_lifts(t_main *m);
 void				handle_menu(t_main *m, int key);
 void				check_menu_active_option(t_main *m, int check);
+json_value			*serialize_sectors(t_map_editor *e, json_value **vert);
+int					write_map_to_file(char *buf, const char *filename);
 #endif

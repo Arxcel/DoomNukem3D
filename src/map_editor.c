@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 14:27:34 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:33:17 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ int					map_editor_loop(t_main *m)
 			sdl_keydown(m, &e);
 			if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
 			{
-				if (e.mode < SPRITE)
+				if (e.mode < SPRITE_Z)
 					update_all_menu(m, &e);
 				else
 					update_sprite_menu(m, &e);
 				if (m->sdl.e.key.keysym.sym == SDLK_1)
-					e.mode = SPRITE;
+					e.mode = SPRITE_Z;
 				//printf("selected row %i\n", e.selected_row);				
 			}
 			e.chosen = draw(m, &e);

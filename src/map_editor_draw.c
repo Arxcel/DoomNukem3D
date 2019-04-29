@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_draw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:08 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 14:01:57 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:34:36 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		draw(t_main *m, t_map_editor *e)
 	sdl_clear_image(&m->sdl.img);
 	SDL_RenderCopy(m->sdl.ren, m->sdl.texture, NULL, NULL);
 	i = -1;
-	if (e->mode < SPRITE)
+	if (e->mode < SPRITE_Z)
 		while (++i < TEXT_MENU)
 			SDL_RenderCopy(m->sdl.ren, e->menu[i].text_texture, NULL, &e->menu[i].dstrect);
 	else
