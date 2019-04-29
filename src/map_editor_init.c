@@ -6,13 +6,13 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:37:52 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void					init_sectors(t_map_editor *e)
+void	init_sectors(t_map_editor *e)
 {
 	int i;
 	int j;
@@ -25,7 +25,7 @@ void					init_sectors(t_map_editor *e)
 			e->sectors[i].num_walls = 1;
 			e->sectors[i].walls[j].texture = 0;
 			e->sectors[i].walls[j].color = YELLOW;
-            e->sectors[i].walls[j].global_index = 0;
+			e->sectors[i].walls[j].global_index = 0;
 			e->sectors[i].ceiling_height = 100;
 			e->sectors[i].floor_height = 0;
 			e->sectors[i].is_lift = false;
@@ -39,15 +39,14 @@ void					init_sectors(t_map_editor *e)
 	e->chosen = -1;
 	e->selected_row = 2;
 	e->sprite_cnt = 0;
-	init_sprites(e);
 }
 
-void			init_sprites(t_map_editor *e)
+void	init_sprites(t_map_editor *e)
 {
 	int i;
 
 	i = -1;
-	while(++i < SPRITE_CNT)
+	while (++i < SPRITE_CNT)
 	{
 		e->sprites[i].position.z = 0.0f;
 		e->sprites[i].texture = 0;
@@ -68,8 +67,7 @@ int		init_map_editor(t_main *main)
 	return (0);
 }
 
-
-int				editor_clear_sdl(t_sdl *sdl)
+int		editor_clear_sdl(t_sdl *sdl)
 {
 	SDL_DestroyTexture(sdl->texture);
 	SDL_DestroyRenderer(sdl->ren);
@@ -78,4 +76,3 @@ int				editor_clear_sdl(t_sdl *sdl)
 	SDL_Quit();
 	return (0);
 }
-

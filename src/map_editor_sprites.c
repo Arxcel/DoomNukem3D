@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_sprites.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 19:06:28 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:21:17 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 19:33:40 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,25 @@ void				update_sprite_menu(t_main *m, t_map_editor *e)
 	update_text(m, e->sprite_menu, 5, e->sprites[e->sprite_cnt].texture);
 	update_text(m, e->sprite_menu, 6, m->map.player.darkness);
 	update_text(m, e->sprite_menu, 7, (int)m->map.player.gravity);
+}
+
+void				draw_sprites_dot(t_map_editor *e, t_main *m)
+{
+	int i;
+
+	if (m->sdl.e.type == SDL_KEYDOWN
+		|| m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
+	{
+		if (e->mode < SPRITE_Z)
+			update_all_menu(m, &e);
+		else
+			update_sprite_menu(m, &e);
+	}
+	e->chosen = draw(m, e);
+	if (e->mode >= PLAYER)
+		draw_circle(RED, m, m->map.player.position);
+	i = -1;
+	if (e->mode >= SPRITE_Z && e->sprite_cnt)
+		while (++i < e->sprite_cnt)
+			draw_circle(YELLOW, m, e->sprites[i].position);
 }
