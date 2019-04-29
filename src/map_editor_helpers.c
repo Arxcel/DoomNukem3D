@@ -12,27 +12,29 @@
 
 #include "doom_nukem.h"
 
-int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot)
+int		pnpoly(int num_walls, t_editor_wall *walls, t_dot dot)
 {
 	int c;
+	int i;
+	int j;
 
 	c = 0;
-	for (int i = 0, j = num_walls - 1; i < num_walls; j = i++) 
+	i = 0;
+	j = num_walls - 1;
+	while (i < num_walls)
 	{
 		if ((
-		(walls[i].begin.y < walls[j].begin.y) && (walls[i].begin.y <= dot.y)
-		&& (dot.y <= walls[j].begin.y) &&
-		((walls[j].begin.y - walls[i].begin.y) * (dot.x - walls[i].begin.x) >
-		(walls[j].begin.x -  walls[i].begin.x) * (dot.y - walls[i].begin.y))
-		) || (
-		(walls[i].begin.y > walls[j].begin.y) &&
-		(walls[j].begin.y <= dot.y) && (dot.y <= walls[i].begin.y) &&
-		((walls[j].begin.y - walls[i].begin.y) * (dot.x - walls[i].begin.x) <
-		(walls[j].begin.x - walls[i].begin.x) * (dot.y - walls[i].begin.y))
-	))
-		c = !c;
+			(w[i].begin.y < w[j].begin.y) && (w[i].begin.y <= d.y)
+			&& (d.y <= w[j].begin.y) && ((w[j].begin.y - w[i].begin.y)
+			* (d.x - w[i].begin.x) > (w[j].begin.x - w[i].begin.x)
+			* (d.y - w[i].begin.y))) || ((w[i].begin.y > w[j].begin.y)
+			&& (w[j].begin.y <= d.y) && (d.y <= w[i].begin.y) &&
+			((w[j].begin.y - w[i].begin.y) * (d.x - w[i].begin.x) <
+			(w[j].begin.x - w[i].begin.x) * (d.y - w[i].begin.y))))
+			c = !c;
+		j = i++;
 	}
-	return c;
+	return (c);
 }
 
 int		check_intersection(t_map_editor *e, t_dot mouse)
@@ -54,7 +56,7 @@ int		check_intersection(t_map_editor *e, t_dot mouse)
 				e->chosen = j;
 				e->sectors[e->n].wall_vertice[j].color = BLUE;
 			}
-			break;
+			break ;
 		}
 	}
 	return (e->chosen);
