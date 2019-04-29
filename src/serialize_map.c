@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 14:52:36 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:54:13 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int     serialize_map(t_main *m, t_map_editor *e)
     }
     json_value *arr_sprites = json_array_new(e->sprite_cnt + 1);
     i = -1;
-    while(++i <= e->sprite_cnt)
+    while(e->sprite_cnt && ++i <= e->sprite_cnt)
     {
         json_value *sprite = json_object_new(4);
         json_object_push(sprite, "x", json_double_new(e->sprites[i].position.x));
