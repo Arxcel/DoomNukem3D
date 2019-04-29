@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serialize_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 18:00:58 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 18:43:02 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static json_value	*process_player(t_main *m)
 	json_object_push(pl, "sector",
 			json_integer_new(m->map.player.sector_number));
 	json_object_push(pl, "darkness", json_integer_new(m->map.player.darkness));
-	json_object_push(pl, "gravity", json_double_new(m->map.player.gravity));
+	json_object_push(pl, "gravity", json_double_new(m->map.player.gravity /
+		10));
 	return (pl);
 }
 
