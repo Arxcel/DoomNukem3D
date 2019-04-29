@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 13:29:55 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 13:12:31 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:17:32 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void			transform_player(t_map *map)
 	map->player.position.x += map->player.velocity.x;
 	map->player.position.y += map->player.velocity.y;
 	map->player.position.z += map->player.velocity.z;
-	printf("player coord: (%f;%f;%f)\n", map->player.position.x, map->player.position.y, map->player.position.z);
 }
 
 static void			player_vertical_movement(t_main *m)
