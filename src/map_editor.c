@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:36:23 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:43:44 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void				sdl_keydown(t_main *m, t_map_editor *e)
 int					map_editor_loop(t_main *m)
 {
 	t_map_editor	e;
-	int				i;
 
 	init_sectors(&e);
 	init_sprites(&e);

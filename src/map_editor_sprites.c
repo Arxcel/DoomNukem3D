@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 19:06:28 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:33:40 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:44:28 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void				draw_sprites_dot(t_map_editor *e, t_main *m)
 		|| m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
 	{
 		if (e->mode < SPRITE_Z)
-			update_all_menu(m, &e);
+			update_all_menu(m, e);
 		else
-			update_sprite_menu(m, &e);
+			update_sprite_menu(m, e);
 	}
 	e->chosen = draw(m, e);
 	if (e->mode >= PLAYER)
