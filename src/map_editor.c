@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 16:11:59 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 16:45:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 {
 	if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (arrow_keys(m->sdl.e.key.keysym.sym, e)
+		if (arrow_keys(m, e)
 			&& player_save_keys(m, e) &&
 			(e->n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN))
 		{
@@ -101,7 +101,7 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 				|| (e->mode >= PLAYER && e->mode < SAVE))
 					(e->mode)++;
 			if ((e->mode > CLOSE && e->mode < SPRITE_Z && e->selected_row < TEXT_MENU / 2)
-				|| (e->mode >= SPRITE_Z && e->selected_row < SPRITE_MENU / 2))
+				|| (e->mode == SPRITE_Z && e->selected_row < SPRITE_MENU / 2))
 				(e->selected_row)++;
 			create_sector(e);
 		}
@@ -111,6 +111,8 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 int					map_editor_loop(t_main *m)
 {
 	t_map_editor	e;
+	int i;
+
 	init_sectors(&e);
 	create_text_menu(m, e.menu);
 	create_sprite_menu(m, e.sprite_menu);
@@ -133,11 +135,16 @@ int					map_editor_loop(t_main *m)
 					update_all_menu(m, &e);
 				else
 					update_sprite_menu(m, &e);
-				//printf("selected row %i\n", e.selected_row);				
+				printf("mode %i\n", e.mode);
+				printf("selected row %i\n", e.selected_row);
 			}
 			e.chosen = draw(m, &e);
 			if (e.mode >= PLAYER)
 				draw_circle(RED, m, m->map.player.position);
+			i = -1;
+			if (e.mode >= SPRITE_Z && e.sprite_cnt)
+				while (++i < e.sprite_cnt)
+					draw_circle(YELLOW, m, e.sprites[i].position);
 		}
 	}
 	return (remove_text_menu(&e));
