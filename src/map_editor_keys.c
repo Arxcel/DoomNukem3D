@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 14:46:57 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:09:54 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 	}
 	SDL_GetMouseState(&d.x, &d.y);
 	i = -1;
-	while (e->mode >= CREATED && e->mode < SPRITE && ++i <= e->n)
+	while (e->mode >= CREATED && e->mode < SPRITE_Z && ++i <= e->n)
 		if (pnpoly(e->sectors[i].num_walls, e->sectors[i].wall_vertice, d))
 		{
 			m->map.player.sector_number = i;
@@ -109,7 +109,7 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 			e->mode = PLAYER;
 			return (0);
 		}
-	if (e->mode == SPRITE && e->sprite_cnt < SPRITE_CNT)
+	if (e->mode == SPRITE_Z && e->sprite_cnt < SPRITE_CNT)
 	{
 		e->sprites[e->sprite_cnt].position.x = d.x;
 		e->sprites[e->sprite_cnt].position.y = d.y;
