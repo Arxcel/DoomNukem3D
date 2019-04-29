@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 17:56:40 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 18:00:02 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int					serialize_map(t_main *m, t_map_editor *e)
 	obj = prepare_map(m, e);
 	buf = malloc(json_measure(obj));
 	json_serialize(buf, obj);
-	json_value_free(obj);
+	json_builder_free(obj);
 	write_map_to_file(buf, "assets/maps/map4.json");
 	free(buf);
 	MSG("Map saved!");
