@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
 /*   Updated: 2019/04/29 14:46:48 by sahafono         ###   ########.fr       */
@@ -26,11 +26,11 @@
 # define W 			1200
 # define H 			800
 
-# define GRAVITY				1.0f
 # define SPEED					5
-# define RUN_SPEED					10
+# define RUN_SPEED				10
 # define MOUSE_SENSIVITY_X		1
 # define MOUSE_SENSIVITY_Y		2
+# define LIFT_SPEED				1
 
 # define STANDHEIGHT			6
 # define CROUCHINGHEIGHT		2.5
@@ -38,7 +38,6 @@
 # define KNEEHEIGHT				2
 # define HFOV					0.73f
 # define VFOV					.2f
-# define DARKNESS				0
 
 # define RESOURCES				"./assets.kek"
 # define RESOURCES_PASS			"lol"
@@ -164,7 +163,6 @@ int					draw_circle(int color, t_main *m, t_vector position);
 int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot);
 int					check_intersection(t_map_editor *e, t_dot mouse);
 
-
 int					player_save_keys(t_main *m, t_map_editor *e);
 int					arrow_keys(SDL_Keycode sym, t_map_editor *e);
 int					left_arrow_key(SDL_Keycode sym, t_map_editor *e);
@@ -173,4 +171,7 @@ void				shift_left(t_map_editor *e);
 
 int					remove_text_menu(t_map_editor *e);
 int					init_gun_surface(t_main *m);
+void				calc_lifts(t_main *m);
+void				handle_menu(t_main *m, int key);
+void				check_menu_active_option(t_main *m, int check);
 #endif

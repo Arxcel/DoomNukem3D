@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 13:29:55 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/13 16:39:50 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:17:32 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void			player_vertical_movement(t_main *m)
 
 	player_sector = &m->map.sectors[m->map.player.sector_number];
 	eyeheight = m->map.player.is_crouching ? CROUCHINGHEIGHT : STANDHEIGHT;
-	m->map.player.velocity.z -= m->delta_time * GRAVITY;
+	m->map.player.velocity.z -= m->delta_time * m->map.player.gravity;
 	nextz = m->map.player.position.z + m->map.player.velocity.z;
 	if (m->map.player.velocity.z < 0 &&
 							nextz < player_sector->floor_height + eyeheight)

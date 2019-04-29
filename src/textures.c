@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:36:31 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:14:55 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:34:23 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static void		load_block_textures(const char *path, t_tblocks *textures)
 	struct zip_stat		st;
 	SDL_RWops			*rwops;
 
-	z = zip_open(RESOURCES, ZIP_CREATE, 0);
-	if (!z)
+	if (!(z = zip_open(RESOURCES, ZIP_CREATE, 0)))
 		MSG(zip_strerror(z));
 	zip_set_default_password(z, RESOURCES_PASS);
 	zip_stat_init(&st);

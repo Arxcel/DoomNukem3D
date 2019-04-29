@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
 /*   Updated: 2019/04/29 14:29:08 by sahafono         ###   ########.fr       */
@@ -21,7 +21,6 @@ enum
 };
 
 enum	e_bool {false, true} __attribute__((packed));
-
 
 # define WALLS_CNT 10
 # define SECTORS_CNT 30
@@ -106,6 +105,7 @@ typedef struct		s_sector
 	bool			is_lift;
 	int				from;
 	int				to;
+	bool			is_activated;
 }					t_sector;
 
 typedef struct		s_sprite
@@ -115,8 +115,6 @@ typedef struct		s_sprite
 	bool			is_active;
 	unsigned		w;
 	unsigned		h;
-	int				sprite_ceil;
-	int				sprite_floor;
 }					t_sprite;
 
 typedef struct		s_stats
@@ -164,10 +162,11 @@ typedef struct		s_map
 	size_t			number_sprites;
 	float			ligntness;
 }					t_map;
+
 typedef struct		s_dot
 {
-   int x;
-   int y;
+	int				x;
+	int				y;
 }					t_dot;
 
 typedef struct		s_editor_wall
@@ -194,7 +193,7 @@ typedef struct		s_editor_sector
 
 typedef struct		s_text
 {
-	SDL_Texture 	*text_texture;
+	SDL_Texture		*text_texture;
 	SDL_Rect		dstrect;
 	bool			selected;
 	char			*text;
@@ -203,13 +202,13 @@ typedef struct		s_text
 
 typedef struct		s_map_editor
 {
-	int 			n;
+	int				n;
 	t_editor_sector	sectors[SECTORS_CNT];
 	t_sprite		sprites[SPRITE_CNT];
 	int				mode;
 	int				chosen;
 	int				sprite_cnt;
-	t_text 			menu[TEXT_MENU];
+	t_text			menu[TEXT_MENU];
 	t_text			sprite_menu[SPRITE_MENU];
 	int				global_index;
 	int				selected_row;

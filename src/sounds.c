@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:38:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:34:10 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:56:13 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,18 @@ void			load_sounds(t_main *m)
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
 													2, 1500) == -1)
 		MSG(Mix_GetError());
-	m->music.snd = (Mix_Chunk**)malloc(sizeof(Mix_Chunk*) * 8);
-	load_sound_mav("assets/sounds/Knife.wav", &m->music);
-	load_sound_mav("assets/sounds/Pistol.wav", &m->music);
-	load_sound_mav("assets/sounds/Machine Gun.wav", &m->music);
-	load_sound_mav("assets/sounds/Gatling Gun.wav", &m->music);
-	load_sound_mav("assets/sounds/Pickup.wav", &m->music);
+	m->music.snd = (Mix_Chunk**)malloc(sizeof(Mix_Chunk*) * 11);
 	load_sound_mav("assets/sounds/Ammo.wav", &m->music);
-	load_sound_mav("assets/sounds/Key.wav", &m->music);
-	load_sound_mav("assets/sounds/Boss Gun.wav", &m->music);
+	load_sound_mav("assets/sounds/Flamethrower.wav", &m->music);
+	load_sound_mav("assets/sounds/Health.wav", &m->music);
+	load_sound_mav("assets/sounds/Jump.wav", &m->music);
+	load_sound_mav("assets/sounds/Lift.wav", &m->music);
+	load_sound_mav("assets/sounds/Menu Select.wav", &m->music);
+	load_sound_mav("assets/sounds/Menu Toggle.wav", &m->music);
+	load_sound_mav("assets/sounds/Pickup.wav", &m->music);
+	load_sound_mav("assets/sounds/Pistol.wav", &m->music);
+	load_sound_mav("assets/sounds/Start.wav", &m->music);
+	load_sound_mav("assets/sounds/Win.wav", &m->music);
 }
 
 void			unload_sounds(t_main *m)

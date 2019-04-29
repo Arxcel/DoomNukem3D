@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 10:55:17 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 15:12:49 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 15:58:25 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void			load_hud_texture(SDL_Surface **target, const char *path)
 	zip_stat_init(&st);
 	zip_stat(z, path, 0, &st);
 	if (st.size < 1)
-		MSG("No such texture");
+		MSG("No such hud element");
 	file_contents = (char*)malloc(sizeof(char) * st.size);
 	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
 	if (!f)
@@ -53,7 +53,7 @@ static void			load_hud_font(t_main *m, const char *path, size_t size)
 	zip_stat_init(&st);
 	zip_stat(z, path, 0, &st);
 	if (st.size < 1)
-		MSG("No such texture");
+		MSG("No such font");
 	m->hud.font_source = (char*)malloc(sizeof(char) * st.size);
 	f = zip_fopen_encrypted(z, path, 0, RESOURCES_PASS);
 	if (!f)
@@ -74,9 +74,8 @@ void				load_hud(t_main *m)
 		MSG(TTF_GetError());
 	load_hud_texture(&m->hud.surface_hud, "assets/hud/hud.png");
 	load_hud_texture(&m->hud.gun_surface1, "assets/hud/pistol.png");
-	// uncomment when pistol_2.png && pistol_2.png will be archived
-	// load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_2.png");
-	// load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_3.png");
+	load_hud_texture(&m->hud.gun_surface2, "assets/hud/pistol_2.png");
+	load_hud_texture(&m->hud.gun_surface3, "assets/hud/pistol_3.png");
 	load_hud_font(m, "assets/fonts/auto_digital.ttf", 42);
 }
 
@@ -87,8 +86,7 @@ void				unload_hud(t_main *m)
 	TTF_CloseFont(m->hud.font);
 	SDL_FreeSurface(m->hud.surface_hud);
 	SDL_FreeSurface(m->hud.gun_surface1);
-	// uncomment when pistol_2.png && pistol_2.png will be archived
-	// SDL_FreeSurface(m->hud.gun_surface2);
-	// SDL_FreeSurface(m->hud.gun_surface3);	
+	SDL_FreeSurface(m->hud.gun_surface2);
+	SDL_FreeSurface(m->hud.gun_surface3);
 	TTF_Quit();
 }

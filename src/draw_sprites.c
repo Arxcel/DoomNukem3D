@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:22:06 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:41:22 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static bool			need_to_render(t_main *m, t_wall *w, float d, int i)
 {
 	return (!m->map.sprites[i].is_active || (w->t1.y <= 0 && w->t2.y <= 0)
-			|| (d < 1 || d > 15 ||
-			m->map.sprites[i].position.z - m->map.player.position.z > 2));
+			|| d < 2 || d > 15);
 }
 
 static void			calc_sprite_h(t_sprite *s, t_wall *wall,
@@ -74,7 +73,7 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 	while (++x < end_x)
 	{
 		wall->txtx = interp_next(ix);
-		wall->lz = dist * DARKNESS * 4;
+		wall->lz = dist * m->map.player.darkness * 4;
 		if (x < m->sdl.img.w && x > 0)
 			if (x > begin_x - 1)
 				draw_sprite_impl_y(m, wall, x, dist);
@@ -97,14 +96,16 @@ void				draw_sprites(t_main *m)
 	while (++j < m->map.number_sprites)
 	{
 		i = s_order[j];
+		s_dist[0] = calc_distance(m->map.player.position,
+								m->map.sprites[i].position);
 		setup_sprite_texture(m, &wall, m->map.sprites[i].texture);
 		calc_sprite_edges(&m->map.player, m->map.sprites[i].position,
-													&wall, s_dist[s_order[i]]);
-		if (need_to_render(m, &wall, s_dist[s_order[i]], i))
+													&wall, s_dist[0]);
+		if (need_to_render(m, &wall, s_dist[0], i))
 			continue ;
 		do_perspective(&wall, m->sdl.img.w, m->sdl.img.h);
 		calc_sprite_h(&m->map.sprites[i], &wall, &m->map.player, m->sdl.img.h);
-		draw_sprite(m, &wall, s_dist[s_order[i]], i);
+		draw_sprite(m, &wall, s_dist[0], i);
 	}
 	free(s_order);
 	free(s_dist);

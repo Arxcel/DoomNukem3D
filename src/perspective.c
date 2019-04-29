@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perspective.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:41:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 12:59:53 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:38:23 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ t_vertex		reverse_perspective(t_main *m, int x, int y, float height)
 	dist = (r.x - m->map.player.position.x) * (r.x - m->map.player.position.x)
 	+ (r.y - m->map.player.position.y) * (r.y - m->map.player.position.y);
 	dist = sqrtf(dist);
-	m->map.ligntness = dist * DARKNESS * 6;
+	m->map.ligntness = dist * m->map.player.darkness * 6;
 	return (r);
 }

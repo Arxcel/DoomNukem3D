@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:46:44 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 17:51:44 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/28 19:44:18 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,31 @@ int						find_min_max(t_map *map, int i, json_value *js)
 	return (0);
 }
 
-int						check_obj(json_object_entry *obj, t_sector *sect)
+int						check_obj(json_object_entry *obj, t_sector *s)
 {
-	int	j;
+	int					j;
 
-	if (obj[2].value->type != json_array ||
-		obj[3].value->type != json_array ||
+	if (obj[2].value->type != json_array || obj[3].value->type != json_array ||
 		obj[4].value->type != json_array ||
-		obj[2].value->u.array.length != obj[3].value->u.array.length ||
-		obj[2].value->u.array.length != obj[4].value->u.array.length)
+		obj[2].value->u.array.length != obj[3].value->u.array.length
+		|| obj[2].value->u.array.length != obj[4].value->u.array.length)
 		return (1);
-	sect->floor_height = obj[0].value->u.integer;
-	sect->ceil_height = obj[1].value->u.integer;
-	sect->number_vertices = obj[2].value->u.array.length;
-	sect->is_lift = obj[5].value->u.boolean;
-	sect->from = obj[6].value->u.integer;
-	sect->to = obj[7].value->u.integer;
-	if (!(sect->neighbors = malloc(sect->number_vertices * sizeof(short))) ||
-		!(sect->vertices = malloc((sect->number_vertices + 1) *
-		sizeof(t_vertex))) ||
-		!(sect->textures = (int*)malloc(sect->number_vertices * sizeof(int))))
+	s->floor_height = obj[0].value->u.integer;
+	s->ceil_height = obj[1].value->u.integer;
+	s->number_vertices = obj[2].value->u.array.length;
+	s->is_lift = obj[5].value->u.boolean;
+	s->from = obj[6].value->u.integer;
+	s->to = obj[7].value->u.integer;
+	s->is_activated = false;
+	if (!(s->neighbors = malloc(s->number_vertices * sizeof(short))) ||
+		!(s->vertices = malloc((s->number_vertices + 1) * sizeof(t_vertex)))
+		|| !(s->textures = (int*)malloc(s->number_vertices * sizeof(int))))
 		return (1);
 	j = -1;
-	while (++j < sect->number_vertices)
+	while (++j < s->number_vertices)
 	{
-		sect->neighbors[j] = (short)obj[3].value->u.array.values[j]->u.integer;
-		sect->textures[j] = obj[4].value->u.array.values[j]->u.integer;
+		s->neighbors[j] = (short)obj[3].value->u.array.values[j]->u.integer;
+		s->textures[j] = obj[4].value->u.array.values[j]->u.integer;
 	}
 	return (0);
 }
@@ -96,7 +95,7 @@ int						sector_field(t_map *map, json_value *value)
 	return (0);
 }
 
-int					sprite_field(t_map *map, json_value *value)
+int						sprite_field(t_map *map, json_value *value)
 {
 	int					i;
 	json_object_entry	*obj;
@@ -112,7 +111,10 @@ int					sprite_field(t_map *map, json_value *value)
 		map->sprites[i].position.x = (float)obj[0].value->u.dbl;
 		map->sprites[i].position.y = (float)obj[1].value->u.dbl;
 		map->sprites[i].position.z = (float)obj[2].value->u.dbl;
-		map->sprites[i].texture = obj[2].value->u.integer;
+		map->sprites[i].texture = obj[3].value->u.integer;
+		map->sprites[i].is_active = true;
+		map->sprites[i].h = 5;
+		map->sprites[i].w = 10;
 	}
 	return (0);
 }
