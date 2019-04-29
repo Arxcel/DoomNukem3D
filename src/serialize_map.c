@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serialize_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:02:04 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:10:24 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static json_value	*process_sprites(t_map_editor *e)
 	arr_sprites = json_array_new(e->sprite_cnt + 1);
 	while (e->sprite_cnt && ++i < e->sprite_cnt)
 	{
-		puts("fds");
 		sprite = json_object_new(4);
 		json_object_push(sprite, "x",
 				json_double_new(e->sprites[i].position.x / 10.0));
@@ -85,9 +84,7 @@ int					serialize_map(t_main *m, t_map_editor *e)
 	json_serialize(buf, obj);
 	json_builder_free(obj);
 	write_map_to_file(buf, "assets/maps/map4.json");
-	printf("%s\n", buf);
 	free(buf);
-	system("leaks doom-nukem");
 	MSG("Map saved!");
 	return (0);
 }
