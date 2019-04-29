@@ -22,7 +22,6 @@ enum
 
 enum	e_bool {false, true} __attribute__((packed));
 
-
 # define WALLS_CNT 10
 # define SECTORS_CNT 30
 # define YELLOW 0xFFFF00
@@ -42,8 +41,9 @@ _BOOL;
 
 typedef	enum
 {
-	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, IS_LIFTED, FROM, TO, PORTAL, PLAYER, SPRITE
-}					e_select_mode;
+	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT,
+	IS_LIFTED, FROM, TO, PORTAL, PLAYER, SPRITE
+}	e_select_mode;
 
 typedef struct		s_vector
 {
@@ -162,10 +162,11 @@ typedef struct		s_map
 	size_t			number_sprites;
 	float			ligntness;
 }					t_map;
+
 typedef struct		s_dot
 {
-   int x;
-   int y;
+	int				x;
+	int				y;
 }					t_dot;
 
 typedef struct		s_editor_wall
@@ -192,7 +193,7 @@ typedef struct		s_editor_sector
 
 typedef struct		s_text
 {
-	SDL_Texture 	*text_texture;
+	SDL_Texture		*text_texture;
 	SDL_Rect		dstrect;
 	bool			selected;
 	char			*text;
@@ -201,13 +202,13 @@ typedef struct		s_text
 
 typedef struct		s_map_editor
 {
-	int 			n;
+	int				n;
 	t_editor_sector	sectors[SECTORS_CNT];
 	t_sprite		sprites[SPRITE_CNT];
 	int				mode;
 	int				chosen;
 	int				sprite_cnt;
-	t_text 			menu[TEXT_MENU];
+	t_text			menu[TEXT_MENU];
 	t_text			sprite_menu[SPRITE_MENU];
 	int				global_index;
 	int				selected_row;

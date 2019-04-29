@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-static void			calc_delta_time(t_main *m)
+static void	calc_delta_time(t_main *m)
 {
 	m->prev_time = m->curr_time;
 	m->curr_time = SDL_GetPerformanceCounter();
@@ -20,7 +20,7 @@ static void			calc_delta_time(t_main *m)
 									(float)(SDL_GetPerformanceFrequency());
 }
 
-void				sdl_loop(t_main *m)
+void		sdl_loop(t_main *m)
 {
 	m->map.player.is_moving = true;
 	while (m->sdl.running)
@@ -36,7 +36,7 @@ void				sdl_loop(t_main *m)
 	}
 }
 
-void			load_resources(t_main *m)
+void		load_resources(t_main *m)
 {
 	load_textures(m);
 	load_sprites(m);
@@ -44,7 +44,7 @@ void			load_resources(t_main *m)
 	load_sounds(m);
 }
 
-void			unload_resources(t_main *m)
+void		unload_resources(t_main *m)
 {
 	remove_data(&m->map);
 	unload_textures_and_sprites(m);
@@ -52,9 +52,9 @@ void			unload_resources(t_main *m)
 	unload_sounds(m);
 }
 
-int					main(int ac, char **av)
+int			main(int ac, char **av)
 {
-	t_main			m;
+	t_main	m;
 
 	ft_bzero(&m, sizeof(t_main));
 	load_resources(&m);

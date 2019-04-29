@@ -20,8 +20,7 @@ static void		load_block_textures(const char *path, t_tblocks *textures)
 	struct zip_stat		st;
 	SDL_RWops			*rwops;
 
-	z = zip_open(RESOURCES, ZIP_CREATE, 0);
-	if (!z)
+	if (!(z = zip_open(RESOURCES, ZIP_CREATE, 0)))
 		MSG(zip_strerror(z));
 	zip_set_default_password(z, RESOURCES_PASS);
 	zip_stat_init(&st);

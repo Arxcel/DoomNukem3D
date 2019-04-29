@@ -58,8 +58,6 @@ void			load_sounds(t_main *m)
 	load_sound_mav("assets/sounds/Pistol.wav", &m->music);
 	load_sound_mav("assets/sounds/Start.wav", &m->music);
 	load_sound_mav("assets/sounds/Win.wav", &m->music);
-
-
 }
 
 void			unload_sounds(t_main *m)

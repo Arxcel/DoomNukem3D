@@ -42,13 +42,12 @@ int						find_min_max(t_map *map, int i, json_value *js)
 
 int						check_obj(json_object_entry *obj, t_sector *sect)
 {
-	int	j;
+	int					j;
 
-	if (obj[2].value->type != json_array ||
-		obj[3].value->type != json_array ||
-		obj[4].value->type != json_array ||
-		obj[2].value->u.array.length != obj[3].value->u.array.length ||
-		obj[2].value->u.array.length != obj[4].value->u.array.length)
+	if (obj[2].value->type != json_array || obj[3].value->type != json_array ||
+		obj[4].value->type != json_array || obj[2].value->u.array.length !=
+		obj[3].value->u.array.length
+		|| obj[2].value->u.array.length != obj[4].value->u.array.length)
 		return (1);
 	sect->floor_height = obj[0].value->u.integer;
 	sect->ceil_height = obj[1].value->u.integer;
@@ -97,7 +96,7 @@ int						sector_field(t_map *map, json_value *value)
 	return (0);
 }
 
-int					sprite_field(t_map *map, json_value *value)
+int						sprite_field(t_map *map, json_value *value)
 {
 	int					i;
 	json_object_entry	*obj;

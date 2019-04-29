@@ -57,3 +57,21 @@ void		do_select_opt(t_main *m)
 		m->menu.active_option = 0;
 	}
 }
+
+void		check_menu_active_option(t_main *m, int check)
+{
+	if (check == 0)
+	{
+		if (m->menu.active_option > 4)
+			m->menu.active_option = 0;
+		else if (m->menu.active_option < 0)
+			m->menu.active_option = 4;
+	}
+	if (check == 1)
+	{
+		if (m->menu.active_option > 2)
+			m->menu.active_option = 0;
+		else if (m->menu.active_option < 0)
+			m->menu.active_option = 2;
+	}
+}

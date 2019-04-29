@@ -18,7 +18,8 @@ static void	process_lift(t_main *m, t_sector *lift)
 
 	if (lift->is_activated)
 	{
-		lift->floor_height += (lift->to - lift->from) * m->delta_time * LIFT_SPEED / 10.0;
+		lift->floor_height += (lift->to - lift->from) *
+			m->delta_time * LIFT_SPEED / 10.0;
 		if (fabsf(lift->floor_height - lift->to) < 3)
 		{
 			tmp = lift->to;

@@ -15,7 +15,35 @@
 static void		check_total_active_weapon(t_player *p)
 {
 	if (p->stats.total_active_weapon <= 3)
-			p->stats.total_active_weapon++;
+		p->stats.total_active_weapon++;
+}
+
+static void		sprite_collision_ligic2(t_main *m, t_player *p, t_sprite *s)
+{
+	if (s->texture == 6)
+	{
+		p->stats.armor += 50;
+		Mix_PlayChannel(-1, m->music.snd[7], 0);
+	}
+	else if (s->texture == 7)
+	{
+		Mix_PlayChannel(-1, m->music.snd[10], 0);
+		m->victory = true;
+	}
+	else if (s->texture == 8 || s->texture == 9)
+	{
+		p->stats.active_weapon = 2;
+		check_total_active_weapon(p);
+		Mix_PlayChannel(-1, m->music.snd[7], 0);
+	}
+	else if (s->texture == 9)
+	{
+		p->stats.active_weapon = 3;
+		check_total_active_weapon(p);
+		Mix_PlayChannel(-1, m->music.snd[7], 0);
+	}
+	s->is_active = false;
+	m->greenify = true;
 }
 
 static void		sprite_collision_ligic(t_main *m, t_player *p, t_sprite *s)
@@ -40,30 +68,7 @@ static void		sprite_collision_ligic(t_main *m, t_player *p, t_sprite *s)
 		p->stats.rockets += 50;
 		Mix_PlayChannel(-1, m->music.snd[0], 0);
 	}
-	else if (s->texture == 6)
-	{
-		p->stats.armor += 50;
-		Mix_PlayChannel(-1, m->music.snd[7], 0);
-	}
-	else if (s->texture == 7)
-	{
-		Mix_PlayChannel(-1, m->music.snd[10], 0);
-		m->victory = true;
-	}
-	else if (s->texture == 8 || s->texture == 9)
-	{
-		p->stats.active_weapon = 2;
-		check_total_active_weapon(p);
-		Mix_PlayChannel(-1, m->music.snd[7], 0);
-	}
-	else if (s->texture == 9)
-	{
-		p->stats.active_weapon = 3;
-		check_total_active_weapon(p);
-		Mix_PlayChannel(-1, m->music.snd[7], 0);
-	}
-	s->is_active = false;
-	m->greenify = true;
+	sprite_collision_ligic2(m, &m->map.player, s);
 }
 
 void			calc_sprite_collisions(t_main *m)

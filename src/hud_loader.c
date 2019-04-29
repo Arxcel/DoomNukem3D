@@ -87,6 +87,6 @@ void				unload_hud(t_main *m)
 	SDL_FreeSurface(m->hud.surface_hud);
 	SDL_FreeSurface(m->hud.gun_surface1);
 	SDL_FreeSurface(m->hud.gun_surface2);
-	SDL_FreeSurface(m->hud.gun_surface3);	
+	SDL_FreeSurface(m->hud.gun_surface3);
 	TTF_Quit();
 }

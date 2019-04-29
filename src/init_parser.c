@@ -19,14 +19,16 @@ int						vertex_field(t_map *map, json_value *value)
 	json_value	*js;
 
 	if (value->type != json_array || value->u.array.length < 3 ||
-	!(map->vertices = (t_vertex*)malloc(sizeof(t_vertex) * value->u.array.length)))
+	!(map->vertices = (t_vertex*)malloc(sizeof(t_vertex) *
+			value->u.array.length)))
 		return (1);
 	map->number_vertices = value->u.array.length;
 	cnt = -1;
 	while (++cnt < value->u.array.length)
 	{
 		js = value->u.array.values[cnt];
-		if (js->type != json_object || ft_strcmp(js->u.object.values[0].name, "x")
+		if (js->type != json_object
+			|| ft_strcmp(js->u.object.values[0].name, "x")
 			|| ft_strcmp(js->u.object.values[1].name, "y"))
 			return (1);
 		map->vertices[cnt].x = (float)js->u.object.values[0].value->u.dbl;

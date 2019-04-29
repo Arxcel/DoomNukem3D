@@ -82,19 +82,9 @@ void				handle_menu(t_main *m, int key)
 		m->menu.active_option++;
 	}
 	if (m->menu.is_level_select)
-	{
-		if (m->menu.active_option > 4)
-			m->menu.active_option = 0;
-		else if (m->menu.active_option < 0)
-			m->menu.active_option = 4;
-	}
+		check_menu_active_option(m, 0);
 	else
-	{
-		if (m->menu.active_option > 2)
-			m->menu.active_option = 0;
-		else if (m->menu.active_option < 0)
-			m->menu.active_option = 2;
-	}
+		check_menu_active_option(m, 1);
 	if (m->sdl.e.type == SDL_KEYUP && key == SDLK_RETURN)
 	{
 		Mix_PlayChannel(-1, m->music.snd[5], 0);

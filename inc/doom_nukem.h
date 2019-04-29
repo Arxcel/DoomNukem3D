@@ -32,7 +32,6 @@
 # define MOUSE_SENSIVITY_Y		2
 # define LIFT_SPEED				1
 
-
 # define STANDHEIGHT			6
 # define CROUCHINGHEIGHT		2.5
 # define HEADMARGIN				1
@@ -143,7 +142,8 @@ void				unload_resources(t_main *m);
 void				load_resources(t_main *m);
 int					init_map_editor(t_main *main);
 int					map_editor_loop(t_main *m);
-int					serialize_map(t_main *m, t_editor_sector *sectors, int num_sectors);
+int					serialize_map(t_main *m, t_editor_sector *sectors,
+													int num_sectors);
 int					editor_clear_sdl(t_sdl *sdl);
 int					intersect(t_editor_wall wall, t_dot cur);
 int					line(t_editor_wall wall, t_main *main);
@@ -164,7 +164,6 @@ int					draw_circle(int color, t_main *m);
 int					pnpoly(int num_walls, t_editor_wall *walls, t_dot dot);
 int					check_intersection(t_map_editor *e, t_dot mouse);
 
-
 int					player_save_keys(t_main *m, t_map_editor *e);
 int					arrow_keys(SDL_Keycode sym, t_map_editor *e);
 int					left_arrow_key(SDL_Keycode sym, t_map_editor *e);
@@ -174,4 +173,6 @@ void				shift_left(t_map_editor *e);
 int					remove_text_menu(t_map_editor *e);
 int					init_gun_surface(t_main *m);
 void				calc_lifts(t_main *m);
+void				handle_menu(t_main *m, int key);
+void				check_menu_active_option(t_main *m, int check);
 #endif
