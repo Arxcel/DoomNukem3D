@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-int		close_sector(t_main *m, t_map_editor *e)
+int		close_sector(t_map_editor *e)
 {
 	if (e->sectors[e->n].num_walls > 1 && e->sectors[e->n].num_walls < WALLS_CNT)
 	{
@@ -96,7 +96,7 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 			(e->n < SECTORS_CNT && m->sdl.e.key.keysym.sym == SDLK_RETURN))
 		{
 			if ((e->sectors[e->n].num_walls > 0 && e->mode == TEXTURE
-				&& close_sector(m, e))
+				&& close_sector(e))
 				|| (e->mode > TEXTURE && e->mode < PORTAL) || e->mode >= PLAYER)
 					(e->mode)++;
 			if (e->mode > CLOSE && e->selected_row < TEXT_MENU / 2)

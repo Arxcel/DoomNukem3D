@@ -27,7 +27,7 @@ int				left_arrow_key(SDL_Keycode sym, t_map_editor *e)
 	return (0);
 }
 
-int				up_arrow_key(SDL_Keycode sym, t_map_editor *e)
+int				up_arrow_key(t_map_editor *e)
 {
 	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0
 		&& e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture < TEXTURE_MAX)
@@ -45,7 +45,7 @@ int				up_arrow_key(SDL_Keycode sym, t_map_editor *e)
 	return (0);
 }
 
-int				down_arrow_key(SDL_Keycode sym, t_map_editor *e)
+int				down_arrow_key(t_map_editor *e)
 {
 	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0 &&
 		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture > 0)
@@ -67,8 +67,8 @@ int				arrow_keys(SDL_Keycode sym, t_map_editor *e)
 		return (1);
 	if ((e->mode == TEXTURE || e->mode == CLOSE) && !left_arrow_key(sym, e))
 		return (1);
-	if ((sym == SDLK_UP && !up_arrow_key(sym, e)) ||
-		(sym == SDLK_DOWN && !down_arrow_key(sym, e)))
+	if ((sym == SDLK_UP && !up_arrow_key(e)) ||
+		(sym == SDLK_DOWN && !down_arrow_key(e)))
 		return (0);
 	else if (e->mode == IS_LIFTED)
 	{

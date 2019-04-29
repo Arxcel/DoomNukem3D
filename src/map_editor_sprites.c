@@ -15,7 +15,7 @@
 void    create_sprite_menu(t_main *m, t_text *sprite_menu)
 {
     int i;
-	SDL_Color bg = {255, 255, 255};
+	SDL_Color bg = {255, 255, 255, 255};
 
     sprite_menu[0].text = ft_strdup("Sprite z");
 	sprite_menu[1].text = ft_strdup("Sprite texture:");

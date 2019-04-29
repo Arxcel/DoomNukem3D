@@ -59,7 +59,7 @@ static void			clamp_values(t_wall *wall)
 void				render_sector(t_main *m, t_renderer *r,
 										t_render_item const *current_sector)
 {
-	int			s;
+	size_t		s;
 	t_sector	*sect;
 	t_wall		wall;
 

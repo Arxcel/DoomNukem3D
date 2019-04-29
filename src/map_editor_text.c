@@ -22,7 +22,7 @@ int		create_text(t_main *m, t_text *menu, int i, SDL_Color fg)
 	line = i > menu->rows - 1 ? i % menu->rows: i;
 	SDL_Rect		dstrect = {m->sdl.win_w * 0.7 + shift, 15 + line * LETTER_HEIGHT,
 		strlen(menu[i].text) * LETTER_WIDTH, LETTER_HEIGHT};
-	SDL_Color bg = {0, 0, 0};
+	SDL_Color bg = {0, 0, 0, 255};
 
 	textSurface = TTF_RenderText_Shaded(m->hud.font, menu[i].text, fg, bg);
 	menu[i].text_texture = SDL_CreateTextureFromSurface(m->sdl.ren, textSurface);
@@ -33,7 +33,7 @@ int		create_text(t_main *m, t_text *menu, int i, SDL_Color fg)
 
 void		update_text(t_main *m, t_text *menu, int i, int str)
 {
-	SDL_Color bg = {255, 255, 255};
+	SDL_Color bg = {255, 255, 255, 255};
 
 	SDL_DestroyTexture(menu[i].text_texture);
 	free(menu[i].text);
@@ -43,8 +43,8 @@ void		update_text(t_main *m, t_text *menu, int i, int str)
 
 void		update_text_color(t_main *m, t_text *menu, int i)
 {
-	SDL_Color selected = {0, 0, 255};
-	SDL_Color bg = {255, 255, 255};
+	SDL_Color selected = {0, 0, 255, 255};
+	SDL_Color bg = {255, 255, 255, 255};
 
 	SDL_DestroyTexture(menu[i].text_texture);
 	if (menu[i].selected)
@@ -57,7 +57,7 @@ void		update_text_color(t_main *m, t_text *menu, int i)
 void		create_text_menu(t_main *m, t_text *menu)
 {
 	int i;
-	SDL_Color bg = {255, 255, 255};
+	SDL_Color bg = {255, 255, 255, 255};
 
 	menu[0].text = ft_strdup("Sector:");
 	menu[1].text = ft_strdup("Walls:");

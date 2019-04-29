@@ -15,7 +15,7 @@
 
 int						vertex_field(t_map *map, json_value *value)
 {
-	int			cnt;
+	size_t		cnt;
 	json_value	*js;
 
 	if (value->type != json_array || value->u.array.length < 3 ||
@@ -68,7 +68,7 @@ int						analyze_value(t_map *map, json_object_entry js)
 
 int						parser_loop(t_map *map, json_value *value)
 {
-	int			i;
+	size_t			i;
 
 	if (value->type != json_object || value->u.object.length < 3)
 		return (remove_values(map, value));
