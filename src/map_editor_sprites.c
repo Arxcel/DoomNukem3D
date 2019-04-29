@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_sprites.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 19:06:28 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:44:28 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 21:00:16 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ void				create_sprite_menu(t_main *m, t_text *sprite_menu)
 	}
 }
 
+static void			update_sprite_menu_impl(t_main *m, t_map_editor *e)
+{
+	update_text_color(m, e->sprite_menu, e->selected_row);
+	if (e->sprite_cnt)
+		update_text(m, e->sprite_menu, 4,
+						(int)e->sprites[e->sprite_cnt - 1].position.z);
+	if (e->sprite_cnt)
+		update_text(m, e->sprite_menu, 5,
+								e->sprites[e->sprite_cnt - 1].texture);
+	update_text(m, e->sprite_menu, 6, m->map.player.darkness);
+	update_text(m, e->sprite_menu, 7, (int)m->map.player.gravity);
+}
+
 void				update_sprite_menu(t_main *m, t_map_editor *e)
 {
 	int i;
@@ -55,12 +68,7 @@ void				update_sprite_menu(t_main *m, t_map_editor *e)
 			update_text_color(m, e->sprite_menu, i);
 		}
 	e->sprite_menu[e->selected_row].selected = true;
-	update_text_color(m, e->sprite_menu, e->selected_row);
-	update_text(m, e->sprite_menu, 4,
-					(int)e->sprites[e->sprite_cnt].position.z);
-	update_text(m, e->sprite_menu, 5, e->sprites[e->sprite_cnt].texture);
-	update_text(m, e->sprite_menu, 6, m->map.player.darkness);
-	update_text(m, e->sprite_menu, 7, (int)m->map.player.gravity);
+	update_sprite_menu_impl(m, e);
 }
 
 void				draw_sprites_dot(t_map_editor *e, t_main *m)

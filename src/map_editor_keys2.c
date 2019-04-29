@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 19:34:18 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 19:43:58 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 20:48:39 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static int		up_arrow_key_impl(t_main *m,
 	if (e->mode == TO && s->is_lift && s->to + 30 <= s->ceiling_height)
 		s->to += 10;
 	else if (e->mode == SPRITE_Z && e->sprite_cnt)
-		e->sprites[e->sprite_cnt].position.z += 1;
+		e->sprites[e->sprite_cnt - 1].position.z += 1;
 	else if (e->mode == SPRITE_TEXTURE &&
-			e->sprites[e->sprite_cnt].texture < TEXTURE_MAX && e->sprite_cnt)
-		e->sprites[e->sprite_cnt].texture += 1;
+			e->sprites[e->sprite_cnt - 1].texture < TEXTURE_MAX)
+		e->sprites[e->sprite_cnt - 1].texture += 1;
 	else if (e->mode == DARKNESS && m->map.player.darkness < 10)
 		m->map.player.darkness += 1;
 	else if (e->mode == GRAVITY && m->map.player.gravity < 100)
@@ -73,10 +73,10 @@ static int		down_arrow_key_impl(t_main *m,
 	if (e->mode == TO && s->is_lift)
 		s->to -= 10;
 	else if (e->mode == SPRITE_Z && e->sprite_cnt)
-		e->sprites[e->sprite_cnt].position.z -= 1;
+		e->sprites[e->sprite_cnt - 1].position.z -= 1;
 	else if (e->mode == SPRITE_TEXTURE &&
-					e->sprites[e->sprite_cnt].texture > 0 && e->sprite_cnt)
-		e->sprites[e->sprite_cnt].texture -= 1;
+					e->sprites[e->sprite_cnt - 1].texture > 0)
+		e->sprites[e->sprite_cnt - 1].texture -= 1;
 	else if (e->mode == DARKNESS && m->map.player.darkness > 0)
 		m->map.player.darkness -= 1;
 	else if (e->mode == GRAVITY && m->map.player.gravity > 3)

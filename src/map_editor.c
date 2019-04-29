@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:43:44 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:56:25 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int					close_sector(t_map_editor *e)
 {
-	if (e->sectors[e->n].num_walls > 1 &&
+	if (e->sectors[e->n].num_walls > 2 &&
 		e->sectors[e->n].num_walls < WALLS_CNT)
 	{
 		e->sectors[e->n].walls[e->sectors[e->n].num_walls].color =

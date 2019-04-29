@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 20:10:24 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 20:56:32 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static json_value	*process_sprites(t_map_editor *e)
 	json_value	*sprite;
 
 	i = -1;
-	arr_sprites = json_array_new(e->sprite_cnt + 1);
+	arr_sprites = json_array_new(e->sprite_cnt);
 	while (e->sprite_cnt && ++i < e->sprite_cnt)
 	{
 		sprite = json_object_new(4);
