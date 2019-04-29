@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-int		pnpoly(int num_walls, t_editor_wall *walls, t_dot dot)
+int		pnpoly(int num_walls, t_editor_wall *w, t_dot d)
 {
 	int c;
 	int i;
