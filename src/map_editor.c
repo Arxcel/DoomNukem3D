@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:34:50 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:36:23 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int					map_editor_loop(t_main *m)
 	int				i;
 
 	init_sectors(&e);
+	init_sprites(&e);
 	create_text_menu(m, e.menu);
 	create_sprite_menu(m, e.sprite_menu);
 	m->sdl.running = true;
