@@ -6,26 +6,26 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:08 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 19:23:37 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:01:57 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-int		draw_circle(int color, t_main *m)
+int		draw_circle(int color, t_main *m, t_vector position)
 {
-	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
-		m->map.player.position.y, color);
-	sdl_pixel_put(&m->sdl.img, m->map.player.position.x + 1,
-		m->map.player.position.y, color);
-	sdl_pixel_put(&m->sdl.img, m->map.player.position.x - 1,
-		m->map.player.position.y, color);
-	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
-		m->map.player.position.y, color);
-	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
-		m->map.player.position.y + 1, color);
-	sdl_pixel_put(&m->sdl.img, m->map.player.position.x,
-		m->map.player.position.y - 1, color);
+	sdl_pixel_put(&m->sdl.img, position.x,
+		position.y, color);
+	sdl_pixel_put(&m->sdl.img, position.x + 1,
+		position.y, color);
+	sdl_pixel_put(&m->sdl.img, position.x - 1,
+		position.y, color);
+	sdl_pixel_put(&m->sdl.img, position.x,
+		position.y, color);
+	sdl_pixel_put(&m->sdl.img, position.x,
+		position.y + 1, color);
+	sdl_pixel_put(&m->sdl.img, position.x,
+		position.y - 1, color);
 	return (0);
 }
 

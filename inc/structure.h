@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 19:35:13 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:29:08 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ _BOOL;
 
 typedef	enum
 {
-	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT,
-	IS_LIFTED, FROM, TO, PORTAL, PLAYER, SPRITE
-}	e_select_mode;
+	TEXTURE, CLOSE, FLOOR_HEIGHT, CEILING_HEIGHT, IS_LIFTED, FROM, TO,
+	PORTAL, CREATED, PLAYER, SPRITE, DARKNESS, GRAVITY, SAVE
+}					e_select_mode;
 
 typedef struct		s_vector
 {

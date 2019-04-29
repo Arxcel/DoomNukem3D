@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 19:39:35 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:46:57 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,31 +82,38 @@ int				arrow_keys(SDL_Keycode sym, t_map_editor *e)
 
 int					player_save_keys(t_main *m, t_map_editor *e)
 {
-	int i;
+	int		i;
+	t_dot	d;
 
-	if (m->sdl.e.key.keysym.sym == SDLK_s && e->mode >= CEILING_HEIGHT)
+	if (m->sdl.e.key.keysym.sym != SDLK_s && m->sdl.e.type != SDL_MOUSEBUTTONDOWN)
+		return (1);
+	if (m->sdl.e.key.keysym.sym == SDLK_s && e->mode >= PORTAL)
 	{
-		if (e->mode < PLAYER)
+		if (e->mode == PORTAL)
 		{
+			e->mode = CREATED;
 			shift_left(e);
-			e->mode = PLAYER;
 		}
-		else
-			serialize_map(m, e->sectors, e->n);
+		else if (e->mode == SAVE)
+			serialize_map(m, e);
 		return (0);
 	}
-	if (e->mode < PLAYER)
-		return (1);
-	t_dot d;
 	SDL_GetMouseState(&d.x, &d.y);
 	i = -1;
-	while (++i <= e->n)
+	while (e->mode >= CREATED && e->mode < SPRITE && ++i <= e->n)
 		if (pnpoly(e->sectors[i].num_walls, e->sectors[i].wall_vertice, d))
 		{
 			m->map.player.sector_number = i;
 			m->map.player.position.x = d.x;
 			m->map.player.position.y = d.y;
+			e->mode = PLAYER;
 			return (0);
 		}
+	if (e->mode == SPRITE && e->sprite_cnt < SPRITE_CNT)
+	{
+		e->sprites[e->sprite_cnt].position.x = d.x;
+		e->sprites[e->sprite_cnt].position.y = d.y;
+		return (0);
+	}
 	return (1);
 }

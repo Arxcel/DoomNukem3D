@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 19:39:06 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:27:34 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 		{
 			if ((e->sectors[e->n].num_walls > 0 && e->mode == TEXTURE
 				&& close_sector(m, e))
-				|| (e->mode > TEXTURE && e->mode < PORTAL) || e->mode >= PLAYER)
+				|| (e->mode > TEXTURE && e->mode < PORTAL)
+				|| (e->mode >= PLAYER && e->mode < SAVE))
 					(e->mode)++;
 			if (e->mode > CLOSE && e->selected_row < TEXT_MENU / 2)
 				(e->selected_row)++;
 			create_sector(e);
+			printf("mode %i\n", e->mode);
 		}
 	}
 }
@@ -133,11 +135,11 @@ int					map_editor_loop(t_main *m)
 					update_sprite_menu(m, &e);
 				if (m->sdl.e.key.keysym.sym == SDLK_1)
 					e.mode = SPRITE;
-				printf("selected row %i\n", e.selected_row);				
+				//printf("selected row %i\n", e.selected_row);				
 			}
 			e.chosen = draw(m, &e);
-			if (e.mode == PLAYER)
-				draw_circle(RED, m);
+			if (e.mode >= PLAYER)
+				draw_circle(RED, m, m->map.player.position);
 		}
 	}
 	return (remove_text_menu(&e));
