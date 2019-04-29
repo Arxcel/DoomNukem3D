@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:52:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 17:30:02 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 17:56:40 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ int					serialize_map(t_main *m, t_map_editor *e)
 	json_serialize(buf, obj);
 	json_value_free(obj);
 	write_map_to_file(buf, "assets/maps/map4.json");
-	printf("%s\n", buf);
 	free(buf);
-	system("leaks doom-nukem");
 	MSG("Map saved!");
 	return (0);
 }
