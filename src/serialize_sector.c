@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serialize_sector.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 16:13:27 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 17:24:10 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static void				process_vert(t_map_editor *e, int i,
 	{
 		obj = json_object_new(2);
 		json_object_push(obj, "x",
-			json_double_new(e->sectors[i].wall_vertice[j].begin.x / 10.0));
+			json_double_new(e->sectors[i].walls[j].begin.x / 10.0));
 		json_object_push(obj, "y",
-			json_double_new(e->sectors[i].wall_vertice[j].begin.y / 10.0));
+			json_double_new(e->sectors[i].walls[j].begin.y / 10.0));
 		json_array_push(*vert, obj);
 	}
 }
@@ -65,11 +65,11 @@ static json_value		*process_sector(t_map_editor *e,
 	while (++j < e->sectors[i].num_walls)
 	{
 		json_array_push(vertices,
-			json_integer_new(e->sectors[i].wall_vertice[j].global_index));
+			json_integer_new(e->sectors[i].walls[j].global_index));
 		json_array_push(neighbors,
 			json_integer_new(e->sectors[i].neighbors[j]));
 		json_array_push(textures,
-			json_integer_new(e->sectors[i].wall_vertice[j].texture));
+			json_integer_new(e->sectors[i].walls[j].texture));
 	}
 	return (pack_sector(vertices, neighbors, textures, &e->sectors[i]));
 }

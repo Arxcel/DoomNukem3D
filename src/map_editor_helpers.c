@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:25 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/28 11:23:08 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ int		check_intersection(t_map_editor *e, t_dot mouse)
 	j = -1;
 	while (++j < e->sectors[e->n].num_walls)
 	{
-		if (intersect(e->sectors[e->n].wall_vertice[j], mouse))
+		if (intersect(e->sectors[e->n].walls[j], mouse))
 		{
 			if (e->chosen == j)
 			{
 				e->chosen = -1;
-				e->sectors[e->n].wall_vertice[j].color = YELLOW;
+				e->sectors[e->n].walls[j].color = YELLOW;
 			}
 			else if (e->chosen == -1)
 			{
 				e->chosen = j;
-				e->sectors[e->n].wall_vertice[j].color = BLUE;
+				e->sectors[e->n].walls[j].color = BLUE;
 			}
 			break ;
 		}
@@ -70,23 +70,23 @@ void	shift_left(t_map_editor *e)
 	int		gl;
 
 	gl = 0;
-	min = e->sectors[0].wall_vertice[0].begin;
+	min = e->sectors[0].walls[0].begin;
 	i = -1;
 	while (++i <= e->n && (j = -1))
 		while (++j < e->sectors[i].num_walls)
 		{
-			if (e->sectors[i].wall_vertice[j].begin.x < min.x)
-				min.x = e->sectors[i].wall_vertice[j].begin.x;
-			if (e->sectors[i].wall_vertice[j].begin.y < min.y)
-				min.y = e->sectors[i].wall_vertice[j].begin.y;
+			if (e->sectors[i].walls[j].begin.x < min.x)
+				min.x = e->sectors[i].walls[j].begin.x;
+			if (e->sectors[i].walls[j].begin.y < min.y)
+				min.y = e->sectors[i].walls[j].begin.y;
 		}
 	i = -1;
 	while (++i <= e->n && (j = -1))
 		while (++j < e->sectors[i].num_walls)
 		{
-			e->sectors[i].wall_vertice[j].begin.x -= min.x;
-			e->sectors[i].wall_vertice[j].begin.y -= min.y;
-			e->sectors[i].wall_vertice[j].end.x -= min.x;
-			e->sectors[i].wall_vertice[j].end.y -= min.y;
+			e->sectors[i].walls[j].begin.x -= min.x;
+			e->sectors[i].walls[j].begin.y -= min.y;
+			e->sectors[i].walls[j].end.x -= min.x;
+			e->sectors[i].walls[j].end.y -= min.y;
 		}
 }

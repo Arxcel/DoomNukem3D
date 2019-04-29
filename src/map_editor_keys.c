@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_keys.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:22:23 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				left_arrow_key(t_main *m, t_map_editor *e)
 		return (1);
 	if (!e->n && e->sectors[e->n].num_walls < 0)
 		return (1);
-	e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture = 0;
+	e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].texture = 0;
 	e->sectors[e->n].num_walls--;
 	if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) ||
 									(e->n && e->sectors[e->n].num_walls > 1))
@@ -32,8 +32,8 @@ int				left_arrow_key(t_main *m, t_map_editor *e)
 int				up_arrow_key(t_main *m, t_map_editor *e)
 {
 	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0
-		&& e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture < TEXTURE_MAX)
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture++;
+		&& e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].texture < TEXTURE_MAX)
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].texture++;
 	else if (e->mode == FLOOR_HEIGHT &&
 		e->sectors[e->n].floor_height + 10 < e->sectors[e->n].ceiling_height)
 		e->sectors[e->n].floor_height += 10;
@@ -58,8 +58,8 @@ int				up_arrow_key(t_main *m, t_map_editor *e)
 int				down_arrow_key(t_main *m, t_map_editor *e)
 {
 	if ((e->mode == TEXTURE || e->mode == CLOSE) && e->sectors[e->n].num_walls > 0 &&
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture > 0)
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture--;
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].texture > 0)
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].texture--;
 	else if (e->mode == FLOOR_HEIGHT && e->sectors[e->n].floor_height - 10 >= MIN_FLOOR_HEIGHT)
 		e->sectors[e->n].floor_height -= 10;
 	else if (e->mode == CEILING_HEIGHT && e->sectors[e->n].ceiling_height - 10 > e->sectors[e->n].floor_height)
@@ -121,7 +121,7 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 	SDL_GetMouseState(&d.x, &d.y);
 	i = -1;
 	while (e->mode >= CREATED && e->mode < SPRITE_Z && ++i <= e->n)
-		if (pnpoly(e->sectors[i].num_walls, e->sectors[i].wall_vertice, d))
+		if (pnpoly(e->sectors[i].num_walls, e->sectors[i].walls, d))
 		{
 			// e->selected_row = 0;
 			m->map.player.sector_number = i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_draw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:08 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 17:48:52 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		draw(t_main *m, t_map_editor *e)
 	i = -1;
 	while ((j = -1) && ++i < e->n + 1)
 		while (++j < e->sectors[i].num_walls)
-			line(e->sectors[i].wall_vertice[j], m);
+			line(e->sectors[i].walls[j], m);
 	SDL_UpdateTexture(m->sdl.texture, NULL,
 	m->sdl.img.pixels, m->sdl.img.w * sizeof(unsigned int));
 	sdl_clear_image(&m->sdl.img);

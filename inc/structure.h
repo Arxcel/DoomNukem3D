@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 12:59:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 15:07:38 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ typedef struct		s_editor_wall
 
 typedef struct		s_editor_sector
 {
-	t_editor_wall	wall_vertice[WALLS_CNT];
+	t_editor_wall	walls[WALLS_CNT];
 	int				neighbors[WALLS_CNT];
 	int				num_walls;
 	int				floor_height;

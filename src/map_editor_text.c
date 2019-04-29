@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_text.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:06 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:17:11 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void				update_all_menu(t_main *m, t_map_editor *e)
 		update_text(m, e->menu, 9, e->sectors[e->n].num_walls);
 	if (e->sectors[e->n].num_walls > 0)
 		update_text(m, e->menu, 10,
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].texture);
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].texture);
 	update_text(m, e->menu, 11, e->sectors[e->n].floor_height);
 	update_text(m, e->menu, 12, e->sectors[e->n].ceiling_height);
 	update_text(m, e->menu, 13, e->sectors[e->n].is_lift);

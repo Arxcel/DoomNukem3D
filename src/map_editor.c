@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:08:37 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 int		close_sector(t_map_editor *e)
 {
-	if (e->sectors[e->n].num_walls > 1 && e->sectors[e->n].num_walls < WALLS_CNT)
+	if (e->sectors[e->n].num_walls > 1 &&
+		e->sectors[e->n].num_walls < WALLS_CNT)
 	{
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].color = YELLOW;
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].begin.x =
-			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end.x;
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].begin.y =
-			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end.y;
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end.x =
-			e->sectors[e->n].wall_vertice[0].begin.x;
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end.y =
-			e->sectors[e->n].wall_vertice[0].begin.y;
-		e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index =
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls].color =
+			YELLOW;
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls].begin.x =
+			e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].end.x;
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls].begin.y =
+			e->sectors[e->n].walls[e->sectors[e->n].num_walls - 1].end.y;
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls].end.x =
+			e->sectors[e->n].walls[0].begin.x;
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls].end.y =
+			e->sectors[e->n].walls[0].begin.y;
+		e->sectors[e->n].walls[e->sectors[e->n].num_walls].global_index =
 			e->global_index++;
 		e->sectors[e->n].num_walls++;
 		return (e->sectors[e->n].num_walls);
@@ -41,17 +43,18 @@ int		create_wall(t_map_editor *e)
 	if (e->mode == TEXTURE && e->sectors[e->n].num_walls < WALLS_CNT - 1)
 	{
 		if (e->sectors[e->n].num_walls == -1)
-			e->sectors[e->n].wall_vertice[0].begin = mouse;
+			e->sectors[e->n].walls[0].begin = mouse;
 		else
 		{
 			if (e->sectors[e->n].num_walls > 0)
-				e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].begin =
-					e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls - 1].end;
-			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].end = mouse;
+				e->sectors[e->n].walls[e->sectors[e->n].num_walls].
+				begin = e->sectors[e->n].walls[e->sectors[e->n].
+				num_walls - 1].end;
+			e->sectors[e->n].walls[e->sectors[e->n].num_walls].end = mouse;
 		}
 		if ((e->n == 0 && e->sectors[e->n].num_walls >= 0) ||
 			(e->n && e->sectors[e->n].num_walls > 1))
-			e->sectors[e->n].wall_vertice[e->sectors[e->n].num_walls].global_index =
+			e->sectors[e->n].walls[e->sectors[e->n].num_walls].global_index =
 				e->global_index++;
 		e->sectors[e->n].num_walls++;
 	}
@@ -69,16 +72,16 @@ void				create_sector(t_map_editor	*e)
 		else
 			e->sectors[e->n].neighbors[0] = e->n + 1;
 		(e->n)++;
-		e->sectors[e->n].wall_vertice[0] = e->sectors[e->n - 1].wall_vertice[e->chosen];
-		e->sectors[e->n].wall_vertice[0].begin = e->sectors[e->n - 1].wall_vertice[e->chosen].end;
-		e->sectors[e->n].wall_vertice[0].end = e->sectors[e->n - 1].wall_vertice[e->chosen].begin;
-		e->sectors[e->n].wall_vertice[1].global_index =
-			e->sectors[e->n - 1].wall_vertice[e->chosen].global_index;
-		if (e->sectors[e->n - 1].wall_vertice[e->chosen].global_index != e->sectors[e->n - 1].num_walls - 1)
-			e->sectors[e->n].wall_vertice[0].global_index =
-				e->sectors[e->n - 1].wall_vertice[e->chosen].global_index + 1;
+		e->sectors[e->n].walls[0] = e->sectors[e->n - 1].walls[e->chosen];
+		e->sectors[e->n].walls[0].begin = e->sectors[e->n - 1].walls[e->chosen].end;
+		e->sectors[e->n].walls[0].end = e->sectors[e->n - 1].walls[e->chosen].begin;
+		e->sectors[e->n].walls[1].global_index =
+			e->sectors[e->n - 1].walls[e->chosen].global_index;
+		if (e->sectors[e->n - 1].walls[e->chosen].global_index != e->sectors[e->n - 1].num_walls - 1)
+			e->sectors[e->n].walls[0].global_index =
+				e->sectors[e->n - 1].walls[e->chosen].global_index + 1;
 		else
-			e->sectors[e->n].wall_vertice[0].global_index = 0;
+			e->sectors[e->n].walls[0].global_index = 0;
 		e->sectors[e->n].neighbors[1] = e->n - 1;
 		e->chosen = -1;
 		e->mode = TEXTURE;

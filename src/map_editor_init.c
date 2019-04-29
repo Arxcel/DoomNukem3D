@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 19:14:10 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:23:31 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void					init_sectors(t_map_editor *e)
 		{
 			e->sectors[i].neighbors[j] = -1;
 			e->sectors[i].num_walls = 1;
-			e->sectors[i].wall_vertice[j].texture = 0;
-			e->sectors[i].wall_vertice[j].color = YELLOW;
-            e->sectors[i].wall_vertice[j].global_index = 0;
+			e->sectors[i].walls[j].texture = 0;
+			e->sectors[i].walls[j].color = YELLOW;
+            e->sectors[i].walls[j].global_index = 0;
 			e->sectors[i].ceiling_height = 100;
 			e->sectors[i].floor_height = 0;
 			e->sectors[i].is_lift = false;
