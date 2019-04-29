@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 18:52:44 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:08:37 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,8 @@ void				sdl_keydown(t_main *m, t_map_editor	*e)
 				|| e->mode == PLAYER || e->mode == SPRITE_Z
 				|| (e->mode > SPRITE_TEXTURE && e->mode < SAVE))
 					(e->mode)++;
-			if ((e->mode > CLOSE && e->mode < SPRITE_Z && e->selected_row < TEXT_MENU / 2)
-				|| (e->mode == SPRITE_Z && !e->selected_row)
-				|| (e->mode > SPRITE_TEXTURE && e->mode < SAVE))
+			if ((e->mode > CLOSE && e->mode < SPRITE_Z && e->selected_row < TEXT_MENU / 2))
 				(e->selected_row)++;
-			if (e->mode == SPRITE_TEXTURE)
-				(e->selected_row)--;
-			if (e->mode == SPRITE_Z)
-				e->selected_row = 0;
-				
 			create_sector(e);
 		}
 	}

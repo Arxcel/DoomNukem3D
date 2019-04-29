@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:34 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 14:43:25 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:14:10 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		init_map_editor(t_main *main)
 	SDL_RenderClear(main->sdl.ren);
 	SDL_RenderPresent(main->sdl.ren);
 	main->map.player.darkness = 2;
-	main->map.player.gravity = 1.0f;
+	main->map.player.gravity = 3.0f;
 	return (0);
 }
 

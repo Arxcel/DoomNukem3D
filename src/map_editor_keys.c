@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 18:55:58 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:12:15 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int				up_arrow_key(t_main *m, t_map_editor *e)
 	else if (e->mode == TO && e->sectors[e->n].is_lift &&
 		e->sectors[e->n].to + 30 <=e->sectors[e->n].ceiling_height)
 		e->sectors[e->n].to += 10;
-	else if (e->mode == SPRITE_Z)
+	else if (e->mode == SPRITE_Z && e->sprite_cnt)
 		e->sprites[e->sprite_cnt].position.z += 1;
-	else if (e->mode == SPRITE_TEXTURE && e->sprites[e->sprite_cnt].texture < TEXTURE_MAX)
+	else if (e->mode == SPRITE_TEXTURE && e->sprites[e->sprite_cnt].texture < TEXTURE_MAX && e->sprite_cnt)
 		e->sprites[e->sprite_cnt].texture += 1;
 	else if (e->mode == DARKNESS && m->map.player.darkness < 10)
 		m->map.player.darkness += 1;
@@ -64,9 +64,9 @@ int				down_arrow_key(t_main *m, t_map_editor *e)
 		e->sectors[e->n].ceiling_height -= 10;
 	else if (e->mode == TO && e->sectors[e->n].is_lift)
 		e->sectors[e->n].to -= 10;
-	else if (e->mode == SPRITE_Z)
+	else if (e->mode == SPRITE_Z && e->sprite_cnt)
 		e->sprites[e->sprite_cnt].position.z -= 1;
-	else if (e->mode == SPRITE_TEXTURE && e->sprites[e->sprite_cnt].texture > 0)
+	else if (e->mode == SPRITE_TEXTURE && e->sprites[e->sprite_cnt].texture > 0 && e->sprite_cnt)
 		e->sprites[e->sprite_cnt].texture -= 1;
 	else if (e->mode == DARKNESS && m->map.player.darkness > 0)
 		m->map.player.darkness -= 1;
@@ -121,7 +121,7 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 	while (e->mode >= CREATED && e->mode < SPRITE_Z && ++i <= e->n)
 		if (pnpoly(e->sectors[i].num_walls, e->sectors[i].wall_vertice, d))
 		{
-			e->selected_row = 0;
+			// e->selected_row = 0;
 			m->map.player.sector_number = i;
 			m->map.player.position.x = d.x;
 			m->map.player.position.y = d.y;
@@ -131,7 +131,7 @@ int					player_save_keys(t_main *m, t_map_editor *e)
 	if ((e->mode == SPRITE_Z || e->mode == SPRITE_TEXTURE) && e->sprite_cnt < SPRITE_CNT)
 	{
 		puts("here");
-		e->selected_row = 0;
+		// e->selected_row = 0;
 		e->sprites[e->sprite_cnt].position.x = d.x;
 		e->sprites[e->sprite_cnt].position.y = d.y;
 		e->sprite_cnt++;
