@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_editor_draw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:08 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 16:12:26 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:48:52 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int		draw(t_main *m, t_map_editor *e)
 	i = -1;
 	if (e->mode < SPRITE_Z)
 		while (++i < TEXT_MENU)
-			SDL_RenderCopy(m->sdl.ren, e->menu[i].text_texture, NULL, &e->menu[i].dstrect);
+			SDL_RenderCopy(m->sdl.ren, e->menu[i].text_texture,
+										NULL, &e->menu[i].dstrect);
 	else
 		while (++i < SPRITE_MENU)
 			SDL_RenderCopy(m->sdl.ren, e->sprite_menu[i].text_texture,
@@ -57,6 +58,6 @@ int		draw(t_main *m, t_map_editor *e)
 void	print_vector(t_editor_wall wall, t_main *main)
 {
 	if (wall.begin.x > -1 && wall.begin.y > -1 &&
-		wall.begin.x < main->sdl.win_w && wall.begin.y <  main->sdl.win_h)
+		wall.begin.x < main->sdl.win_w && wall.begin.y < main->sdl.win_h)
 		sdl_pixel_put(&main->sdl.img, wall.begin.x, wall.begin.y, wall.color);
 }

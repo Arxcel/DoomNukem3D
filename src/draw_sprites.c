@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 13:41:22 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 17:28:39 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,29 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 
 void				draw_sprites(t_main *m)
 {
-	t_wall		wall;
+	t_wall		w;
 	int			i;
-	int			*s_order;
-	float		*s_dist;
+	int			*o;
+	float		*d;
 	size_t		j;
 
-	s_order = (int*)malloc(sizeof(int) * m->map.number_sprites);
-	s_dist = (float*)malloc(sizeof(float) * m->map.number_sprites);
-	sort_sprites(m, s_order, s_dist);
+	o = (int*)malloc(sizeof(int) * m->map.number_sprites);
+	d = (float*)malloc(sizeof(float) * m->map.number_sprites);
+	sort_sprites(m, o, d);
 	j = -1;
 	while (++j < m->map.number_sprites)
 	{
-		i = s_order[j];
-		s_dist[0] = calc_distance(m->map.player.position,
+		i = o[j];
+		d[0] = calc_distance(m->map.player.position,
 								m->map.sprites[i].position);
-		setup_sprite_texture(m, &wall, m->map.sprites[i].texture);
-		calc_sprite_edges(&m->map.player, m->map.sprites[i].position,
-													&wall, s_dist[0]);
-		if (need_to_render(m, &wall, s_dist[0], i))
+		setup_sprite_texture(m, &w, m->map.sprites[i].texture);
+		calc_sprites(&m->map.player, m->map.sprites[i].position, &w, d[0]);
+		if (need_to_render(m, &w, d[0], i))
 			continue ;
-		do_perspective(&wall, m->sdl.img.w, m->sdl.img.h);
-		calc_sprite_h(&m->map.sprites[i], &wall, &m->map.player, m->sdl.img.h);
-		draw_sprite(m, &wall, s_dist[0], i);
+		do_perspective(&w, m->sdl.img.w, m->sdl.img.h);
+		calc_sprite_h(&m->map.sprites[i], &w, &m->map.player, m->sdl.img.h);
+		draw_sprite(m, &w, d[0], i);
 	}
-	free(s_order);
-	free(s_dist);
+	free(o);
+	free(d);
 }

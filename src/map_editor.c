@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:49:14 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 17:53:40 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:57:36 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int					map_editor_loop(t_main *m)
 					update_all_menu(m, &e);
 				else
 					update_sprite_menu(m, &e);
+				if (m->sdl.e.key.keysym.sym == SDLK_1)
+					e.mode = SPRITE_Z;
 				printf("mode %i\n", e.mode);
 				printf("selected row %i\n", e.selected_row);
 			}

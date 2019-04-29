@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 15:18:34 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 13:40:41 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 16:53:47 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		sort_sprites(t_main *m, int *order, float *dist)
 	sort(m->map.number_sprites, order, dist);
 }
 
-void		calc_sprite_edges(t_player *p, t_vector sprite_pos,
+void		calc_sprites(t_player *p, t_vector sprite_pos,
 										t_wall *wall, float dist)
 {
 	t_vertex loc1;

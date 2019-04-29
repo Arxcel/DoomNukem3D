@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 11:52:23 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 15:37:53 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 17:47:27 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ unsigned int	c_greenify(unsigned int color, float green)
 
 void			draw_green(t_main *m)
 {
-	size_t x;
-	size_t y;
-	int color;
+	size_t	x;
+	size_t	y;
+	int		color;
 
 	y = -1;
 	while (++y < m->sdl.img.h)

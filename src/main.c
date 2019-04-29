@@ -6,7 +6,7 @@
 /*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 18:33:04 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/04/29 17:47:44 by vkozlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void		unload_resources(t_main *m)
 	unload_sounds(m);
 }
 
-// int			main(int ac, char **av)
-int			main()
+int			main(void)
 {
 	t_main	m;
 
