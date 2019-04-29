@@ -6,7 +6,7 @@
 /*   By: sahafono <sahafono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:48:45 by sahafono          #+#    #+#             */
-/*   Updated: 2019/04/29 17:41:52 by sahafono         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:53:10 by sahafono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				up_arrow_key(t_main *m, t_map_editor *e)
 		e->sectors[e->n].to += 10;
 	else if (e->mode == SPRITE_Z)
 		e->sprites[e->sprite_cnt].position.z += 1;
-	else if (e->mode == SPRITE_TEXTURE && e->sprites[e->sprite_cnt].texture < SPRITE_TEXTURE)
+	else if (e->mode == SPRITE_TEXTURE && e->sprites[e->sprite_cnt].texture < TEXTURE_MAX)
 		e->sprites[e->sprite_cnt].texture += 1;
 	else if (e->mode == DARKNESS && m->map.player.darkness < 10)
 		m->map.player.darkness += 1;
