@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hud.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:06:44 by olbondar          #+#    #+#             */
-/*   Updated: 2019/04/28 19:56:15 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/13 22:58:41 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	draw_gun(t_main *m)
 	m->hud.curr_sprite.y = 0;
 	m->hud.curr_sprite.w = (int)(w / 4);
 	m->hud.curr_sprite.h = (int)(h * 2);
-	m->hud.all_sprites.x = (int)(W / 2.2);
-	m->hud.all_sprites.y = (int)(H - 0 - h * 2 + 15);
+	m->hud.all_sprites.x = (int)(m->sdl.img.w / 2.2);
+	m->hud.all_sprites.y = (int)(m->sdl.img.h - 0 - h * 2 + 15);
 	m->hud.all_sprites.w = (int)(w * 2 / 4);
 	m->hud.all_sprites.h = (int)(h * 2);
 	m->hud.boom = 0;

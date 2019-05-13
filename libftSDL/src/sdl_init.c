@@ -6,7 +6,7 @@
 /*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:42:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/05/13 22:54:34 by arxcel           ###   ########.fr       */
+/*   Updated: 2019/05/13 23:03:47 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void				sdl_init(t_sdl *sdl)
 		MSG(SDL_GetError());
 	if (!(sdl->win = SDL_CreateWindow("My SDL", SDL_WINDOWPOS_UNDEFINED,
 								SDL_WINDOWPOS_UNDEFINED, sdl->win_w,
-								sdl->win_h, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI)))
+								sdl->win_h, SDL_WINDOW_SHOWN |
+											SDL_WINDOW_RESIZABLE |
+											SDL_WINDOW_ALLOW_HIGHDPI)))
 		MSG(SDL_GetError());
 	if (!(sdl->ren = SDL_CreateRenderer(sdl->win, -1,
 					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)))
@@ -28,8 +30,8 @@ void				sdl_init(t_sdl *sdl)
 								SDL_TEXTUREACCESS_STATIC,
 								sdl->win_w, sdl->win_h)))
 		MSG(SDL_GetError());
-	SDL_ShowCursor(SDL_DISABLE);
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	// SDL_ShowCursor(SDL_DISABLE);
+	// SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_SetRenderDrawColor(sdl->ren, 255, 255, 255, 255);
 	SDL_RenderClear(sdl->ren);
 	SDL_RenderPresent(sdl->ren);
