@@ -6,7 +6,7 @@
 /*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:06:44 by olbondar          #+#    #+#             */
-/*   Updated: 2019/05/13 22:58:41 by arxcel           ###   ########.fr       */
+/*   Updated: 2019/05/13 23:22:37 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	draw_hud(t_main *m)
 		MSG(SDL_GetError());
 	m->hud.hud_rect.x = 0;
 	m->hud.hud_rect.y = 0;
-	m->hud.hud_rect.w = m->hud.surface_hud->w;
-	m->hud.hud_rect.h = m->hud.surface_hud->h;
+	m->hud.hud_rect.w = m->sdl.img.w;
+	m->hud.hud_rect.h = m->sdl.img.h;
 	SDL_RenderCopy(m->sdl.ren, m->hud.hud, NULL, &m->hud.hud_rect);
 	SDL_DestroyTexture(m->hud.hud);
 	draw_text(m, ft_strdup("Find yellow card"), 440, 550);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 14:18:45 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/13 23:15:01 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,38 @@ static void			handle_key(t_main *m, int key)
 	vertical_movement(m, key);
 }
 
+static void		sdl_recreate_img(t_img *img, size_t w, size_t h)
+{
+	ft_memdel((void**)&img->pixels);
+	*img = sdl_create_image(w, h);
+}
+
+static void		window_resized_event(t_main *m)
+{
+	m->sdl.win_w = m->sdl.e.window.data1;
+	m->sdl.win_h = m->sdl.e.window.data2;
+	sdl_recreate_img(&m->sdl.img, m->sdl.win_w,
+									m->sdl.win_h);
+	SDL_DestroyTexture(m->sdl.texture);
+	m->sdl.texture = SDL_CreateTexture(m->sdl.ren,
+								SDL_PIXELFORMAT_ARGB8888,
+								SDL_TEXTUREACCESS_STATIC,
+								m->sdl.win_w,
+								m->sdl.win_h);
+	m->sdl.changes = 1;
+}
+
 void				sdl_hook(t_main *m)
 {
 	while (SDL_PollEvent(&m->sdl.e))
 	{
 		if (m->sdl.e.type == SDL_QUIT)
 			m->sdl.running = 0;
+		else if (m->sdl.e.type == SDL_WINDOWEVENT)
+		{
+			if (m->sdl.e.window.event == SDL_WINDOWEVENT_RESIZED)
+				window_resized_event(m);
+		}
 		else if (m->sdl.e.type == SDL_KEYDOWN || m->sdl.e.type == SDL_KEYUP)
 			handle_key(m, m->sdl.e.key.keysym.sym);
 		else if (m->sdl.e.type == SDL_MOUSEBUTTONUP)
