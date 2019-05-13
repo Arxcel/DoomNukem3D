@@ -6,7 +6,7 @@
 /*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:42:04 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/05/13 23:03:47 by arxcel           ###   ########.fr       */
+/*   Updated: 2019/05/13 23:42:25 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void				sdl_init(t_sdl *sdl)
 	SDL_SetRenderDrawColor(sdl->ren, 255, 255, 255, 255);
 	SDL_RenderClear(sdl->ren);
 	SDL_RenderPresent(sdl->ren);
-	sdl->img = sdl_create_image(sdl->win_w, sdl->win_h);
+	sdl->img = sdl_create_image(sdl->isRetina ? sdl->win_w * 2 : sdl->win_w, sdl->isRetina ? sdl->win_h * 2 : sdl->win_h);
 	sdl->running = 1;
 }

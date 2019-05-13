@@ -6,7 +6,7 @@
 /*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:33:57 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/05/13 22:59:34 by arxcel           ###   ########.fr       */
+/*   Updated: 2019/05/13 23:54:25 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,17 @@ void		unload_resources(t_main *m)
 	unload_sounds(m);
 }
 
-int			main(void)
+int			main(int ac, char **av)
 {
 	t_main	m;
 
+	(void)av;
 	ft_bzero(&m, sizeof(t_main));
 	load_resources(&m);
 	m.menu.is_active = true;
 	m.sdl.win_w = W;
 	m.sdl.win_h = H;
+	m.sdl.isRetina = ac > 1;
 	sdl_init(&m.sdl);
 	sdl_loop(&m);
 	unload_resources(&m);

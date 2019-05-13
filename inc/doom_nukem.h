@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 19:48:00 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/13 23:46:55 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # define MOUSE_SENSIVITY_X		1
 # define MOUSE_SENSIVITY_Y		2
 # define LIFT_SPEED				1
-
 # define STANDHEIGHT			6
 # define CROUCHINGHEIGHT		2.5
 # define HEADMARGIN				1

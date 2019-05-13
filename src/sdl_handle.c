@@ -6,7 +6,7 @@
 /*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:01:54 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/05/13 23:15:01 by arxcel           ###   ########.fr       */
+/*   Updated: 2019/05/13 23:45:35 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ static void		window_resized_event(t_main *m)
 {
 	m->sdl.win_w = m->sdl.e.window.data1;
 	m->sdl.win_h = m->sdl.e.window.data2;
-	sdl_recreate_img(&m->sdl.img, m->sdl.win_w,
-									m->sdl.win_h);
+	sdl_recreate_img(&m->sdl.img, m->sdl.isRetina ? m->sdl.win_w * 2 : m->sdl.win_w, m->sdl.isRetina ? m->sdl.win_h * 2 : m->sdl.win_h);
 	SDL_DestroyTexture(m->sdl.texture);
 	m->sdl.texture = SDL_CreateTexture(m->sdl.ren,
 								SDL_PIXELFORMAT_ARGB8888,

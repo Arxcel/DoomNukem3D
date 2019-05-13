@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sdl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 18:38:51 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 14:37:52 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/13 23:37:39 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_sdl
 	t_img			img;
 	int				running;
 	int				changes;
+	int				isRetina;
 }					t_sdl;
 
 void				sdl_init(t_sdl *sdl);
