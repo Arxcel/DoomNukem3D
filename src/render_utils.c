@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:31:29 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 11:59:06 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/14 00:12:24 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 #include <stdlib.h>
 
-void		init_renderer(t_renderer *r, t_img *img, int n_sectors)
+void			init_renderer(t_renderer *r, t_sdl *sdl, int n_sectors)
 {
 	size_t	x;
 
 	ft_bzero(r, sizeof(t_renderer));
-	r->w = img->w;
-	r->h = img->h;
+	r->w = sdl->win_w;
+	r->h = sdl->win_h;
 	r->rendered_sectors = (int *)malloc(n_sectors * sizeof(int));
-	r->top_limit = (int *)malloc(img->w * sizeof(int));
-	r->bottom_limit = (int *)malloc(img->w * sizeof(int));
+	r->top_limit = (int *)malloc(sdl->win_w * sizeof(int));
+	r->bottom_limit = (int *)malloc(sdl->win_w * sizeof(int));
 	r->head = r->queue;
 	r->tail = r->queue;
 	ft_bzero(r->rendered_sectors, n_sectors * sizeof(int));
-	ft_bzero(r->top_limit, img->w * sizeof(int));
+	ft_bzero(r->top_limit, sdl->win_w * sizeof(int));
 	x = -1;
-	while (++x < img->w)
-		r->bottom_limit[x] = img->h - 1;
+	while (++x < (size_t)sdl->win_w)
+		r->bottom_limit[x] = sdl->win_h - 1;
 }
 
 void		free_renderer(t_renderer *renderer)

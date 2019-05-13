@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 19:38:10 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/14 00:14:06 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void		draw_neighbor_wall(t_main *m, t_wall *wall,
 	draw_line(m, wall, &(t_vline){x, wall->cya,
 										wall->ncya - 1, wall->upper_id}, i);
 	r->top_limit[x] = clampf(maxf(wall->cya, wall->ncya),
-										r->top_limit[x], m->sdl.img.h);
+										r->top_limit[x], m->sdl.win_h);
 	free(i);
 	i = init_interp((t_pt){wall->ya, wall->ncyb},
 	wall->yb, (t_pt){0, cl->w});
@@ -124,9 +124,9 @@ void			draw_screen(t_main *m)
 	t_renderer		r;
 	t_render_item	current_sector;
 
-	init_renderer(&r, &m->sdl.img, m->map.number_sectors);
+	init_renderer(&r, &m->sdl, m->map.number_sectors);
 	(*r.head) = (t_render_item){m->map.player.sector_number,
-												0, m->sdl.img.w - 1};
+												0, m->sdl.win_w - 1};
 	++r.head;
 	if (r.head == r.queue + MaxQueue)
 		r.head = r.queue;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perspective.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 13:41:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/28 19:38:23 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/14 00:15:07 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ t_vertex		reverse_perspective(t_main *m, int x, int y, float height)
 	float		rty;
 	float		dist;
 
-	r.y = height * VFOV * m->sdl.img.h / ((m->sdl.img.h / 2.0 - y) -
-									m->map.player.pitch * VFOV * m->sdl.img.h);
-	r.x = r.y * (m->sdl.img.w / 2.0 - x) / (HFOV * m->sdl.img.w);
+	r.y = height * VFOV * m->sdl.win_h / ((m->sdl.win_h / 2.0 - y) -
+									m->map.player.pitch * VFOV * m->sdl.win_h);
+	r.x = r.y * (m->sdl.win_w / 2.0 - x) / (HFOV * m->sdl.win_w);
 	rtx = r.y * m->map.player.anglecos + r.x * m->map.player.anglesin;
 	rty = r.y * m->map.player.anglesin - r.x * m->map.player.anglecos;
 	r.x = rtx + m->map.player.position.x;

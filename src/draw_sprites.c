@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 14:01:22 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/29 17:28:39 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/14 00:16:26 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void			draw_sprite_impl_y(t_main *m, t_wall *wall,
 										(wall->x2 - wall->x1) + wall->y1.a;
 	wall->yb = (x - wall->x1) * (wall->y2.b - wall->y1.b) /
 										(wall->x2 - wall->x1) + wall->y1.b;
-	wall->cya = clampf(wall->ya, 0, m->sdl.img.h - 1);
-	wall->cyb = clampf(wall->yb, 0, m->sdl.img.h - 1);
+	wall->cya = clampf(wall->ya, 0, m->sdl.win_h - 1);
+	wall->cyb = clampf(wall->yb, 0, m->sdl.win_h - 1);
 	i = init_interp((t_pt){wall->ya, wall->cya},
 								wall->yb, (t_pt){0, current->h});
 	draw_sprite_line(m, wall, &(t_vline){x, wall->cya,
@@ -71,7 +71,7 @@ static void			draw_sprite(t_main *m, t_wall *wall, float dist, int s)
 	{
 		wall->txtx = interp_next(ix);
 		wall->lz = dist * m->map.player.darkness * 4;
-		if (x < m->sdl.img.w && x > 0)
+		if (x < (size_t)m->sdl.win_w && x > 0)
 			if (x > begin_x - 1)
 				draw_sprite_impl_y(m, wall, x);
 	}
@@ -99,8 +99,8 @@ void				draw_sprites(t_main *m)
 		calc_sprites(&m->map.player, m->map.sprites[i].position, &w, d[0]);
 		if (need_to_render(m, &w, d[0], i))
 			continue ;
-		do_perspective(&w, m->sdl.img.w, m->sdl.img.h);
-		calc_sprite_h(&m->map.sprites[i], &w, &m->map.player, m->sdl.img.h);
+		do_perspective(&w, m->sdl.win_w, m->sdl.win_h);
+		calc_sprite_h(&m->map.sprites[i], &w, &m->map.player, m->sdl.win_h);
 		draw_sprite(m, &w, d[0], i);
 	}
 	free(o);

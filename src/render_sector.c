@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:40:20 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/27 11:27:44 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/14 00:17:33 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void				render_sector(t_main *m, t_renderer *r,
 			continue;
 		clamp_edges_with_player_view(&wall);
 		clamp_values(&wall);
-		do_perspective(&wall, m->sdl.img.w, m->sdl.img.h);
+		do_perspective(&wall, m->sdl.win_w, m->sdl.win_h);
 		if (wall.x1 >= wall.x2 || wall.x2 < current_sector->limit_x_left ||
 									wall.x1 > current_sector->limit_x_right)
 			continue;

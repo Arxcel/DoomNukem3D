@@ -6,7 +6,7 @@
 /*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:32:12 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/05/13 23:46:55 by arxcel           ###   ########.fr       */
+/*   Updated: 2019/05/14 00:11:16 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void				render_sector(t_main *m, t_renderer *renderer,
 void				render_wall(t_main *m, t_renderer *renderer, t_wall *wall,
 								t_render_item const *current_sector);
 
-void				init_renderer(t_renderer *r, t_img *img, int n_sectors);
+void				init_renderer(t_renderer *r, t_sdl *sdl, int n_sectors);
 void				free_renderer(t_renderer *r);
 void				clamp_point(t_vertex *point, t_vertex *i1, t_vertex *i2);
 void				draw_line(t_main *m, t_wall *w, t_vline *v, t_interp *ty);

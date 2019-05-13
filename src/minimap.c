@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkozlov <vkozlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arxcel <arxcel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 12:24:16 by vkozlov           #+#    #+#             */
-/*   Updated: 2019/04/20 19:20:03 by vkozlov          ###   ########.fr       */
+/*   Updated: 2019/05/14 00:18:24 by arxcel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void				draw_minimap(t_main *m)
 	size_t h;
 	size_t s;
 
-	w = m->sdl.img.w / 2;
-	h = m->sdl.img.h / 2;
+	w = m->sdl.win_w / 2;
+	h = m->sdl.win_h / 2;
 	s = -1;
 	while (++s < m->map.number_sectors)
 	{
